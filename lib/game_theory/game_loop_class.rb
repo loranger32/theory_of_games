@@ -1,31 +1,3 @@
-#!/usr/bin/env ruby
-require 'pry'
-require 'colorize'
-
-class Player
-end
-
-class PlayerFactory
-  def generate_players
-  end
-end
-
-class DecisionFactory
-end
-
-class Reporter
-end
-
-class GameEngine
-  def initialize(players)
-    @players = players
-  end
-
-  def play_turn
-    puts "vous jouez".blue
-  end
-end
-
 class GameLoop
   TURNS = 3
 
@@ -75,8 +47,3 @@ class GameLoop
     @still_playing = false if answer == 'n'
   end
 end
-
-
-GameLoop.new(GameEngine.new(PlayerFactory.new.generate_players)).run
-
-at_exit { puts "Merci d'avoir joué.".yellow }
