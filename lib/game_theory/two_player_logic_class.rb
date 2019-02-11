@@ -10,7 +10,7 @@ class TwoPlayerLogic
     elsif all_players_betray
       earning_engine.give_each_player_minimum_earning
     elsif one_traitor_and_one_naive
-      earning_engine.pay_traitor  
+      pay_max_to_traitor_and_min_to_naive      
     else
       err_msg = "Something went wrong : invalid moves combinaison - unable to\
  to define earnings."
@@ -28,6 +28,16 @@ class TwoPlayerLogic
 
   def one_traitor_and_one_naive
     players.any?(&:cooperates) && players.any(&:betrays?)
+  end
+
+  def pay_max_to_traitor_and_min_to_naive
+    traitor, naive = retrieve_winner_and_loser
+    earning_engine.give_max_aerning_to(traitor)
+    earning_engine.give_min_aerning_to(naive)
+  end
+
+  def retrieve_winner_and_loser
+    winner, loser = players.partition { |player| player.betrays? }
   end
 
   private

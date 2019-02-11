@@ -11,10 +11,12 @@ class EarningEngine
     players.map(&:earn_min)
   end
 
-  def pay_traitor
-    winner, loser = players.partition { |player| player.betrays? }
-    winner.earn_max
-    loser.earn_min
+  def pay_min_earning_to(naive)
+    naive.earn_min
+  end
+
+  def pay_max_earning_to(traitor)
+    traitor.earn_max
   end
 
   private
