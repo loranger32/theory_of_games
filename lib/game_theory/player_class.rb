@@ -2,17 +2,19 @@ class Player
 
   MAX_GAIN = 5
   MEDIUM_GAIN = 3
-  NO_GAIN = 0
+  MIN_GAIN = 0
 
-  def initialize(name: 'random', player_type: :random)
+  attr_reader :name, :behavior, :score, :move
+
+  def initialize(name: 'random', behavior: :random)
     @name = name
-    @player_type = player_type
+    @behavior = behavior
     @move = nil
     @score = 0
   end
 
   def play_move
-    @move = case @player_type
+    @move = case @behavior
             when :cooperator then :cooperates
             when :traitor then :betrays
             when :random then choose_random_move
@@ -37,22 +39,28 @@ class Player
     @score += MEDIUM_GAIN
   end
 
-  def loose
-    @score += NO_GAIN
-  end
-
-  def choose_random_move
-    rand(0..1) == 0 ? :betrays : :cooperates
+  def earn_min
+    @score += MIN_GAIN
   end
 
   def reset_move
     @move = nil
   end
+
+  def reset_score
+    @score = 0
+  end
+
+  private
+
+  def choose_random_move
+    rand(0..1) == 0 ? :betrays : :cooperates
+  end
 end
 
 
-good_guy = Player.new(name: 'Good guy', player_type: :cooperator)
-bad_guy = Player.new(name: 'Bad guy', player_type: :traitor)
+good_guy = Player.new(name: 'Good guy', behavior: :cooperator)
+bad_guy = Player.new(name: 'Bad guy', behavior: :traitor)
 
 good_guy.play_move
 bad_guy.play_move

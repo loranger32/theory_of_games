@@ -15,11 +15,11 @@ class GameTurnEngine
     if players.all(&:cooperates?)
       players.map(&:earn_medium)
     elsif players.all(&:betrays?)
-      players.map(&:loose)
+      players.map(&:earn_min)
     else
       winner, loser = players.partition { |player| player.betrays? }
       winner.earn_max
-      loser.loose
+      loser.earn_min
     end
   end
 
