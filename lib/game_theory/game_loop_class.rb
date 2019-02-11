@@ -1,8 +1,8 @@
 class GameLoop
   TURNS = 3
 
-  def initialize(game_engine)
-    @game_engine = game_engine
+  def initialize(turn_engine)
+    @turn_engine = turn_engine
     @still_playing = true
   end
 
@@ -10,7 +10,7 @@ class GameLoop
     greet
     while still_playing?
       ready_to_play?
-      TURNS.times { @game_engine.play_turn }
+      TURNS.times { @turn_engine.play_turn }
       display_end_of_turns
       play_again?
     end
@@ -34,8 +34,6 @@ class GameLoop
     puts "Prêt à lancer le jeu ? (pressez une touche pour continuer)".blue
     gets.chomp
   end
-
-
 
   def play_again?
     puts "On refait un essai (o/n) ?"
