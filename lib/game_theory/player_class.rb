@@ -44,6 +44,10 @@ class Player
   def choose_random_move
     rand(0..1) == 0 ? :betrays : :cooperates
   end
+
+  def reset_move
+    @move = nil
+  end
 end
 
 
