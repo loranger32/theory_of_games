@@ -1,4 +1,4 @@
-class GameTurnEngine
+class TurnEngine
   
   attr_reader :players, :game_logic
 
