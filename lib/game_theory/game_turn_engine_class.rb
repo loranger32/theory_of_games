@@ -6,6 +6,7 @@ class GameTurnEngine
   def play_turn
     @players.each { |player| player.play_move }
     process_moves
+    reset_players_move
   end
 
   private
@@ -20,5 +21,9 @@ class GameTurnEngine
       winner.earn_max
       loser.loose
     end
+  end
+
+  def reset_players_move
+    @players.map(&:reset_move)
   end
 end
