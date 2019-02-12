@@ -31,18 +31,14 @@ class PlayerMovesTest < Minitest::Test
     @players = [@good_guy, @bad_guy, @random_guy]
   end
 
-  def test_player_can_play_a_move
-    @players.all? { |player| assert_silent { player.move } }
-  end
-
   def test_player_store_correct_move_when_she_plays
     @players.map(&:play_move)
     assert_equal :cooperates, @good_guy.move
     assert_equal :betrays, @bad_guy.move
-    assert_includes [:betrays, :cooperates], @good_guy.move
+    assert_includes [:betrays, :cooperates], @random_guy.move
   end
 
-  def test_player_move_cvan_be_reset_to_nil
+  def test_player_move_can_be_reset_to_nil
     assert_nil @good_guy.move
     @good_guy.play_move
     refute_nil @good_guy.move
@@ -76,7 +72,6 @@ class PlayerScoreTest < Minitest::Test
   end
 
   def test_player_can_earn_min
-    
     check_score_is_zero
     @player.earn_min
     assert_equal @min_gain, @player.score
