@@ -39,7 +39,9 @@ class TwoPlayerLogic
   end
 
   def retrieve_winner_and_loser
-    players.partition { |player| player.betrays? }
+    winner = players.find(&:betrays?)
+    loser = players.find(&:cooperates?)
+    [winner, loser]
   end
 
   private

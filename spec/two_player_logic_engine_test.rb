@@ -1,5 +1,3 @@
-require 'pry'
-
 require_relative 'spec_helpers'
 require_relative '../lib/game_theory/two_player_logic_class'
 
@@ -39,7 +37,7 @@ class TwoPlayerLogicTest < Minitest::Test
   end
 
   def test_process_move_give_appropriate_earnings_to_traitor_and_naive
-    2.times do
+    3.times do
       @player1.expect(:betrays?, true)
       @player1.expect(:cooperates?, false)
 
@@ -47,13 +45,8 @@ class TwoPlayerLogicTest < Minitest::Test
       @player2.expect(:cooperates?, true)
     end
 
-    @player1.expect(:betrays?, true)
-    @player2.expect(:betrays?, false)
-
-    # Needs to pass an Object as argument, otherwise returns an error
-    # I think it's due to Minitest internals, and Mock in particular
-    @earning_engine.expect(:give_max_earning_to, nil, [Object])
-    @earning_engine.expect(:give_min_earning_to, nil, [Object])
+    @earning_engine.expect(:give_max_earning_to, true, [@player1])
+    @earning_engine.expect(:give_min_earning_to, true, [@player2])
 
     @logic_engine.process_moves
 
