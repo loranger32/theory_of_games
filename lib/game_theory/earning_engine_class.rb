@@ -11,11 +11,11 @@ class EarningEngine
     players.map(&:earn_min)
   end
 
-  def pay_min_earning_to(naive)
+  def give_min_earning_to(naive)
     naive.earn_min
   end
 
-  def pay_max_earning_to(traitor)
+  def give_max_earning_to(traitor)
     traitor.earn_max
   end
 

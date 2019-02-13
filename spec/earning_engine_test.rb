@@ -27,13 +27,13 @@ class EaringEngineTest < Minitest::Test
 
   def test_give_max_earning_to_traitor
     @player1.expect(:earn_max, nil)
-    @earning_engine.pay_max_earning_to(@player1)
+    @earning_engine.give_max_earning_to(@player1)
     @player1.verify
   end
 
   def test_give_min_earning_to_naive
     @player2.expect(:earn_min, nil)
-    @earning_engine.pay_min_earning_to(@player2)
+    @earning_engine.give_min_earning_to(@player2)
     @player2.verify
   end
 end
