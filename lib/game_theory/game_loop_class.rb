@@ -14,7 +14,6 @@ class GameLoop
       display_end_of_turns
       play_again?
     end
-    binding.pry
   end
 
   private
