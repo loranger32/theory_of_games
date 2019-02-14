@@ -11,11 +11,10 @@ require_relative 'game_theory/player_factory_class'
 require_relative 'game_theory/earning_engine_class'
 require_relative 'game_theory/two_player_logic_class'
 require_relative 'game_theory/turn_engine_class'
-require_relative 'game_theory/decision_maker_class'
 require_relative 'game_theory/reporter_class'
 
 # Generate Players - Will take options in the future
-players = PlayerFactory.new.generate_players
+players = PlayerFactory.new(Player).generate_players
 
 # Rules for granting earnings - acts on players instances
 earning_engine = EarningEngine.new(players)
