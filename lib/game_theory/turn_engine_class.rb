@@ -9,7 +9,7 @@ class TurnEngine
 
   def play_turn
     @players.each { |player| player.play_move }
-    game_logic.process_moves(@players)
+    game_logic.process_moves
     reset_players_move
   end
 

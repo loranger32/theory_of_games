@@ -57,15 +57,3 @@ class Player
     rand(0..1) == 0 ? :betrays : :cooperates
   end
 end
-
-
-good_guy = Player.new(name: 'Good guy', behavior: :cooperator)
-bad_guy = Player.new(name: 'Bad guy', behavior: :traitor)
-
-good_guy.play_move
-bad_guy.play_move
-
-p good_guy.cooperates?
-p bad_guy.betrays?
-
-
