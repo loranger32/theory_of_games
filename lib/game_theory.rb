@@ -14,6 +14,9 @@ require_relative 'game_theory/two_player_logic_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 
+MAX_GAIN = 5
+MEDIUM_GAIN = 3
+MIN_GAIN = 0
 
 # Generate Players - Will take options in the future
 player_factory = PlayerFactory.new(Player)

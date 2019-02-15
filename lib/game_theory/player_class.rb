@@ -1,9 +1,5 @@
 class Player
 
-  MAX_GAIN = 5
-  MEDIUM_GAIN = 3
-  MIN_GAIN = 0
-
   attr_reader :name, :behavior, :score, :move
 
   def initialize(name: 'random', behavior: :random)
