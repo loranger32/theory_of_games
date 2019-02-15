@@ -13,6 +13,10 @@ class TurnEngine
     reset_players_move
   end
 
+  def reset_players_score
+    @players.each(&:reset_score)
+  end
+
   private
 
   def reset_players_move

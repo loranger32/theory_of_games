@@ -25,7 +25,10 @@ logic_engine = TwoPlayerLogic.new(players, earning_engine)
 # Engine that process turns - needs the logic engine to know how
 turn_engine = TurnEngine.new(players, logic_engine)
 
+# Engine that generates the reports
+reporter = Reporter.new(players)
+
 # Game can be instantiated with the turn engine
-GameLoop.new(turn_engine).run
+GameLoop.new(turn_engine, reporter).run
 
 at_exit { puts "\nMerci d'avoir joué.".yellow }
