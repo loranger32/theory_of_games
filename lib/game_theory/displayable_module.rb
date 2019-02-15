@@ -20,8 +20,9 @@ module Displayable
     puts "\n#{message}".yellow
   end
 
-  def prompt(message)
-    puts "\n=> #{message}".green
+  def prompt_for_answer(message)
+    puts "#{message}".blue
+    print "> ".blue
   end
 
   def clear_screen
