@@ -1,6 +1,6 @@
 class TurnEngine
   
-  attr_reader :players, :game_logic
+  attr_reader :game_logic
   attr_accessor :players
 
   def initialize(game_logic)
