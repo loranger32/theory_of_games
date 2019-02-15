@@ -1,10 +1,16 @@
 class TurnEngine
   
   attr_reader :players, :game_logic
+  attr_accessor :players
 
-  def initialize(players, game_logic)
-    @players = players
+  def initialize(game_logic)
+    @players = nil
     @game_logic = game_logic
+  end
+
+  def assign_players(players)
+    @players = players
+    game_logic.assign_players(players)
   end
 
   def play_turn

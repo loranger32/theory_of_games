@@ -3,15 +3,20 @@ class GameLoop
 
   TURNS = 3
 
-  def initialize(turn_engine, reporter)
+  attr_reader :players
+
+  def initialize(turn_engine, reporter, player_factory)
     @turn_engine = turn_engine
-    @still_playing = true
     @reporter = reporter
-    @players = []
+    @player_factory = player_factory
+    @players = nil
+    @still_playing = true
   end
 
   def run
     greet
+    create_players
+    assign_players_to_engines
     while still_playing?
       ready_to_play?
       TURNS.times { @turn_engine.play_turn }
@@ -23,16 +28,24 @@ class GameLoop
 
   private
 
-  def still_playing?
-    @still_playing
-  end
-
   def greet
     clear_screen
     titleize('LA THEORIE DES JEUX - SIMULATION')
     print_message "Bienvenue dans cette simulation de la théorie des jeux."
     skip_lines(2)
-    sleep(2)
+  end
+
+  def create_players
+    @players = player_factory.create_players
+  end
+
+  def assign_players_to_engines
+    turn_engine.assign_players(players)
+    reporter.assign_players(players)
+  end
+
+  def still_playing?
+    @still_playing
   end
 
   def display_end_of_turns
@@ -59,4 +72,8 @@ class GameLoop
     end
     @still_playing = false if answer == 'n'
   end
+
+  private
+
+  attr_reader :player_factory, :turn_engine, :reporter, :players
 end

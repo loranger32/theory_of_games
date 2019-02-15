@@ -1,7 +1,14 @@
 class TwoPlayerLogic
-  def initialize(players, earning_engine)
-    @players = players
+  attr_accessor :players
+
+  def initialize(earning_engine)
+    @players = nil
     @earning_engine = earning_engine
+  end
+
+  def assign_players(players)
+    @players = players
+    @earning_engine.assign_players(players)
   end
 
   def process_moves 
