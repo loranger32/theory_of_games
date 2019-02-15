@@ -1,4 +1,6 @@
 class GameLoop
+  include Displayable
+
   TURNS = 3
 
   def initialize(turn_engine, reporter)
@@ -26,11 +28,16 @@ class GameLoop
   end
 
   def greet
-    puts "Bienvenue à la théorie des jeux en pratique\n\n".red
+    clear_screen
+    titleize('LA THEORIE DES JEUX - SIMULATION')
+    print_message "Bienvenue dans cette simulation de la théorie des jeux."
+    skip_lines(2)
+    sleep(2)
   end
 
   def display_end_of_turns
-    puts "Tous les tours ont été joués.\n"
+    print_message "Tous les tours ont été joués."
+    skip_lines(1)
     @reporter.display_game_report
   end
 

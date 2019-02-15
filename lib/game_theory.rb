@@ -5,6 +5,7 @@ require 'bundler'
 require 'bundler/setup'
 Bundler.require(:default, :development)
 
+require_relative 'game_theory/displayable_module'
 require_relative 'game_theory/game_loop_class'
 require_relative 'game_theory/player_class'
 require_relative 'game_theory/player_factory_class'
@@ -12,6 +13,7 @@ require_relative 'game_theory/earning_engine_class'
 require_relative 'game_theory/two_player_logic_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
+
 
 # Generate Players - Will take options in the future
 players = PlayerFactory.new(Player).generate_players
@@ -31,4 +33,12 @@ reporter = Reporter.new(players)
 # Game can be instantiated with the turn engine
 GameLoop.new(turn_engine, reporter).run
 
-at_exit { puts "\nMerci d'avoir joué.".yellow }
+at_exit do
+  # clear_screen
+  # print_message "Fermeture du jeux"
+  # 5.times do
+  #   print '.'.blue
+  #   sleep(0.3)
+  # end
+  print_message "Merci d'avoir joué."
+end

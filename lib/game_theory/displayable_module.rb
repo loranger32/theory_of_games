@@ -9,7 +9,7 @@ module Displayable
     puts line
     puts title
     puts line
-    3.times { puts '' }
+    skip_lines(3)
   end
 
   def print_message(message)
@@ -36,5 +36,9 @@ module Displayable
   def wait_until_ready_to_go_on
     prompt("Prêts ? (appuyer sur une touche pour continuer)")
     gets
+  end
+
+  def skip_lines(number_of_lines_to_skip)
+    number_of_lines_to_skip.times { puts '' }
   end
 end
