@@ -5,6 +5,7 @@ require 'bundler'
 require 'bundler/setup'
 Bundler.require(:default, :development)
 
+require_relative 'game_theory/messages_module'
 require_relative 'game_theory/displayable_module'
 require_relative 'game_theory/game_loop_class'
 require_relative 'game_theory/player_class'
@@ -34,11 +35,5 @@ reporter = Reporter.new(players)
 GameLoop.new(turn_engine, reporter).run
 
 at_exit do
-  # clear_screen
-  # print_message "Fermeture du jeux"
-  # 5.times do
-  #   print '.'.blue
-  #   sleep(0.3)
-  # end
-  print_message "Merci d'avoir joué."
+  Messages.exit_game
 end
