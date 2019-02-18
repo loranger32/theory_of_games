@@ -48,11 +48,13 @@ class PlayerMovesTest < Minitest::Test
 end
 
 class PlayerScoreTest < Minitest::Test
+  # Copy Paste from lib/game_theory.rb, instead of loading it
+  
   def setup
+    @max_gain = MAX_GAIN = 5 
+    @medium_gain = MEDIUM_GAIN = 3
+    @min_gain = MIN_GAIN = 0
     @player = Player.new(name: 'Test Player', behavior: :cooperator)
-    @max_gain = Player::MAX_GAIN
-    @medium_gain = Player::MEDIUM_GAIN
-    @min_gain = Player::MIN_GAIN
   end
 
   def check_score_is_zero
