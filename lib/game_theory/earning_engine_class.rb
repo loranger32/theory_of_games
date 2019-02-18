@@ -1,4 +1,7 @@
 class EarningEngine
+
+  attr_reader :players
+  
   def initialize
     @players = nil
   end
@@ -22,9 +25,4 @@ class EarningEngine
   def give_max_earning_to(traitor)
     traitor.earn_max
   end
-
-  private
-
-  attr_reader :players
-
 end
