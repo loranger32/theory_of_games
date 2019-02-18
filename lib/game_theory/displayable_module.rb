@@ -21,7 +21,8 @@ module Displayable
   end
 
   def prompt(message)
-    puts "\n=> #{message}".green
+    puts "#{message}".green
+    print '=> '
   end
 
   def clear_screen
