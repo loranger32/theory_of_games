@@ -1,5 +1,9 @@
 class EarningEngine
-  def initialize(players)
+  def initialize
+    @players = nil
+  end
+
+  def assign_players(players)
     @players = players
   end
 

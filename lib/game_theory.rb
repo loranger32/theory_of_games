@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
 require 'bundler'
 require 'bundler/setup'
 Bundler.require(:default, :development)
@@ -15,24 +14,27 @@ require_relative 'game_theory/two_player_logic_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 
+MAX_GAIN = 5
+MEDIUM_GAIN = 3
+MIN_GAIN = 0
 
 # Generate Players - Will take options in the future
-players = PlayerFactory.new(Player).generate_players
+player_factory = PlayerFactory.new(Player)
 
 # Rules for granting earnings - acts on players instances
-earning_engine = EarningEngine.new(players)
+earning_engine = EarningEngine.new
 
 # Game logic - needs acces to the earning engine to grant earnings
-logic_engine = TwoPlayerLogic.new(players, earning_engine)
+logic_engine = TwoPlayerLogic.new(earning_engine)
 
 # Engine that process turns - needs the logic engine to know how
-turn_engine = TurnEngine.new(players, logic_engine)
+turn_engine = TurnEngine.new(logic_engine)
 
 # Engine that generates the reports
-reporter = Reporter.new(players)
+reporter = Reporter.new
 
 # Game can be instantiated with the turn engine
-GameLoop.new(turn_engine, reporter).run
+GameLoop.new(turn_engine, reporter, player_factory).run
 
 at_exit do
   Messages.exit_game
