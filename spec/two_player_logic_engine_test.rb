@@ -11,7 +11,22 @@ class TwoPlayerLogicTest < Minitest::Test
   def setup
     @players = create_players_mock
     @earning_engine = Minitest::Mock.new
-    @logic_engine = TwoPlayerLogic.new(@players, @earning_engine)
+    @earning_engine.expect(:assign_players, nil, [@players])
+    @logic_engine = TwoPlayerLogic.new(@earning_engine)
+    @logic_engine.assign_players(@players)
+  end
+
+  def test_it_has_a_players_attributes_set_to_nil_on_instantiation
+    assert_equal nil, TwoPlayerLogic.new(@earning_engine).send(:players)
+  end
+
+  def test_it_assigns_players_to_self
+    assert_equal @players, @logic_engine.send(:players)
+  end
+
+  def test_it_assigns_players_to_earning_engine
+    # assignment occurs in setup - simply verify it here
+    @earning_engine.verify
   end
 
   def test_process_move_give_all_players_medium_amount_if_they_cooperate

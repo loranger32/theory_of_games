@@ -1,6 +1,4 @@
 class TwoPlayerLogic
-  attr_accessor :players
-
   def initialize(earning_engine)
     @players = nil
     @earning_engine = earning_engine
