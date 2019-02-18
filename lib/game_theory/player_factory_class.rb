@@ -12,10 +12,10 @@ class PlayerFactory
   end
 
   def ask_how_many_players_will_play
-    prompt_for_answer("Combie de joueur voulez-vous (1 - 9) ?")
+    prompt("Combien de joueur voulez-vous (2 - 9) ?")
     choice = gets.chomp
-    until choice.match?(/\A[1-9]\z/)
-      prompt_for_answer("Valeur incorrecte. Choisissez un chiffre (1 - 9)")
+    until choice.match?(/\A[2-9]\z/)
+      prompt("Valeur incorrecte. Choisissez un chiffre (2 - 9)")
       choice = gets.chomp
     end
     choice.to_i
@@ -34,17 +34,17 @@ class PlayerFactory
   def choose_player_name(player_number)
     question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
  pour un nom par défaut:"
-    prompt_for_answer(question)
+    prompt(question)
     choice = gets.chomp
     choice == '' ? player_class.random_name : choice
   end
 
   def choose_player_behavior
     question = "Choisissez le type ce comportement pour le joueur:"
-    prompt_for_answer("- naif (n)\n- traitre (t)\n- au hasard (h)")
+    prompt("- naif (n)\n- traitre (t)\n- au hasard (h)")
     choice = gets.chomp
     until %w[n t h].include?(choice)
-      prompt_for_answer("Choix incorrect, veuillez choisir 'n', 't ou 'h'.")
+      prompt("Choix incorrect, veuillez choisir 'n', 't ou 'h'.")
       choice = gets.chomp
     end
     case choice

@@ -1,6 +1,6 @@
 # A utils module to be included in game_loop_class but defined separately for clarity
 module Displayable
-  SCREEN_WIDTH = 135
+  SCREEN_WIDTH = 100
 
   def titleize(title)
     title_size = title.size
@@ -22,7 +22,7 @@ module Displayable
 
   def prompt(message)
     puts "#{message}".green
-    print '=> '
+    print '=> '.green
   end
 
   def clear_screen
