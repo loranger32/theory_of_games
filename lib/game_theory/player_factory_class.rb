@@ -1,8 +1,9 @@
 class PlayerFactory
   include Displayable
 
-  def initialize(player_class)
+  def initialize(player_class, score_class)
     @player_class = player_class
+    @score_class = score_class
   end
 
   def create_players
@@ -26,7 +27,7 @@ class PlayerFactory
     number_of_players.times do |index|
       name = choose_player_name(index + 1)
       behavior = choose_player_behavior
-      players << @player_class.new(name: name, behavior: behavior)
+      players << @player_class.new(@score_class.new, name: name, behavior: behavior)
     end
     players
   end

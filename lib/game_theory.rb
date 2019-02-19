@@ -6,6 +6,7 @@ Bundler.require(:default, :development)
 
 require_relative 'game_theory/messages_module'
 require_relative 'game_theory/displayable_module'
+require_relative 'game_theory/score_class'
 require_relative 'game_theory/game_loop_class'
 require_relative 'game_theory/player_class'
 require_relative 'game_theory/player_factory_class'
@@ -19,7 +20,7 @@ MEDIUM_GAIN = 3
 MIN_GAIN = 0
 
 # Generate Players - Will take options in the future
-player_factory = PlayerFactory.new(Player)
+player_factory = PlayerFactory.new(Player, Score)
 
 # Rules for granting earnings - acts on players instances
 earning_engine = EarningEngine.new
