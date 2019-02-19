@@ -1,5 +1,5 @@
+# The classic player class
 class Player
-
   attr_reader :name, :behavior, :move
 
   def initialize(score, name: 'random', behavior: :random)
@@ -54,6 +54,6 @@ class Player
   private
 
   def choose_random_move
-    rand(0..1) == 0 ? :betrays : :cooperates
+    rand(0..1).zero? ? :betrays : :cooperates
   end
 end

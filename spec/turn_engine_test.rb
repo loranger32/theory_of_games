@@ -33,7 +33,7 @@ class TurnEngineTest < Minitest::Test
   def test_play_turn_method_actually_play_the_whole_turn
     @game_logic.expect(:assign_players, nil, [@players])
     @turn_engine.assign_players(@players)
-    
+
     @players.each do |player|
       player.expect(:play_move, nil)
       player.expect(:reset_move, nil)
@@ -49,7 +49,7 @@ class TurnEngineTest < Minitest::Test
   def test_it_can_reset_player_scores
     @game_logic.expect(:assign_players, nil, [@players])
     @turn_engine.assign_players(@players)
-    
+
     @players.each { |player| player.expect(:reset_score, nil) }
     @turn_engine.reset_players_score
     @players.each(&:verify)

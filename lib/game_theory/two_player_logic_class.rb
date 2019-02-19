@@ -1,3 +1,4 @@
+# Class holding the rules of the game
 class TwoPlayerLogic
   def initialize(earning_engine)
     @players = nil
@@ -9,7 +10,7 @@ class TwoPlayerLogic
     @earning_engine.assign_players(players)
   end
 
-  def process_moves 
+  def process_moves
     if all_players_cooperate?
       earning_engine.give_each_player_medium_earning
     elsif all_players_betray?
@@ -17,9 +18,8 @@ class TwoPlayerLogic
     elsif one_traitor_and_one_naive?
       pay_max_to_traitor_and_min_to_naive
     else
-      err_msg = "Something went wrong : invalid moves combinaison - unable to\
- to define earnings."
-      raise StandardError, err_msg
+      raise StandardError, 'Something went wrong : invalid moves combinaison - \
+ unable to define earnings.'
     end
   end
 
@@ -49,9 +49,5 @@ class TwoPlayerLogic
     [winner, loser]
   end
 
-  private
-
   attr_reader :players, :earning_engine
 end
-
-

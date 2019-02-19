@@ -1,5 +1,5 @@
+# The engine responsible for manging turns
 class TurnEngine
-  
   attr_reader :game_logic, :players
 
   def initialize(game_logic)
@@ -13,7 +13,7 @@ class TurnEngine
   end
 
   def play_turn
-    @players.each { |player| player.play_move }
+    @players.each(&:play_move)
     game_logic.process_moves
     reset_players_move
   end

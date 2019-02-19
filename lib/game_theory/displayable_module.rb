@@ -1,10 +1,11 @@
-# A utils module to be included in game_loop_class but defined separately for clarity
+# A utils module to be included in game_loop_class but defined separately for
+# clarity
 module Displayable
   SCREEN_WIDTH = 100
 
   def titleize(title)
     title_size = title.size
-    line = ("*" * (title_size + 10)).blue.center(SCREEN_WIDTH)
+    line = ('*' * (title_size + 10)).blue.center(SCREEN_WIDTH)
     title = title.red.center(SCREEN_WIDTH)
     puts line
     puts title
@@ -21,7 +22,7 @@ module Displayable
   end
 
   def prompt(message)
-    puts "#{message}".green
+    puts message.to_s.green
     print '=> '.green
   end
 
@@ -35,7 +36,7 @@ module Displayable
   end
 
   def wait_until_ready_to_go_on
-    prompt("Prêts ? (appuyer sur une touche pour continuer)")
+    prompt('Prêts ? (appuyer sur une touche pour continuer)')
     gets
   end
 

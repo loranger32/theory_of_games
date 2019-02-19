@@ -43,7 +43,7 @@ class PlayerMovesTest < Minitest::Test
     @players.map(&:play_move)
     assert_equal :cooperates, @good_guy.move
     assert_equal :betrays, @bad_guy.move
-    assert_includes [:betrays, :cooperates], @random_guy.move
+    assert_includes %I[betrays cooperates], @random_guy.move
   end
 
   def test_player_move_can_be_reset_to_nil

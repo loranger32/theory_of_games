@@ -1,7 +1,7 @@
+# The class that handles the earning rules
 class EarningEngine
-
   attr_reader :players
-  
+
   def initialize
     @players = nil
   end

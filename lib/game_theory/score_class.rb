@@ -1,3 +1,4 @@
+# Class to manage and remeber score of players
 class Score
   MIN_GAIN    = 0
   MEDIUM_GAIN = 3

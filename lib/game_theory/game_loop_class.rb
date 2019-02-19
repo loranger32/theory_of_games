@@ -1,3 +1,4 @@
+# Main Game Loop
 class GameLoop
   include Displayable
 
@@ -31,7 +32,7 @@ class GameLoop
   def greet
     clear_screen
     titleize('LA THEORIE DES JEUX - SIMULATION')
-    print_message "Bienvenue dans cette simulation de la théorie des jeux."
+    print_message 'Bienvenue dans cette simulation de la théorie des jeux.'
     skip_lines(2)
   end
 
@@ -49,13 +50,13 @@ class GameLoop
   end
 
   def display_end_of_turns
-    print_message "Tous les tours ont été joués."
+    print_message 'Tous les tours ont été joués.'
     skip_lines(1)
     @reporter.display_game_report
   end
 
   def ready_to_play?
-    puts "Prêt à lancer le jeu ? (pressez une touche pour continuer)".blue
+    puts 'Prêt à lancer le jeu ? (pressez une touche pour continuer)'.blue
     gets.chomp
   end
 
@@ -64,16 +65,14 @@ class GameLoop
   end
 
   def play_again?
-    puts "On refait un essai (o/n) ?"
+    puts 'On refait un essai (o/n) ?'
     answer = gets.chomp.downcase
-    until ['o', 'n'].include?(answer)
+    until %w[o n].include?(answer)
       puts "Je n'ai pas compris. Veuillez choisir 'o' ou 'n'."
       answer = gets.chomp.downcase
     end
     @still_playing = false if answer == 'n'
   end
 
-  private
-
-  attr_reader :player_factory, :turn_engine, :reporter, :players
+  attr_reader :player_factory, :turn_engine, :reporter
 end

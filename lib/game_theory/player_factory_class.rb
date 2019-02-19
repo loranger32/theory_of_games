@@ -1,3 +1,4 @@
+# A class to generate the players
 class PlayerFactory
   include Displayable
 
@@ -15,10 +16,10 @@ class PlayerFactory
   private
 
   def ask_how_many_players_will_play
-    prompt("Combien de joueur voulez-vous (2 - 9) ?")
+    prompt('Combien de joueurs voulez-vous (2 - 9) ?')
     choice = gets.chomp
     until choice.match?(/\A[2-9]\z/)
-      prompt("Valeur incorrecte. Choisissez un chiffre (2 - 9)")
+      prompt('Valeur incorrecte. Choisissez un chiffre (2 - 9)')
       choice = gets.chomp
     end
     choice.to_i
@@ -29,7 +30,8 @@ class PlayerFactory
     number_of_players.times do |index|
       name = choose_player_name(index + 1)
       behavior = choose_player_behavior
-      players << @player_class.new(@score_class.new, name: name, behavior: behavior)
+      players << @player_class.new(@score_class.new, name: name,
+                                                     behavior: behavior)
     end
     players
   end
@@ -43,13 +45,7 @@ class PlayerFactory
   end
 
   def choose_player_behavior
-    question = "Choisissez le type ce comportement pour le joueur:"
-    prompt("- naif (n)\n- traitre (t)\n- au hasard (h)")
-    choice = gets.chomp
-    until %w[n t h].include?(choice)
-      prompt("Choix incorrect, veuillez choisir 'n', 't ou 'h'.")
-      choice = gets.chomp
-    end
+    choice = ask_behavior_to_player
     case choice
     when 'n' then :cooperator
     when 't' then :traitor
@@ -57,5 +53,16 @@ class PlayerFactory
     else
       raise StandardError, "Impossible de gérer votre choix: #{choice}."
     end
+  end
+
+  def ask_behavior_to_player
+    question = 'Choisissez le type ce comportement pour le joueur: \n'
+    prompt(question + "- naif (n)\n- traitre (t)\n- au hasard (h)")
+    choice = gets.chomp
+    until %w[n t h].include?(choice)
+      prompt("Choix incorrect, veuillez choisir 'n', 't ou 'h'.")
+      choice = gets.chomp
+    end
+    choice
   end
 end
