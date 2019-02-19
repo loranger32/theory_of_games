@@ -3,14 +3,16 @@ class PlayerFactory
 
   def initialize(player_class, score_class)
     @player_class = player_class
-    @score_class = score_class
+    @score_class  = score_class
   end
 
   def create_players
     number_of_players = ask_how_many_players_will_play
-    players = create_player_times(number_of_players)
+    players           = create_player_times(number_of_players)
     players
   end
+
+  private
 
   def ask_how_many_players_will_play
     prompt("Combien de joueur voulez-vous (2 - 9) ?")
