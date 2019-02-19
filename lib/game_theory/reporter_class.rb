@@ -14,4 +14,8 @@ class Reporter
     puts ''
     puts '*' * 30
   end
+  
+  private
+
+  attr_reader :players
 end
