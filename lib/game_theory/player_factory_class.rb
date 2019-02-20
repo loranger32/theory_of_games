@@ -49,7 +49,7 @@ class PlayerFactory
   end
 
   def ask_behavior_to_player
-    question = 'Choisissez le type ce comportement pour le joueur: \n'
+    question = "Choisissez le type ce comportement pour le joueur: \n"
     prompt(question + "- naif (n)\n- traitre (t)\n- au hasard (h)")
     choice = gets.chomp
     until %w[n t h].include?(choice)
