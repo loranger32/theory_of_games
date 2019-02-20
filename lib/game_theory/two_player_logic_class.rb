@@ -18,8 +18,8 @@ class TwoPlayerLogic
     elsif one_traitor_and_one_naive?
       pay_max_to_traitor_and_min_to_naive
     else
-      raise StandardError, 'Something went wrong : invalid moves combinaison - \
- unable to define earnings.'
+      raise StandardError, "Something went wrong : invalid moves combinaison -\
+ unable to define earnings."
     end
   end
 
