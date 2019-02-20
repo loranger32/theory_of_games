@@ -11,7 +11,7 @@ class Player
 
   def play_move
     @move = case @behavior
-            when :cooperator then :cooperates
+            when :naive      then :cooperates
             when :traitor    then :betrays
             when :random     then choose_random_move
             else

@@ -11,8 +11,11 @@ class BehaviorEngine
   def choose_player_behavior
     choice = ask_behavior_to_player
     behavior = behaviors_list[choice]
+
     raise StandardError, "Impossible de gérer votre choix: #{choice}." if\
       behavior.nil?
+    
+    behavior
   end
 
   private
