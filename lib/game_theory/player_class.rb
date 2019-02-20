@@ -1,7 +1,7 @@
 # The classic player class
 class Player
   attr_reader :name, :behavior, :move
-
+  
   def initialize(score, name: 'random', behavior: :random)
     @score = score
     @name = name

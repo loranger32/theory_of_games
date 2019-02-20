@@ -2,9 +2,10 @@
 class PlayerFactory
   include Displayable
 
-  def initialize(player_class, score_class)
-    @player_class = player_class
-    @score_class  = score_class
+  def initialize(player_class, score_class, name_engine)
+    @player_class      = player_class
+    @score_class       = score_class
+    @name_engine = name_engine
   end
 
   def create_players
@@ -28,20 +29,12 @@ class PlayerFactory
   def create_player_times(number_of_players)
     players = []
     number_of_players.times do |index|
-      name = choose_player_name(index + 1)
+      name = @name_engine.choose_player_name(index + 1)
       behavior = choose_player_behavior
       players << @player_class.new(@score_class.new, name: name,
                                                      behavior: behavior)
     end
     players
-  end
-
-  def choose_player_name(player_number)
-    question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
- pour un nom par défaut:"
-    prompt(question)
-    choice = gets.chomp
-    choice == '' ? player_class.random_name : choice
   end
 
   def choose_player_behavior
