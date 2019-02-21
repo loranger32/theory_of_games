@@ -33,7 +33,7 @@ class PlayerFactory
     prompt('Combien de joueurs voulez-vous (2 - 9) ?')
     pattern = /\A[2-9]\z/
 
-    choice = obtain_a_valid_input_from_pattern(pattern)
+    choice = obtain_a_valid_input_from(pattern)
     choice.to_i
   end
 end
