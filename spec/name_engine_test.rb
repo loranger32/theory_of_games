@@ -29,9 +29,9 @@ class NameEngineTest < Minitest::Test
 
   def test_it_can_choose_random_name
     @name_engine.input = StringIO.new('')
-    #capture_io do
+    capture_io do
       result = @name_engine.choose_player_name(1)
       assert_includes RANDOM_TEST_NAMES, result
-    #end
+    end
   end
 end
