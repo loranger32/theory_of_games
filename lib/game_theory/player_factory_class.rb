@@ -7,24 +7,23 @@ class PlayerFactory
 
   def initialize(player_class, score_class, name_engine, behavior_engine)
     Displayable.set_io_variables_on(self)
-    @player_class    = player_class
-    @score_class     = score_class
-    @name_engine     = name_engine
-    @behavior_engine = behavior_engine
-    @players         = []
+    @player_class     = player_class
+    @score_class      = score_class
+    @name_engine      = name_engine
+    @behavior_engine  = behavior_engine
+    @players          = []
   end
 
   def create_players
-    number_of_players = ask_number_of_players_to_create
-    
-    1.upto(number_of_players) do |player_number|
-      name = @name_engine.choose_player_name(player_number)
-      behavior = @behavior_engine.choose_player_behavior
-      players << @player_class.new(@score_class.new, name: name,
-                                                     behavior: behavior)
+    until @choice_confirmed
+      number_of_players = ask_number_of_players_to_create
+      collect_data_for_player_creation(number_of_players)
+      if confirm_players?
+        break players
+      else
+        collect_data_again
+      end
     end
-    
-    players
   end
 
   private
@@ -35,5 +34,32 @@ class PlayerFactory
 
     choice = obtain_a_valid_input_from(pattern)
     choice.to_i
+  end
+
+  def collect_data_for_player_creation(number_of_players)
+    1.upto(number_of_players) do |player_number|
+      name = @name_engine.choose_player_name(player_number)
+      behavior = @behavior_engine.choose_player_behavior
+      players << @player_class.new(@score_class.new, name: name,
+                                                     behavior: behavior)
+    end
+  end
+
+  def confirm_players?
+    clear_screen
+    print_message("Vous avez choisi les joueurs suivant:")
+    @players.each_with_index do |player, index|
+      print_message("Joueur #{index + 1}")
+      print_message(player)
+    end
+    prompt("Confirmerz_vous ce choix ? (o/n)")
+    pattern = %w(o n)
+    choice = obtain_a_valid_input_from(pattern)
+    choice == 'o'
+  end
+
+  def collect_data_again
+    @players = []
+    print_message("Ok, on recommence.")
   end
 end

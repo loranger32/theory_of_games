@@ -51,6 +51,17 @@ class Player
     @score.reset!
   end
 
+  def display
+    puts self
+  end
+
+  def to_s
+    <<~PLAYER
+    Nom: #{name}
+    Comportement: #{behavior}
+    PLAYER
+  end
+
   private
 
   def choose_random_move
