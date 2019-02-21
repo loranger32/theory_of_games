@@ -33,7 +33,7 @@ end
 class PlayerMovesTest < Minitest::Test
   def setup
     @score = Minitest::Mock.new
-    @good_guy = Player.new(@score, name: 'Test Good Guy', behavior: :cooperator)
+    @good_guy = Player.new(@score, name: 'Test Good Guy', behavior: :naive)
     @bad_guy = Player.new(@score, name: 'Test Bad Guy', behavior: :traitor)
     @random_guy = Player.new(@score, name: 'Test Random Guy', behavior: :random)
     @players = [@good_guy, @bad_guy, @random_guy]
