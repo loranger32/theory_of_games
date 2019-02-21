@@ -1,8 +1,6 @@
 class BehaviorEngine
   include Displayable
 
-  attr_reader :behaviors_list, :valid_choices
-
   def initialize(behaviors_list)
     @behaviors_list = behaviors_list
     @valid_choices = behaviors_list.keys
@@ -19,6 +17,8 @@ class BehaviorEngine
   end
 
   private
+
+  attr_reader :behaviors_list, :valid_choices
 
   def ask_behavior_to_player
     question = <<~QUESTION
