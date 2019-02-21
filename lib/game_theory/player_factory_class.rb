@@ -1,10 +1,12 @@
 # A class to generate the players
 class PlayerFactory
   include Displayable
+  include Validable
 
   attr_reader :players
 
   def initialize(player_class, score_class, name_engine, behavior_engine)
+    Displayable.set_io_variables_on(self)
     @player_class    = player_class
     @score_class     = score_class
     @name_engine     = name_engine
@@ -29,11 +31,9 @@ class PlayerFactory
 
   def ask_number_of_players_to_create
     prompt('Combien de joueurs voulez-vous (2 - 9) ?')
-    choice = gets.chomp
-    until choice.match?(/\A[2-9]\z/)
-      prompt('Valeur incorrecte. Choisissez un chiffre (2 - 9)')
-      choice = gets.chomp
-    end
+    pattern = /\A[2-9]\z/
+
+    choice = obtain_a_valid_input_from_pattern(pattern)
     choice.to_i
   end
 end
