@@ -1,3 +1,5 @@
+require 'colorize'
+
 # A utils module to be included in game_loop_class but defined separately for
 # clarity
 module Displayable
@@ -5,7 +7,7 @@ module Displayable
 
   attr_accessor :input, :output
 
-  def self.set_io_variables(object)
+  def self.set_io_variables_on(object)
     object.input = $stdin
     object.output = $stdout
   end

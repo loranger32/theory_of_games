@@ -1,8 +1,9 @@
+class CustomError < StandardError; end
+
 class BehaviorEngine
   include Displayable
 
   def initialize(behaviors_list)
-    Displayable.set_io_variables(self)
     @behaviors_list = behaviors_list
     @valid_choices = behaviors_list.keys
   end
@@ -11,7 +12,7 @@ class BehaviorEngine
     choice = ask_behavior_to_player
     behavior = behaviors_list[choice]
 
-    raise StandardError, "Impossible de gérer votre choix: #{choice}." if\
+    raise CustomError, "Impossible de gérer votre choix: #{choice}." if\
       behavior.nil?
     
     behavior
