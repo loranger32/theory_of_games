@@ -1,19 +1,20 @@
-# Class responsible for name choice, both cutsom and random
+# Class responsible for name choice, both custom and random
 class NameEngine
   include Displayable
 
   def initialize(random_name_list)
+    Displayable.set_io_variables_on(self)
     @random_names = random_name_list
     @choosen_names = []
   end
   
   def choose_player_name(player_number)
     name = ask_player_choice(player_number)
-    if name == ''
+    if name == nil
       pick_random_name
     else
       name = ensure_uniqueness_of(name)
-      store_and_return_name(name)
+      store_and_return_name(name.chomp)
     end
   end
 
@@ -35,13 +36,13 @@ class NameEngine
     question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
  pour un nom par défaut:"
     prompt(question)
-    choice = gets.chomp
+    input.gets
   end
 
   def ensure_uniqueness_of(name)
     while choosen_names.include?(name)
       prompt("Le nom #{name} est déjà pris, choisissez en un nouveau")
-      name = gets.chomp
+      name = input.gets
     end
     name
   end

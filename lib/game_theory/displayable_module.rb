@@ -5,12 +5,16 @@ require 'colorize'
 module Displayable
   SCREEN_WIDTH = 100
 
-  attr_accessor :input, :output
-
+  # Method to be called in the initialize method of classes that implement
+  # the module, in order to perform the tests with custom StringIO objects
   def self.set_io_variables_on(object)
     object.input = $stdin
     object.output = $stdout
   end
+
+  # Accessors to use the $stdin and $stdout objects in the instances of the
+  # including class
+  attr_accessor :input, :output
 
   def titleize(title)
     title_size = title.size
