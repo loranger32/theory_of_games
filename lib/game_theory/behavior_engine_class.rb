@@ -2,6 +2,7 @@ class BehaviorEngine
   include Displayable
 
   def initialize(behaviors_list)
+    Displayable.set_io_variables(self)
     @behaviors_list = behaviors_list
     @valid_choices = behaviors_list.keys
   end
@@ -32,10 +33,10 @@ class BehaviorEngine
 
     prompt(question)
 
-    choice = gets.chomp
+    choice = input.gets.chomp
     until valid_choices.include?(choice)
       prompt("Choix incorrect, veuillez choisir #{valid_choices.join(', ')}.")
-      choice = gets.chomp
+      choice = input.gets.chomp
     end
     choice
   end

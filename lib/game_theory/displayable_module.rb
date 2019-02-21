@@ -3,6 +3,13 @@
 module Displayable
   SCREEN_WIDTH = 100
 
+  attr_accessor :input, :output
+
+  def self.set_io_variables(object)
+    object.input = $stdin
+    object.output = $stdout
+  end
+
   def titleize(title)
     title_size = title.size
     line = ('*' * (title_size + 10)).blue.center(SCREEN_WIDTH)
