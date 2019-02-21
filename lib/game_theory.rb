@@ -7,6 +7,7 @@ Bundler.require(:default, :development)
 
 require_relative 'game_theory/messages_module'
 require_relative 'game_theory/displayable_module'
+require_relative 'game_theory/validable_module'
 require_relative 'game_theory/score_class'
 require_relative 'game_theory/name_engine_class'
 require_relative 'game_theory/behavior_engine_class'

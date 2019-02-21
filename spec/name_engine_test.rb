@@ -1,6 +1,7 @@
 require 'pry'
 require_relative 'spec_helpers'
 require_relative '../lib/game_theory/displayable_module'
+require_relative '../lib/game_theory/validable_module'
 require_relative '../lib/game_theory/name_engine_class'
 
 class NameEngineTest < Minitest::Test
@@ -28,9 +29,9 @@ class NameEngineTest < Minitest::Test
 
   def test_it_can_choose_random_name
     @name_engine.input = StringIO.new('')
-    capture_io do
+    #capture_io do
       result = @name_engine.choose_player_name(1)
       assert_includes RANDOM_TEST_NAMES, result
-    end
+    #end
   end
 end

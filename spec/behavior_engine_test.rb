@@ -1,6 +1,7 @@
 require 'pry'
 require_relative 'spec_helpers'
 require_relative '../lib/game_theory/displayable_module'
+require_relative '../lib/game_theory/validable_module'
 require_relative '../lib/game_theory/behavior_engine_class'
 
 class BehaviorEngineTest < Minitest::Test

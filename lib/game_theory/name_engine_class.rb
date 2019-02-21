@@ -1,6 +1,7 @@
 # Class responsible for name choice, both custom and random
 class NameEngine
   include Displayable
+  include Validable
 
   def initialize(random_name_list)
     Displayable.set_io_variables_on(self)
@@ -10,7 +11,9 @@ class NameEngine
   
   def choose_player_name(player_number)
     name = ask_player_choice(player_number)
-    if name == nil
+
+    # The comparison with nil is needed for the tests
+    if name == '' || name.nil?
       pick_random_name
     else
       name = ensure_uniqueness_of(name)
@@ -36,7 +39,7 @@ class NameEngine
     question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
  pour un nom par défaut:"
     prompt(question)
-    input.gets
+    retrieve_input
   end
 
   def ensure_uniqueness_of(name)
