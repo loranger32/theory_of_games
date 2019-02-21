@@ -13,19 +13,21 @@ class PlayerFactory
   end
 
   def create_players
-    number_of_players = ask_how_many_players_will_play
-    number_of_players.times do |index|
-      name = @name_engine.choose_player_name(index + 1)
+    number_of_players = ask_number_of_players_to_create
+    
+    1.upto(number_of_players) do |player_number|
+      name = @name_engine.choose_player_name(player_number)
       behavior = @behavior_engine.choose_player_behavior
       players << @player_class.new(@score_class.new, name: name,
                                                      behavior: behavior)
     end
+    
     players
   end
 
   private
 
-  def ask_how_many_players_will_play
+  def ask_number_of_players_to_create
     prompt('Combien de joueurs voulez-vous (2 - 9) ?')
     choice = gets.chomp
     until choice.match?(/\A[2-9]\z/)
