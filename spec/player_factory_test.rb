@@ -1,7 +1,7 @@
 require_relative 'spec_helpers'
 require_relative '../lib/game_theory/displayable_module'
 require_relative '../lib/game_theory/player_factory_class'
-require 'pry'
+
 class PlayerFactory
   def ask_number_of_players_to_create
     2
