@@ -1,5 +1,7 @@
 # Class to format results of games and turns
 class Reporter
+  include Displayable
+
   def initialize
     @players = nil
   end
