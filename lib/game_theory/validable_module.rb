@@ -19,11 +19,8 @@ module Validable
   def obtain_a_valid_input_from_list(valid_choices_list)
     choice = retrieve_input
 
-    until HelperMethods.valid_choice?(choice, valid_choices_list)
-      print_error_message("Choix invalide !")
-      print_error_message("Les choix valides sont:")
-      print_error_message(valid_choices_list.join(', ') + '.')
-      prompt("Quel est votre choix ?")
+    until valid_choices_list.include?(choice.downcase)
+      HelperMethods.display_invalid_choice_from_list(valid_choices_list)
       choice = retrieve_input.downcase
     end
     choice
@@ -32,9 +29,8 @@ module Validable
   def obtain_a_valid_input_from_regexp(valid_pattern)
     choice = retrieve_input
 
-    until HelperMethods.valid_pattern?(choice, valid_pattern)
-      print_error_message("Choix invalide !")
-      prompt("Quel est votre choix ?")
+    until choice.match?(valid_pattern)
+      HelperMethods.display_invalid_choice_from_regexp(valid_pattern)
       choice = retrieve_input.downcase
     end
     choice
@@ -46,19 +42,18 @@ module Validable
   end
 
   module HelperMethods
-    def self.valid_choice?(choice, valid_choices_list)
-      unless valid_choices_list.is_a?(Array)
-        raise ArgumentError, "Valid_choices_list must be an Array,\
- was a #{valid_choices_list.class}."
-      end
-      valid_choices_list.include?(choice.downcase)
+    extend Displayable
+
+    def self.display_invalid_choice_from_list(valid_choices_list)
+      print_error_message("Choix invalide !")
+      print_error_message("Les choix valides sont:")
+      print_error_message(valid_choices_list.join(', ') + '.')
+      prompt("Quel est votre choix ?")
     end
 
-    def self.valid_pattern?(choice, valid_pattern)
-      raise ArgumentError, "valid_pattern must be a Regexp, was a\
- #{valid_pattern.class}." unless valid_pattern.is_a?(Regexp)
-
-      choice.match?(valid_pattern)
+    def self.display_invalid_choice_from_regexp(valid_pattern)
+      print_error_message("Choix invalide !")
+      prompt("Quel est votre choix ?")
     end
   end
 end
