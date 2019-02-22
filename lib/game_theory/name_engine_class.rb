@@ -3,7 +3,8 @@ class NameEngine
   include Displayable
   include Validable
 
-  NAME_PATTERN = /\A[\w+]|\n\z/.freeze
+  # Allow word characters, a new line or an empty string
+  NAME_PATTERN = /\A[\w+]|\n|\z/.freeze
 
   def initialize(random_name_list)
     Displayable.set_io_variables_on(self)

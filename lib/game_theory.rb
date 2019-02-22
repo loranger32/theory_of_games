@@ -19,6 +19,8 @@ require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 require_relative 'game_theory/game_loop_class'
 
+MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
+
 # generate the name engine instance
 random_names = YAML.load_file('./data/random_names.yaml')
 name_engine = NameEngine.new(random_names)

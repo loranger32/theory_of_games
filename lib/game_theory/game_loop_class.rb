@@ -31,7 +31,7 @@ class GameLoop
 
   def greet
     clear_screen
-    titleize('LA THEORIE DES JEUX - SIMULATION')
+    titleize(MAIN_TITLE)
     print_message 'Bienvenue dans cette simulation de la théorie des jeux.'
     skip_lines(2)
   end

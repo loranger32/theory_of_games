@@ -30,8 +30,8 @@ module Validable
     # TODO
     # comparison with nil is required for the tests - Needs to be fixed
     until  choice.nil? || choice.match?(valid_pattern)
-      HelperMethods.display_invalid_choice_from_regexp(valid_pattern)
-      choice = retrieve_input.downcase
+      HelperMethods.display_invalid_choice_from_regexp
+      choice = retrieve_input
     end
     choice
   end
@@ -52,9 +52,8 @@ module Validable
       prompt('Quel est votre choix ?')
     end
 
-    def self.display_invalid_choice_from_regexp(valid_pattern)
+    def self.display_invalid_choice_from_regexp
       print_error_message('Choix invalide !')
-      print_error_message("Modèle à respecter: #{valid_pattern}")
       prompt('Quel est votre choix ?')
     end
   end
