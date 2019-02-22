@@ -1,6 +1,7 @@
 # A module for all sort of input validation
-# Must be included with Displayable or in a class that add special accessors
+# Must be included with Displayable which adds special accessors
 # and instance variable 'input' and 'output' to reference $stdin and $stdout
+# AND extends the HelperMethods submodule
 module Validable
 
 # ========== Generic input validation mechanism ==========

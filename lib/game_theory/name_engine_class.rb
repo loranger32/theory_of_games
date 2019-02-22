@@ -3,6 +3,8 @@ class NameEngine
   include Displayable
   include Validable
 
+  NAME_PATTERN = /\A[\w+]|\n\z]|/
+
   def initialize(random_name_list)
     Displayable.set_io_variables_on(self)
     @random_names = random_name_list
@@ -39,7 +41,7 @@ class NameEngine
     question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
  pour un nom par défaut:"
     prompt(question)
-    retrieve_input
+    obtain_a_valid_input_from(NAME_PATTERN)
   end
 
   def ensure_uniqueness_of(name)
