@@ -5,7 +5,7 @@ require_relative '../lib/game_theory/validable_module'
 require_relative '../lib/game_theory/name_engine_class'
 
 class NameEngineTest < Minitest::Test
-  RANDOM_TEST_NAMES = %w[alex bert iris ann lolo evan mike larry moe]
+  RANDOM_TEST_NAMES = %w[alex bert iris ann lolo evan mike larry moe].freeze
 
   def setup
     @name_engine = NameEngine.new(RANDOM_TEST_NAMES)
@@ -20,10 +20,10 @@ class NameEngineTest < Minitest::Test
   end
 
   def test_it_can_choose_custom_player_name
-    @name_engine.input = StringIO.new("Roger")
+    @name_engine.input = StringIO.new('Roger')
     capture_io do
       result = @name_engine.choose_player_name(1)
-      assert_equal "Roger", result
+      assert_equal 'Roger', result
     end
   end
 

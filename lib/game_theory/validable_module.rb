@@ -4,8 +4,6 @@
 # AND extends the HelperMethods submodule
 module Validable
 
-# ========== Generic input validation mechanism ==========
-
   def obtain_a_valid_input_from(pattern)
     if pattern.is_a?(Array)
       obtain_a_valid_input_from_list(pattern)
@@ -29,8 +27,9 @@ module Validable
 
   def obtain_a_valid_input_from_regexp(valid_pattern)
     choice = retrieve_input
-
-    until choice.match?(valid_pattern)
+    # TODO
+    # comparison with nil is required for the tests - Needs to be fixed
+    until  choice.nil? || choice.match?(valid_pattern)
       HelperMethods.display_invalid_choice_from_regexp(valid_pattern)
       choice = retrieve_input.downcase
     end
@@ -42,19 +41,21 @@ module Validable
     choice.nil? ? nil : choice.chomp
   end
 
+  # Some private methods stored in a submodule
   module HelperMethods
     extend Displayable
 
     def self.display_invalid_choice_from_list(valid_choices_list)
-      print_error_message("Choix invalide !")
-      print_error_message("Les choix valides sont:")
+      print_error_message('Choix invalide !')
+      print_error_message('Les choix valides sont:')
       print_error_message(valid_choices_list.join(', ') + '.')
-      prompt("Quel est votre choix ?")
+      prompt('Quel est votre choix ?')
     end
 
     def self.display_invalid_choice_from_regexp(valid_pattern)
-      print_error_message("Choix invalide !")
-      prompt("Quel est votre choix ?")
+      print_error_message('Choix invalide !')
+      print_error_message("Modèle à respecter: #{valid_pattern}")
+      prompt('Quel est votre choix ?')
     end
   end
 end

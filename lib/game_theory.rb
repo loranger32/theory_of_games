@@ -25,7 +25,7 @@ name_engine = NameEngine.new(random_names)
 
 # List the available behaviors and generate the behavior engine
 BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
-              'r' => :quick_adapter, 's' => :slow_adapter }
+              'r' => :quick_adapter, 's' => :slow_adapter }.freeze
 
 behavior_engine = BehaviorEngine.new(BEHAVIORS)
 

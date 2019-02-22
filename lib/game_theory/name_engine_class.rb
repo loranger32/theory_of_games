@@ -3,14 +3,14 @@ class NameEngine
   include Displayable
   include Validable
 
-  NAME_PATTERN = /\A[\w+]|\n\z]|/
+  NAME_PATTERN = /\A[\w+]|\n\z/.freeze
 
   def initialize(random_name_list)
     Displayable.set_io_variables_on(self)
     @random_names = random_name_list
     @choosen_names = []
   end
-  
+
   def choose_player_name(player_number)
     name = ask_player_choice(player_number)
 
@@ -25,10 +25,8 @@ class NameEngine
 
   def pick_random_name
     random_name = random_names.sample
-    
-    while choosen_names.include?(random_name)
-      random_name = random_names.sample
-    end
+
+    random_name = random_names.sample while choosen_names.include?(random_name)
 
     store_and_return_name(random_name)
   end

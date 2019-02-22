@@ -18,11 +18,10 @@ class PlayerFactory
     until @choice_confirmed
       number_of_players = ask_number_of_players_to_create
       collect_data_for_player_creation(number_of_players)
-      if confirm_players?
-        break players
-      else
-        collect_data_again
-      end
+
+      return players if confirm_players?
+
+      collect_data_again
     end
   end
 
@@ -47,19 +46,19 @@ class PlayerFactory
 
   def confirm_players?
     clear_screen
-    print_message("Vous avez choisi les joueurs suivant:")
+    print_message('Vous avez choisi les joueurs suivant:')
     @players.each_with_index do |player, index|
       print_message("Joueur #{index + 1}")
       print_message(player)
     end
-    prompt("Confirmerz_vous ce choix ? (o/n)")
-    pattern = %w(o n)
+    prompt('Confirmerz_vous ce choix ? (o/n)')
+    pattern = %w[o n]
     choice = obtain_a_valid_input_from(pattern)
     choice == 'o'
   end
 
   def collect_data_again
     @players = []
-    print_message("Ok, on recommence.")
+    print_message('Ok, on recommence.')
   end
 end

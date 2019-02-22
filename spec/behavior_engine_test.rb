@@ -7,7 +7,7 @@ require_relative '../lib/game_theory/behavior_engine_class'
 class BehaviorEngineTest < Minitest::Test
   # Constant copied from the game_theory.rb file
   BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
-              'r' => :quick_adapter, 's' => :slow_adapter }
+                'r' => :quick_adapter, 's' => :slow_adapter }.freeze
 
   def setup
     @behavior_engine = BehaviorEngine.new(BEHAVIORS)

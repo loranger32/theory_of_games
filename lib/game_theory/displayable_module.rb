@@ -1,3 +1,4 @@
+# The 'require' is needed for the tests
 require 'colorize'
 
 # A utils module to be included in game_loop_class but defined separately for
@@ -7,10 +8,12 @@ module Displayable
 
   # Method to be called in the initialize method of classes that implement
   # the module, in order to perform the tests with custom StringIO objects
+  # rubocop:disable Naming/AccessorMethodName
   def self.set_io_variables_on(object)
     object.input = $stdin
     object.output = $stdout
   end
+  # rubocop:enable Naming/AccessorMethodName
 
   # Accessors to use the $stdin and $stdout objects in the instances of the
   # including class

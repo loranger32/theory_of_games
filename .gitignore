@@ -92,7 +92,7 @@ Temporary Items
 .apdisk
 
 # Rubocop
-.rubocop.yml
+#.rubocop.yml
 
 # Images
 images/

@@ -18,25 +18,31 @@ class PlayerFactoryTest < Minitest::Test
                                         @name_engine, @behavior_engine)
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def test_create_players
+    @player_factory.input = StringIO.new('o')
+
     @player1 = Minitest::Mock.new
     @player2 = Minitest::Mock.new
 
-    @name_engine.expect(:choose_player_name, "Roger", [1])
-    @name_engine.expect(:choose_player_name, "Tim", [2])
+    @name_engine.expect(:choose_player_name, 'Roger', [1])
+    @name_engine.expect(:choose_player_name, 'Tim', [2])
 
     4.times { @score_class.expect(:new, Object) }
 
     2.times { @behavior_engine.expect(:choose_player_behavior, :random) }
 
-    @player_class.expect(:new, @player1, [@score_class.new, name: "Roger",
-                                          behavior: :random])
+    @player_class.expect(:new, @player1,
+                         [@score_class.new, name: 'Roger', behavior: :random])
 
-    @player_class.expect(:new, @player2, [@score_class.new, name: "Tim",
-                                          behavior: :random])
+    @player_class.expect(:new, @player2,
+                         [@score_class.new, name: 'Tim', behavior: :random])
 
-    assert_equal [@player1, @player2], @player_factory.create_players
+    capture_io do
+      assert_equal [@player1, @player2], @player_factory.create_players
+    end
 
     [@name_engine, @behavior_engine, @player_class].each(&:verify)
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

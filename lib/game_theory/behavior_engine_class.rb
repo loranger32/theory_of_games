@@ -1,3 +1,4 @@
+# A class to manage behaviors
 class BehaviorEngine
   include Displayable
   include Validable
@@ -14,7 +15,7 @@ class BehaviorEngine
 
     raise StandardError, "Impossible de gérer votre choix: #{choice}." if\
       behavior.nil?
-    
+
     behavior
   end
 
@@ -24,12 +25,12 @@ class BehaviorEngine
 
   def ask_behavior_to_player
     question = <<~QUESTION
-    Choisissez le type ce comportement pour le joueur:
-    - Naif (n)
-    - Traitre (t)
-    - au Hasard (h)
-    - s'adapte Rapidement (r)
-    - s'adapet Lentement (l)
+      Choisissez le type ce comportement pour le joueur:
+      - Naif (n)
+      - Traitre (t)
+      - au Hasard (h)
+      - s'adapte Rapidement (r)
+      - s'adapet Lentement (l)
     QUESTION
 
     prompt(question)
