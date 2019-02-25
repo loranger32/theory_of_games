@@ -2,7 +2,7 @@
 class GameLoop
   include Displayable
 
-  TURNS = 3
+  TURNS = 30
 
   attr_reader :players
 
@@ -17,11 +17,11 @@ class GameLoop
   def run
     greet
     create_players
-    assign_players_to_engines
+    define_report_form
     while still_playing?
       ready_to_play?
       TURNS.times { @turn_engine.play_turn }
-      display_end_of_turns
+      display_report(turn_engine.history)
       reset_players_score
       play_again?
     end
@@ -38,6 +38,7 @@ class GameLoop
 
   def create_players
     @players = player_factory.create_players
+    assign_players_to_engines
   end
 
   def assign_players_to_engines
@@ -45,14 +46,17 @@ class GameLoop
     reporter.assign_players(players)
   end
 
+  def define_report_form
+    reporter.define_form_report
+  end
+
   def still_playing?
     @still_playing
   end
 
-  def display_end_of_turns
+  def display_report(history)
     print_message 'Tous les tours ont été joués.'
-    skip_lines(1)
-    @reporter.display_full_game_report(turn_engine.history)
+    reporter.display_report(history)
   end
 
   def ready_to_play?
@@ -74,5 +78,5 @@ class GameLoop
     @still_playing = false if answer == 'n'
   end
 
-  attr_reader :player_factory, :turn_engine, :reporter
+  attr_reader :player_factory, :turn_engine, :reporter, :report_type
 end

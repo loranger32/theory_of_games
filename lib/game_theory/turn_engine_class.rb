@@ -56,14 +56,14 @@ class TurnEngine
   end
 
   def format_turn(players)
-    players.each_with_object({}) do |player, container|
-      container[player] = Turn.new.tap do |turn|
-                            turn.name = player.name
-                            turn.move = player.move
-                            turn.earning = player.turn_earning
-                            turn.behavior = player.behavior
-                            turn.score = player.score
-                          end
+    players.each_with_object([]) do |player, container|
+      container << Turn.new.tap do |turn|
+                     turn.name = player.name
+                     turn.move = player.move
+                     turn.earning = player.turn_earning
+                     turn.behavior = player.behavior
+                     turn.score = player.score
+                   end
       
     end
   end

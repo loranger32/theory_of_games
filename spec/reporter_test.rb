@@ -18,7 +18,7 @@ class ReporterTest < Minitest::Test
     assert_equal @players, @reporter.send(:players)
   end
 
-  def test_it_responds_to_display_game_report_method
-    assert_respond_to(@reporter, :display_game_report)
+  def test_it_responds_to_display_report_method
+    assert_respond_to(@reporter, :display_report)
   end
 end
