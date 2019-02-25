@@ -7,7 +7,8 @@ class TurnEngineTest < Minitest::Test
     @player2 = Minitest::Mock.new
     @players = [@player1, @player2]
     @game_logic = Minitest::Mock.new
-    @turn_engine = TurnEngine.new(@game_logic)
+    @history = Minitest::Mock.new
+    @turn_engine = TurnEngine.new(@game_logic, @history)
   end
 
   def test_it_has_players_and_game_logic_attribute_readers
@@ -25,13 +26,16 @@ class TurnEngineTest < Minitest::Test
 
   def test_it_can_assigns_players_to_self_and_game_logic
     @game_logic.expect(:assign_players, nil, [@players])
+    @history.expect(:assign_players, nil, [@players])
     @turn_engine.assign_players(@players)
     assert_equal @players, @turn_engine.players
     @game_logic.verify
+    @history.verify
   end
 
   def test_play_turn_method_actually_play_the_whole_turn
     @game_logic.expect(:assign_players, nil, [@players])
+    @history.expect(:assign_players, nil, [@players])
     @turn_engine.assign_players(@players)
 
     @players.each do |player|
@@ -48,6 +52,7 @@ class TurnEngineTest < Minitest::Test
 
   def test_it_can_reset_player_scores
     @game_logic.expect(:assign_players, nil, [@players])
+    @history.expect(:assign_players, nil, [@players])
     @turn_engine.assign_players(@players)
 
     @players.each { |player| player.expect(:reset_score, nil) }

@@ -11,11 +11,17 @@ class Reporter
   end
 
   def display_game_report
-    puts '*' * 30
-    puts 'Les scores sont:'
-    @players.each { |player| puts "- #{player.name}: #{player.score}." }
-    puts ''
-    puts '*' * 30
+    print_message('*' * 30)
+    print_message('Les scores sont:')
+    @players.each { |player| print_message "- #{player.name}: #{player.score}." }
+    print_message '*' * 30
+  end
+
+  def display_full_game_report(history)
+    print_message('*' * 30)
+    print_message('Résultats des matchs:')
+    history.display
+    print_message '*' * 30
   end
 
   private

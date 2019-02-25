@@ -1,30 +1,70 @@
 # The engine responsible for manging turns
 class TurnEngine
-  attr_reader :game_logic, :players
+  attr_reader :game_logic, :players, :history
 
-  def initialize(game_logic)
+  Turn = Struct.new(:name, :move, :earning, :behavior, :score, 
+                      keyword_init: true) do
+    def to_s
+      <<~TURN
+      #{name}:
+      - behavior : #{behavior}
+      - move : #{move}
+      - earning : #{earning}
+      - score : #{score}
+      --------------------------
+    TURN
+    end
+  end
+
+  def initialize(game_logic, history)
     @players = nil
     @game_logic = game_logic
+    @history = history
   end
 
   def assign_players(players)
     @players = players
     game_logic.assign_players(players)
+    history.assign_players(players)
   end
 
   def play_turn
-    @players.each(&:play_move)
+    players.each(&:play_move)
     game_logic.process_moves
+    store_turn
+    reset_players_turn_earning
     reset_players_move
   end
 
   def reset_players_score
-    @players.each(&:reset_score)
+    players.each(&:reset_score)
+  end
+
+  def reset_players_turn_earning
+    players.each(&:reset_turn_earning)
+  end
+
+  def store_turn
+    formatted_turn = format_turn(players)
+    history.store_turn(formatted_turn)
   end
 
   private
 
   def reset_players_move
     @players.map(&:reset_move)
+  end
+
+  def format_turn(players)
+    players.each_with_object({}) do |player, container|
+      container[player] = Turn.new.tap do |turn|
+                            turn.name = player.name
+                            turn.move = player.move
+                            turn.earning = player.turn_earning
+                            turn.behavior = player.behavior
+                            turn.score = player.score
+                          end
+      
+    end
   end
 end

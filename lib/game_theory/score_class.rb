@@ -4,22 +4,30 @@ class Score
   MEDIUM_GAIN = 3
   MAX_GAIN    = 5
 
-  attr_reader :total
+  attr_reader :turn_earning, :total
 
   def initialize
-    @total = 0
+    @turn_earning = 0
+    @total        = 0
   end
 
   def earn_min
-    @total += MIN_GAIN
+    @turn_earning = MIN_GAIN
+    @total       += MIN_GAIN
   end
 
   def earn_max
-    @total += MAX_GAIN
+    @turn_earning = MAX_GAIN
+    @total       += MAX_GAIN
   end
 
   def earn_medium
-    @total += MEDIUM_GAIN
+    @turn_earning = MEDIUM_GAIN
+    @total       += MEDIUM_GAIN
+  end
+
+  def reset_turn_earning!
+    @turn_earning = 0
   end
 
   def reset!

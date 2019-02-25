@@ -52,7 +52,7 @@ class GameLoop
   def display_end_of_turns
     print_message 'Tous les tours ont été joués.'
     skip_lines(1)
-    @reporter.display_game_report
+    @reporter.display_full_game_report(turn_engine.history)
   end
 
   def ready_to_play?

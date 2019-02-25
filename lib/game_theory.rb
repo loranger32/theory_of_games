@@ -17,6 +17,7 @@ require_relative 'game_theory/earning_engine_class'
 require_relative 'game_theory/two_player_logic_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
+require_relative 'game_theory/history_class'
 require_relative 'game_theory/game_loop_class'
 
 MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
@@ -40,8 +41,11 @@ earning_engine = EarningEngine.new
 # Game logic - needs acces to the earning engine to grant earnings
 logic_engine = TwoPlayerLogic.new(earning_engine)
 
+# History object
+history = History.new
+
 # Engine that process turns - needs the logic engine to know how
-turn_engine = TurnEngine.new(logic_engine)
+turn_engine = TurnEngine.new(logic_engine, history)
 
 # Engine that generates the reports
 reporter = Reporter.new

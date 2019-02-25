@@ -31,6 +31,10 @@ class Player
     @score.total
   end
 
+  def turn_earning
+    @score.turn_earning
+  end
+
   def earn_max
     @score.earn_max
   end
@@ -49,6 +53,10 @@ class Player
 
   def reset_score
     @score.reset!
+  end
+
+  def reset_turn_earning
+    @score.reset_turn_earning!
   end
 
   def display
