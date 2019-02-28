@@ -52,5 +52,5 @@ class Reporter
 
   private
 
-  attr_reader :players
+  attr_reader :players, :report_form
 end
