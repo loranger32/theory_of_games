@@ -15,13 +15,13 @@ class PlayerAttributesTest < Minitest::Test
     assert_equal :random, @player.behavior
   end
 
-  def test_player_has_a_score_attribute
+  def test_player_respond_to_score_instance_method
     assert_respond_to(@player, :score)
   end
 
-  def test_player_score_method_sends_the_correct_message_to_the_score_object
-    @score.expect(:total, 0)
-    @player.score
+  def test_player_score_method_works_ok
+    @score.expect(:total, 4)
+    assert_equal 4, @player.score
     @score.verify
   end
 
@@ -32,11 +32,26 @@ end
 
 class PlayerMovesTest < Minitest::Test
   def setup
-    @score = Minitest::Mock.new
-    @good_guy = Player.new(@score, name: 'Test Good Guy', behavior: :naive)
-    @bad_guy = Player.new(@score, name: 'Test Bad Guy', behavior: :traitor)
-    @random_guy = Player.new(@score, name: 'Test Random Guy', behavior: :random)
+    @gg_score = Minitest::Mock.new
+    @bg_score = Minitest::Mock.new
+    @rg_score = Minitest::Mock.new
+    @good_guy = Player.new(@gg_score, name: 'Test Good Guy', behavior: :naive)
+    @bad_guy = Player.new(@bg_score, name: 'Test Bad Guy', behavior: :traitor)
+    @random_guy = Player.new(@rg_score, name: 'Test Random Guy',
+                             behavior: :random)
     @players = [@good_guy, @bad_guy, @random_guy]
+  end
+
+  def test_player_cooperates_method
+    @players.each(&:play_move)
+    assert @good_guy.cooperates?
+    refute @bad_guy.cooperates?
+  end
+
+  def test_player_betrays_method
+    @players.each(&:play_move)
+    assert @bad_guy.betrays?
+    refute @good_guy.betrays?
   end
 
   def test_player_store_correct_move_when_she_plays
@@ -83,5 +98,23 @@ class PlayerScoreTest < Minitest::Test
     @score.expect(:reset!, nil)
     @player.reset_score
     @score.verify
+  end
+
+  def test_player_reset_turn_earning
+    @score.expect(:reset_turn_earning!, nil)
+    @player.reset_turn_earning
+    @score.verify
+  end
+
+  def test_to_s_method
+    assert_instance_of(String, @player.to_s)
+  end
+
+  def test_display
+    out, err = capture_io do
+      @player.display
+    end
+
+    assert_includes(out, 'Test Player')
   end
 end
