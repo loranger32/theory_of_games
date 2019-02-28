@@ -33,18 +33,24 @@ class TurnEngineTest < Minitest::Test
     @history.verify
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def test_play_turn_method_actually_play_the_whole_turn
     @game_logic.expect(:assign_players, nil, [@players])
     @history.expect(:assign_players, nil, [@players])
-    @history.expect(:store_turn, nil, [[TurnEngine::Turn.new(name: 'roro', behavior: :random, move: :betrays, score: 10, earning: 0),
-                                        TurnEngine::Turn.new(name: 'roro', behavior: :random, move: :betrays, score: 10, earning: 0)]])
+
+    turn1 = TurnEngine::Turn.new(name: 'roro', behavior: :random,
+                                 move: :betrays, score: 10, earning: 0)
+    turn2 = TurnEngine::Turn.new(name: 'roro', behavior: :random,
+                                 move: :betrays, score: 10, earning: 0)
+
+    @history.expect(:store_turn, nil, [[turn1, turn2]])
     @turn_engine.assign_players(@players)
 
     @players.each do |player|
       player.expect(:play_move, nil)
       player.expect(:reset_move, nil)
       player.expect(:reset_turn_earning, nil)
-      player.expect(:name, "roro")
+      player.expect(:name, 'roro')
       player.expect(:behavior, :random)
       player.expect(:move, :betrays)
       player.expect(:score, 10)
@@ -57,6 +63,7 @@ class TurnEngineTest < Minitest::Test
     @players.each(&:verify)
     @game_logic.verify
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def test_it_can_reset_player_scores
     @game_logic.expect(:assign_players, nil, [@players])

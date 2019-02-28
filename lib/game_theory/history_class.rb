@@ -4,7 +4,7 @@ class History
   include Enumerable
 
   attr_reader :players, :turns
-  
+
   def initialize
     @players = nil
     @turns = []
@@ -26,7 +26,7 @@ class History
 
   def display
     each_with_index do |turn, index|
-      print_message("=" * 30)
+      print_message('=' * 30)
       print_message("TOUR #{index + 1} :")
       turn.each do |player_turn|
         print_message(player_turn)

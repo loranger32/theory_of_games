@@ -38,7 +38,7 @@ class PlayerMovesTest < Minitest::Test
     @good_guy = Player.new(@gg_score, name: 'Test Good Guy', behavior: :naive)
     @bad_guy = Player.new(@bg_score, name: 'Test Bad Guy', behavior: :traitor)
     @random_guy = Player.new(@rg_score, name: 'Test Random Guy',
-                             behavior: :random)
+                                        behavior: :random)
     @players = [@good_guy, @bad_guy, @random_guy]
   end
 
@@ -111,7 +111,7 @@ class PlayerScoreTest < Minitest::Test
   end
 
   def test_display
-    out, err = capture_io do
+    out, _err = capture_io do
       @player.display
     end
 

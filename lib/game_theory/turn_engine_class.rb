@@ -2,17 +2,17 @@
 class TurnEngine
   attr_reader :game_logic, :players, :history
 
-  Turn = Struct.new(:name, :move, :earning, :behavior, :score, 
-                      keyword_init: true) do
+  Turn = Struct.new(:name, :move, :earning, :behavior, :score,
+                    keyword_init: true) do
     def to_s
       <<~TURN
-      #{name}:
-      - behavior : #{behavior}
-      - move : #{move}
-      - earning : #{earning}
-      - score : #{score}
-      --------------------------
-    TURN
+        #{name}:
+        - behavior : #{behavior}
+        - move : #{move}
+        - earning : #{earning}
+        - score : #{score}
+        --------------------------
+      TURN
     end
   end
 
@@ -58,13 +58,12 @@ class TurnEngine
   def format_turn(players)
     players.each_with_object([]) do |player, container|
       container << Turn.new.tap do |turn|
-                     turn.name = player.name
-                     turn.move = player.move
-                     turn.earning = player.turn_earning
-                     turn.behavior = player.behavior
-                     turn.score = player.score
-                   end
-      
+        turn.name = player.name
+        turn.move = player.move
+        turn.earning = player.turn_earning
+        turn.behavior = player.behavior
+        turn.score = player.score
+      end
     end
   end
 end

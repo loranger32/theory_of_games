@@ -37,9 +37,9 @@ class HistoryTest < Minitest::Test
     @history.store_turn(@turn1)
     @history.store_turn(@turn2)
     turns = [@turn1, @turn2]
-    turns.each { |turn| turn.expect(:i_am_yielded_to_the_block, nil)}
+    turns.each { |turn| turn.expect(:i_am_yielded_to_the_block, nil) }
     @history.each do |turn|
-      assert_respond_to(turn, :i_am_yielded_to_the_block) 
+      assert_respond_to(turn, :i_am_yielded_to_the_block)
     end
   end
 

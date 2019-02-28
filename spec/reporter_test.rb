@@ -3,7 +3,6 @@ require_relative '../lib/game_theory/displayable_module'
 require_relative '../lib/game_theory/validable_module'
 require_relative '../lib/game_theory/reporter_class'
 
-
 class ReporterTest < Minitest::Test
   def setup
     @reporter = Reporter.new

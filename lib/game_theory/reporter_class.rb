@@ -14,13 +14,10 @@ class Reporter
   end
 
   def define_form_report
-    print_message("Veuillez choisir la forme de votre rapport:")
-    print_message("- Tous les tours (t)")
-    print_message("- Résultat final (r)")
-    report_form = obtain_a_valid_input_from( %w[t r])
-    if report_form == 't'
+    choice = ask_report_form
+    if choice == 't'
       @report_form = :long
-    elsif report_form == 'r'
+    elsif choice == 'r'
       @report_form = :short
     else
       @reportform = :short
@@ -39,7 +36,11 @@ class Reporter
   def display_short_game_report
     print_message('*' * 30)
     print_message('Les scores sont:')
-    @players.each { |player| print_message "- #{player.name}: #{player.score}." }
+
+    @players.each do |player|
+      print_message "- #{player.name}: #{player.score}."
+    end
+
     print_message '*' * 30
   end
 
@@ -51,6 +52,13 @@ class Reporter
   end
 
   private
+
+  def ask_report_form
+    print_message('Veuillez choisir la forme de votre rapport:')
+    print_message('- Tous les tours (t)')
+    print_message('- Résultat final (r)')
+    obtain_a_valid_input_from(%w[t r])
+  end
 
   attr_reader :players, :report_form
 end
