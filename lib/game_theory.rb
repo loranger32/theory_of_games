@@ -14,7 +14,7 @@ require_relative 'game_theory/behavior_engine_class'
 require_relative 'game_theory/player_class'
 require_relative 'game_theory/player_factory_class'
 require_relative 'game_theory/earning_engine_class'
-require_relative 'game_theory/two_player_logic_class'
+require_relative 'game_theory/logic_engine_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 require_relative 'game_theory/history_class'
@@ -39,12 +39,12 @@ player_factory = PlayerFactory.new(Player, Score, name_engine, behavior_engine)
 earning_engine = EarningEngine.new
 
 # Game logic - needs acces to the earning engine to grant earnings
-logic_engine = TwoPlayerLogic.new(earning_engine)
+logic_engine = LogicEngine.new(earning_engine)
 
 # History object
 history = History.new
 
-# Engine that process turns - needs the logic engine to know how
+# Engine that process turns - needs the logic engine and the history
 turn_engine = TurnEngine.new(logic_engine, history)
 
 # Engine that generates the reports
