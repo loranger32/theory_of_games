@@ -1,7 +1,7 @@
 # The 'require' is needed for the tests
 require 'colorize'
 
-# A custom error class for invalid table display argument
+# A custom error class for invalid display_in_table argument
 class TableArgumentError < ArgumentError; end
 
 # A utils module to be included in various files to add display options
@@ -34,11 +34,11 @@ module Displayable
 
   def print_message(message, color: nil)
     if color.nil?
-      puts "\n#{message}".light_blue
+      puts "#{message}".light_blue
     elsif Helpers.valid_color?(color)
-      puts "\n#{message}".send(color)
+      puts "#{message}".send(color)
     else
-      puts "\n#{message}".light_blue
+      puts "#{message}".light_blue
     end
   end
 
@@ -87,11 +87,13 @@ module Displayable
     attributes.each do |attribute|
       collection.each do |item|
         print_on_line('|', color: :yellow)
-        print_on_line("#{item.send(attribute)}".center(COLOM_LENGTH - 2), color: :yellow)
+        print_on_line("#{item.send(attribute)}".center(COLOM_LENGTH - 2),
+                      color: :yellow)
         print_on_line("|", color: :yellow)
       end
-      
-      print_message('-' * COLOM_LENGTH * collection.size, color: :yellow) unless attributes.index(attribute) == attributes.size - 1
+      skip_lines(1)
+      print_message('-' * COLOM_LENGTH * collection.size, color: :yellow) \
+        unless attributes.index(attribute) == attributes.size - 1
     end
 
     print_message('+' * COLOM_LENGTH * collection.size, color: :yellow)

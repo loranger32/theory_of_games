@@ -28,9 +28,7 @@ class History
     each_with_index do |turn, index|
       print_message('=' * 30)
       print_message("TOUR #{index + 1} :")
-      turn.each do |player_turn|
-        print_message(player_turn)
-      end
+      display_in_table(turn, :name, :behavior, :move, :earning, :score)
     end
   end
 end

@@ -24,6 +24,11 @@ class PlayerFactoryTest < Minitest::Test
 
     @player1 = Minitest::Mock.new
     @player2 = Minitest::Mock.new
+    players = [@player1, @player2]
+    players.each do |player|
+      player.expect(:name, nil)
+      player.expect(:behavior, nil)
+    end
 
     @name_engine.expect(:choose_player_name, 'Roger', [1])
     @name_engine.expect(:choose_player_name, 'Tim', [2])
@@ -39,7 +44,7 @@ class PlayerFactoryTest < Minitest::Test
                          [@score_class.new, name: 'Tim', behavior: :random])
 
     capture_io do
-      assert_equal [@player1, @player2], @player_factory.create_players
+      assert_equal players, @player_factory.create_players
     end
 
     [@name_engine, @behavior_engine, @player_class].each(&:verify)

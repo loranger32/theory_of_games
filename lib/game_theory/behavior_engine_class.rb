@@ -13,8 +13,8 @@ class BehaviorEngine
     choice = ask_behavior_to_player
     behavior = behaviors_list[choice]
 
-    raise StandardError, "Impossible de gérer votre choix: #{choice}." if\
-      behavior.nil?
+    err_msg = "Impossible de gérer votre choix: #{choice}."
+    raise StandardError,  err_msg if behavior.nil?
 
     behavior
   end
