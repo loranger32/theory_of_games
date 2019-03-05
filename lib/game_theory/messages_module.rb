@@ -3,7 +3,7 @@ module Messages
   def self.exit_game
     (system 'clear') || (system 'cls')
     print 'Fermeture du jeu'.yellow
-    5.times do
+    3.times do
       print '.'.yellow
       sleep(0.3)
     end

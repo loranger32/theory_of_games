@@ -50,6 +50,7 @@ class GameLoop
   end
 
   def display_report(history)
+    clear_screen
     print_message 'Tous les tours ont été joués.'
     reporter.display_report(history)
   end
