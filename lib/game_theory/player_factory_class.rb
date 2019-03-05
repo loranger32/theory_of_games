@@ -47,14 +47,10 @@ class PlayerFactory
   def confirm_players?
     clear_screen
     print_message('Vous avez choisi les joueurs suivant:')
-    @players.each_with_index do |player, index|
-      print_message("Joueur #{index + 1}")
-      print_message(player)
-    end
+    display_in_table(@players, :name, :behavior)
+
     prompt('Confirmerz_vous ce choix ? (o/n)')
-    pattern = %w[o n]
-    choice = obtain_a_valid_input_from(pattern)
-    choice == 'o'
+    obtain_a_valid_input_from(%w[o n]) == 'o'
   end
 
   def collect_data_again

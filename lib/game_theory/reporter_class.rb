@@ -3,6 +3,8 @@ class Reporter
   include Displayable
   include Validable
 
+  COLOM_LENGTH = 20
+
   def initialize
     Displayable.set_io_variables_on(self)
     @players = nil
@@ -18,29 +20,23 @@ class Reporter
   end
 
   def display_short_game_report
-    print_message('*' * 30)
-    print_message('Les scores sont:')
+    print_message('Les scores sont:', color: :light_blue)
 
-    @players.each do |player|
-      print_message "- #{player.name}: #{player.score}."
-    end
-
-    print_message '*' * 30
+    display_in_table(players, :name, :score)
   end
 
   def display_full_game_report(history)
-    print_message('*' * 30)
-    print_message('Résultats des matchs:')
+    print_message('*' * COLOM_LENGTH, color: :red)
+    print_message('Résultats des matchs:', color: :yellow)
     history.display
-    print_message '*' * 30
+    print_message('*' * COLOM_LENGTH, color: :red)
   end
 
   private
 
   def want_full_report?
-    prompt("Voulez-vous également un rapport détaillé tout par tour (o/n) ?")
-    answer = obtain_a_valid_input_from(%w(o n))
-    answer == 'o'
+    prompt("Voulez-vous également un rapport détaillé tour par tour (o/n) ?")
+    obtain_a_valid_input_from(%w(o n)) == 'o'
   end
 
   attr_reader :players
