@@ -24,23 +24,11 @@ class ReporterTest < Minitest::Test
     assert_respond_to(@reporter, :display_report)
   end
 
-  def test_it_can_set_the_report_form_to_long
-    @reporter.input = StringIO.new('t')
-    capture_io do
-      @reporter.define_form_report
-    end
-    assert_equal :long, @reporter.send(:report_form)
+  def test_it_respond_to_display_short_game_report
+    assert_respond_to(@reporter, :display_short_game_report)
   end
 
-  def test_it_can_set_the_report_form_to_short
-    @reporter.input = StringIO.new('r')
-    capture_io do
-      @reporter.define_form_report
-    end
-    assert_equal :short, @reporter.send(:report_form)
-  end
-
-  def test_it_set_the_short_report_form_by_default
-    assert_equal :short, @reporter.send(:report_form)
+  def test_it_respond_to_display_full_game_report
+    assert_respond_to(@reporter, :display_full_game_report)
   end
 end

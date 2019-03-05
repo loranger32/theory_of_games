@@ -6,31 +6,15 @@ class Reporter
   def initialize
     Displayable.set_io_variables_on(self)
     @players = nil
-    @report_form = :short
   end
 
   def assign_players(players)
     @players = players
   end
 
-  def define_form_report
-    choice = ask_report_form
-    if choice == 't'
-      @report_form = :long
-    elsif choice == 'r'
-      @report_form = :short
-    else
-      @reportform = :short
-    end
-  end
-
   def display_report(history)
-    case @report_form
-    when :long then display_full_game_report(history)
-    when :short then display_short_game_report
-    else
-      display_short_game_report
-    end
+    display_short_game_report
+    display_full_game_report(history) if want_full_report?
   end
 
   def display_short_game_report
@@ -53,12 +37,11 @@ class Reporter
 
   private
 
-  def ask_report_form
-    print_message('Veuillez choisir la forme de votre rapport:')
-    print_message('- Tous les tours (t)')
-    print_message('- Résultat final (r)')
-    obtain_a_valid_input_from(%w[t r])
+  def want_full_report?
+    prompt("Voulez-vous également un rapport détaillé tout par tour (o/n) ?")
+    answer = obtain_a_valid_input_from(%w(o n))
+    answer == 'o'
   end
 
-  attr_reader :players, :report_form
+  attr_reader :players
 end

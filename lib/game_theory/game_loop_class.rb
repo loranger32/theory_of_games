@@ -17,7 +17,6 @@ class GameLoop
   def run
     greet
     create_players
-    define_report_form
     while still_playing?
       ready_to_play?
       TURNS.times { @turn_engine.play_turn }
@@ -44,10 +43,6 @@ class GameLoop
   def assign_players_to_engines
     turn_engine.assign_players(players)
     reporter.assign_players(players)
-  end
-
-  def define_report_form
-    reporter.define_form_report
   end
 
   def still_playing?
