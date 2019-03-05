@@ -1,8 +1,7 @@
 # The 'require' is needed for the tests
 require 'colorize'
 
-# A utils module to be included in game_loop_class but defined separately for
-# clarity
+# A utils module to be included in various files to add display options
 module Displayable
   SCREEN_WIDTH = 100
 
@@ -29,12 +28,18 @@ module Displayable
     skip_lines(3)
   end
 
-  def print_message(message)
-    puts "\n#{message}".blue
+  def print_message(message, color: nil)
+    if color.nil?
+      puts "\n#{message}".blue
+    elsif ColorHelpers.valid_color?(color)
+      puts "\n#{message}".send(color)
+    else
+      puts "\n#{message}".blue
+    end
   end
 
   def print_error_message(message)
-    puts "\n#{message}".yellow
+    puts "\n#{message}".red
   end
 
   def prompt(message)
@@ -58,5 +63,13 @@ module Displayable
 
   def skip_lines(number_of_lines_to_skip)
     number_of_lines_to_skip.times { puts '' }
+  end
+
+  module ColorHelpers
+    module_function
+
+    def valid_color?(color)
+      String.colors.include?(color)
+    end
   end
 end
