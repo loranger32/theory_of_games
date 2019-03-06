@@ -2,9 +2,16 @@ require_relative 'spec_helpers'
 require_relative '../lib/game_theory/player_class'
 
 class PlayerAttributesTest < Minitest::Test
+  def create_behavior_mocks
+    history = Minitest::Mock.new
+    history.expect(:store_turn, nil)
+    @random = Behavior.new(type: :random, history: history)
+  end
+
   def setup
+    create_behavior_mocks
     @score = Minitest::Mock.new
-    @player = Player.new(@score, name: 'Test Player', behavior: :random)
+    @player = Player.new(score: @score, name: 'Test Player', behavior: @random)
   end
 
   def test_player_has_a_name
@@ -12,7 +19,7 @@ class PlayerAttributesTest < Minitest::Test
   end
 
   def test_player_has_a_behavior
-    assert_equal :random, @player.behavior
+    assert_equal @random.object_id, @player.behavior.object_id
   end
 
   def test_player_respond_to_score_instance_method
@@ -31,14 +38,29 @@ class PlayerAttributesTest < Minitest::Test
 end
 
 class PlayerMovesTest < Minitest::Test
-  def setup
+  def create_score_mocks
     @gg_score = Minitest::Mock.new
     @bg_score = Minitest::Mock.new
     @rg_score = Minitest::Mock.new
-    @good_guy = Player.new(@gg_score, name: 'Test Good Guy', behavior: :naive)
-    @bad_guy = Player.new(@bg_score, name: 'Test Bad Guy', behavior: :traitor)
-    @random_guy = Player.new(@rg_score, name: 'Test Random Guy',
-                                        behavior: :random)
+  end
+
+  def create_behavior_mocks
+    history = Minitest::Mock.new
+    history.expect(:store_turn, nil)
+    @naive = Behavior.new(type: :naive, history: history)
+    @traitor = Behavior.new(type: :traitor, history: history)
+    @random = Behavior.new(type: :random, history: history)
+  end
+
+  def setup
+    create_score_mocks
+    create_behavior_mocks    
+    @good_guy = Player.new(score: @gg_score, name: 'Test Good Guy',
+                           behavior: @naive)
+    @bad_guy = Player.new(score: @bg_score, name: 'Test Bad Guy',
+                          behavior: @traitor)
+    @random_guy = Player.new(score: @rg_score, name: 'Test Random Guy',
+                                        behavior: @random)
     @players = [@good_guy, @bad_guy, @random_guy]
   end
 
@@ -71,9 +93,16 @@ class PlayerMovesTest < Minitest::Test
 end
 
 class PlayerScoreTest < Minitest::Test
+  def create_behavior_mock
+    history = Minitest::Mock.new
+    history.expect(:store_turn, nil)
+    @random = Behavior.new(type: :random, history: history)
+  end
+
   def setup
+    create_behavior_mock
     @score = Minitest::Mock.new
-    @player = Player.new(@score, name: 'Test Player', behavior: :cooperator)
+    @player = Player.new(score: @score, name: 'Test Player', behavior: @random)
   end
 
   def test_player_can_earn_max

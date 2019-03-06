@@ -1,8 +1,6 @@
-class History
-  def store_turn
-  end
-end
+class BehaviorArgumentError < ArgumentError; end
 
+# Behavior class - stores the possible behaviors and the choose move logic
 class Behavior
   BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
                 'r' => :quick_adapter, 's' => :slow_adapter }.freeze
@@ -15,8 +13,12 @@ class Behavior
     BEHAVIORS
   end
 
-  def self.valid_behavior_choice
+  def self.valid_behavior_choices
     BEHAVIORS.keys
+  end
+
+  def self.choose_random_move
+    rand(0..1).zero? ? :betrays : :cooperates
   end
 
   attr_reader :type, :history
@@ -31,14 +33,10 @@ class Behavior
     case type
     when :naive   then :cooperates
     when :traitor then :betrays
-    when :random  then choose_random_move
+    when :random  then Behavior.choose_random_move
     else
       :do_not_know
     end
-  end
-
-  def choose_random_move
-    rand(0..1).zero? ? :betrays : :cooperates
   end
 
   def to_s
@@ -55,15 +53,12 @@ class Behavior
   def validate_type(type)
     err_msg = "Invalid behavior argument. Got #{type}, but must be one of the \
  following: #{BEHAVIORS.values.join(', ')}."
-    raise ArgumentError, err_msg unless BEHAVIORS.values.include?(type)
+    raise BehaviorArgumentError, err_msg unless BEHAVIORS.values.include?(type)
   end
 
   def validate_history(history)
     err_msg = "Invalid :history argument. Got '#{history}', of \
  class #{history.class}, and this class doesn't respond to \#store_turn"
-    raise ArgumentError, err_msg unless history.respond_to?(:store_turn)
+    raise BehaviorArgumentError, err_msg unless history.respond_to?(:store_turn)
   end
 end
-
-be = Behavior.new(type: :random, history: History.new)
-  

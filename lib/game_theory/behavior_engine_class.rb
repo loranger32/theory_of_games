@@ -7,7 +7,7 @@ class BehaviorEngine
     Displayable.set_io_variables_on(self)
     @behavior_class = behavior_class
     @behaviors_list = behavior_class.behaviors
-    @valid_choices = behavior_class.valid_behavior_choice
+    @valid_choices = behavior_class.valid_behavior_choices
     @history = history
   end
 
