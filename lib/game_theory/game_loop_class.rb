@@ -2,7 +2,7 @@
 class GameLoop
   include Displayable
 
-  TURNS = 30
+  TURNS = 5
 
   attr_reader :players
 
@@ -56,7 +56,7 @@ class GameLoop
   end
 
   def ready_to_play?
-    puts 'Prêt à lancer le jeu ? (pressez une touche pour continuer)'.blue
+    print_message 'Prêt à lancer le jeu ? (pressez une touche pour continuer)'
     gets.chomp
   end
 
@@ -65,10 +65,10 @@ class GameLoop
   end
 
   def play_again?
-    puts 'On refait un essai (o/n) ?'
+    prompt 'On refait un essai (o/n) ?'
     answer = gets.chomp.downcase
     until %w[o n].include?(answer)
-      puts "Je n'ai pas compris. Veuillez choisir 'o' ou 'n'."
+      prompt "Je n'ai pas compris. Veuillez choisir 'o' ou 'n'."
       answer = gets.chomp.downcase
     end
     @still_playing = false if answer == 'n'
