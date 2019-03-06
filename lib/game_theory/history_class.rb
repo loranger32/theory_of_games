@@ -16,7 +16,6 @@ class History
 
   def store_turn(turn)
     turns << turn
-    #binding.pry
   end
 
   def empty?
@@ -63,5 +62,9 @@ class History
       print_message("TOUR #{index + 1} :")
       display_in_table(turn, :name, :behavior, :move, :earning, :score)
     end
+  end
+
+  def reset!
+    @turns = []
   end
 end

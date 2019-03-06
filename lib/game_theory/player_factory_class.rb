@@ -48,7 +48,7 @@ class PlayerFactory
     print_message('Vous avez choisi les joueurs suivant:')
     display_in_table(@players, :name, :behavior)
 
-    prompt('Confirmerz_vous ce choix ? (o/n)')
+    prompt('Confirmez vous ce choix ? (o/n)')
     obtain_a_valid_input_from(%w[o n]) == 'o'
   end
 

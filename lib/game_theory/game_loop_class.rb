@@ -2,7 +2,7 @@
 class GameLoop
   include Displayable
 
-  TURNS = 5
+  TURNS = 15
 
   attr_reader :players
 
@@ -21,7 +21,7 @@ class GameLoop
       ready_to_play?
       TURNS.times { @turn_engine.play_turn }
       display_report(turn_engine.history)
-      reset_players_score
+      reset_players_score_and_history
       play_again?
     end
   end
@@ -60,8 +60,9 @@ class GameLoop
     gets.chomp
   end
 
-  def reset_players_score
+  def reset_players_score_and_history
     @turn_engine.reset_players_score
+    @turn_engine.reset_history!
   end
 
   def play_again?

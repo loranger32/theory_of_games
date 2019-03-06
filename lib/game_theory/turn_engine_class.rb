@@ -48,6 +48,10 @@ class TurnEngine
     players.each(&:reset_turn_earning)
   end
 
+  def reset_history!
+    @history.reset!
+  end
+
   def store_turn
     formatted_turn = format_turn(players)
     history.store_turn(formatted_turn)
