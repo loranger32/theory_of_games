@@ -8,6 +8,7 @@ Bundler.require(:default, :development)
 require_relative 'game_theory/messages_module'
 require_relative 'game_theory/displayable_module'
 require_relative 'game_theory/validable_module'
+require_relative 'game_theory/behavior_class'
 require_relative 'game_theory/score_class'
 require_relative 'game_theory/name_engine_class'
 require_relative 'game_theory/behavior_engine_class'
@@ -22,15 +23,14 @@ require_relative 'game_theory/game_loop_class'
 
 MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
 
+# Generate the history object
+history = History.new
+
 # generate the name engine instance
 random_names = YAML.load_file('./data/random_names.yaml')
 name_engine = NameEngine.new(random_names)
 
-# List the available behaviors and generate the behavior engine
-BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
-              'r' => :quick_adapter, 's' => :slow_adapter }.freeze
-
-behavior_engine = BehaviorEngine.new(BEHAVIORS)
+behavior_engine = BehaviorEngine.new(Behavior, history)
 
 # Generate Players - Will take options in the future
 player_factory = PlayerFactory.new(Player, Score, name_engine, behavior_engine)
@@ -40,9 +40,6 @@ earning_engine = EarningEngine.new
 
 # Game logic - needs acces to the earning engine to grant earnings
 logic_engine = LogicEngine.new(earning_engine)
-
-# History object
-history = History.new
 
 # Engine that process turns - needs the logic engine and the history
 turn_engine = TurnEngine.new(logic_engine, history)

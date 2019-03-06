@@ -3,25 +3,27 @@ class BehaviorEngine
   include Displayable
   include Validable
 
-  def initialize(behaviors_list)
+  def initialize(behavior_class, history)
     Displayable.set_io_variables_on(self)
-    @behaviors_list = behaviors_list
-    @valid_choices = behaviors_list.keys
+    @behavior_class = behavior_class
+    @behaviors_list = behavior_class.behaviors
+    @valid_choices = behavior_class.valid_behavior_choice
+    @history = history
   end
 
   def choose_player_behavior
     choice = ask_behavior_to_player
-    behavior = behaviors_list[choice]
 
     err_msg = "Impossible de gérer votre choix: #{choice}."
-    raise StandardError,  err_msg if behavior.nil?
+    raise StandardError,  err_msg if choice.nil?
 
-    behavior
+    behavior = behaviors_list[choice]
+    behavior_class.new(type: behavior, history: history)
   end
 
   private
 
-  attr_reader :behaviors_list, :valid_choices
+  attr_reader :behavior_class, :behaviors_list, :valid_choices, :history
 
   def ask_behavior_to_player
     question = <<~QUESTION

@@ -18,7 +18,6 @@ class PlayerFactory
     until @choice_confirmed
       number_of_players = ask_number_of_players_to_create
       collect_data_for_player_creation(number_of_players)
-
       return players if confirm_players?
 
       collect_data_again
@@ -39,8 +38,8 @@ class PlayerFactory
     1.upto(number_of_players) do |player_number|
       name = @name_engine.choose_player_name(player_number)
       behavior = @behavior_engine.choose_player_behavior
-      players << @player_class.new(@score_class.new, name: name,
-                                                     behavior: behavior)
+      players << @player_class.new(score: @score_class.new, behavior: behavior,
+                                   name: name)
     end
   end
 

@@ -1,22 +1,17 @@
 # The classic player class
 class Player
-  attr_reader :name, :behavior, :move
+  attr_reader :name, :behavior
+  attr_accessor :move
 
-  def initialize(score, name: 'random', behavior: :random)
+  def initialize(score:, behavior:, name:)
     @score = score
-    @name = name
     @behavior = behavior
+    @name = name
     @move = nil
   end
 
   def play_move
-    @move = case @behavior
-            when :naive      then :cooperates
-            when :traitor    then :betrays
-            when :random     then choose_random_move
-            else
-              :do_not_know
-            end
+    self.move = behavior.choose_move
   end
 
   def cooperates?
@@ -68,11 +63,5 @@ class Player
       Nom: #{name}
       Comportement: #{behavior}
     PLAYER
-  end
-
-  private
-
-  def choose_random_move
-    rand(0..1).zero? ? :betrays : :cooperates
   end
 end
