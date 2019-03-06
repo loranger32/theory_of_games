@@ -39,9 +39,9 @@ class TurnEngineTest < Minitest::Test
     @history.expect(:assign_players, nil, [@players])
 
     turn1 = TurnEngine::Turn.new(name: 'roro', behavior: :random,
-                                 move: :betrays, score: 10, earning: 0)
+                                 move: 'trahit', score: 10, earning: 0)
     turn2 = TurnEngine::Turn.new(name: 'roro', behavior: :random,
-                                 move: :betrays, score: 10, earning: 0)
+                                 move: 'trahit', score: 10, earning: 0)
 
     @history.expect(:store_turn, nil, [[turn1, turn2]])
     @turn_engine.assign_players(@players)
@@ -52,7 +52,7 @@ class TurnEngineTest < Minitest::Test
       player.expect(:reset_turn_earning, nil)
       player.expect(:name, 'roro')
       player.expect(:behavior, :random)
-      player.expect(:move, :betrays)
+      player.expect(:display_move, 'trahit')
       player.expect(:score, 10)
       player.expect(:turn_earning, 0)
     end

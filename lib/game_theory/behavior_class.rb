@@ -17,10 +17,6 @@ class Behavior
     BEHAVIORS.keys
   end
 
-  def self.choose_random_move
-    rand(0..1).zero? ? :betrays : :cooperates
-  end
-
   attr_reader :type, :history
 
   def initialize(type:, history:)
@@ -29,13 +25,35 @@ class Behavior
     @history = history
   end
 
-  def choose_move
+  def choose_move(player)
     case type
     when :naive   then :cooperates
     when :traitor then :betrays
-    when :random  then Behavior.choose_random_move
+    when :random  then choose_random_move
+    when :quick_adapter then adapt_quickly(player)
+    when :slow_adapter then adapt_slowly(player)
     else
       :do_not_know
+    end
+  end
+
+  def choose_random_move
+    rand(0..1).zero? ? :betrays : :cooperates
+  end
+
+  def adapt_quickly(player)
+    if history.empty?
+      :cooperates
+    else
+      history.has_a_traitor_on_last_turn?(player) ? :betrays : :cooperates
+    end
+  end
+
+  def adapt_slowly(player)
+    if history.has_less_than_three_turns?
+      :cooperates
+    else
+      history.has_a_traitor_on_last_three_turns?(player) ? :betrays : :cooperates
     end
   end
 

@@ -14,6 +14,10 @@ class TurnEngine
         --------------------------
       TURN
     end
+
+    def has_a_traitor?
+      move == 'trahit'
+    end
   end
 
   def initialize(game_logic, history)
@@ -59,7 +63,7 @@ class TurnEngine
     players.each_with_object([]) do |player, container|
       container << Turn.new.tap do |turn|
         turn.name = player.name
-        turn.move = player.move
+        turn.move = player.display_move
         turn.earning = player.turn_earning
         turn.behavior = player.behavior
         turn.score = player.score

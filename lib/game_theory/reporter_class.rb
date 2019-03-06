@@ -22,7 +22,7 @@ class Reporter
   def display_short_game_report
     print_message('Les scores sont:', color: :light_blue)
 
-    display_in_table(players, :name, :score)
+    display_in_table(players, :name, :behavior, :score)
   end
 
   def display_full_game_report(history)
