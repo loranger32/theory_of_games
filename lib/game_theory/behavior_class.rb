@@ -1,24 +1,10 @@
-class BehaviorArgumentError < ArgumentError; end
+
 
 # Behavior class - stores the possible behaviors and the choose move logic
 class Behavior
-  BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
-                'r' => :quick_adapter, 'l' => :slow_adapter }.freeze
+  
 
-  TRANSLATIONS = { naive: 'naif', traitor: 'traitre', random: 'au hasard',
-                   slow_adapter: 'change lentement',
-                   quick_adapter: 'change vite' }.freeze
-
-  def self.behaviors
-    BEHAVIORS
-  end
-
-  def self.valid_behavior_choices
-    BEHAVIORS.keys
-  end
-
-  attr_reader :type, :history
-
+ 
   def initialize(type:, history:)
     validate_arguments(type, history)
     @type = type
@@ -43,28 +29,12 @@ class Behavior
 
   private
 
-  def choose_random_move
-    rand(0..1).zero? ? :betrays : :cooperates
-  end
+  
 
-  def adapt_quickly(player)
-    if history.empty?
-      :cooperates
-    else
-      history.traitor_on_last_turn?(player) ? :betrays : :cooperates
-    end
-  end
+  
 
   def adapt_slowly(player)
-    if history.less_than_three_turns?
-      :cooperates
-    elsif history.traitor_on_last_three_turns?(player)
-      :betrays
-    elsif history.naive_on_last_three_turns?(player)
-      :cooperates
-    else
-      history.pick_last_move_of_player(player)
-    end
+    
   end
 
   def validate_arguments(type, history)

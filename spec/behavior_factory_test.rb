@@ -1,7 +1,7 @@
 require_relative 'spec_helpers'
 require_relative '../lib/game_theory/displayable_module'
 require_relative '../lib/game_theory/validable_module'
-require_relative '../lib/game_theory/behavior_engine_class'
+require_relative '../lib/game_theory/behavior_factory_class'
 
 class BehaviorEngineTest < Minitest::Test
   BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,

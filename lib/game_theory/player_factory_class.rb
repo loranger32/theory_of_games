@@ -5,17 +5,17 @@ class PlayerFactory
 
   attr_reader :players
 
-  def initialize(player_class, score_class, name_engine, behavior_engine)
+  def initialize(player_class, score_class, name_engine, behavior_factory)
     Displayable.set_io_variables_on(self)
-    @player_class     = player_class
-    @score_class      = score_class
-    @name_engine      = name_engine
-    @behavior_engine  = behavior_engine
-    @players          = []
+    @player_class      = player_class
+    @score_class       = score_class
+    @name_engine       = name_engine
+    @behavior_factory  = behavior_factory
+    @players           = []
   end
 
   def create_players
-    until @choice_confirmed
+    loop do
       number_of_players = ask_number_of_players_to_create
       collect_data_for_player_creation(number_of_players)
       return players if confirm_players?
@@ -37,7 +37,7 @@ class PlayerFactory
   def collect_data_for_player_creation(number_of_players)
     1.upto(number_of_players) do |player_number|
       name = @name_engine.choose_player_name(player_number)
-      behavior = @behavior_engine.choose_player_behavior
+      behavior = @behavior_factory.create_behavior
       players << @player_class.new(score: @score_class.new, behavior: behavior,
                                    name: name)
     end
