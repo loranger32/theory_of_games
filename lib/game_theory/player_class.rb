@@ -3,10 +3,10 @@ class Player
   attr_reader :name, :behavior, :score_recorder
   attr_accessor :move
 
-  def initialize(score:, behavior:, name:)
+  def initialize(name:, score:, behavior:)
+    @name = name
     @score_recorder = score
     @behavior = behavior
-    @name = name
     @move = nil
   end
 

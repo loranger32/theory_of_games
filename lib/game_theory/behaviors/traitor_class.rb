@@ -1,5 +1,4 @@
 class Traitor < Behavior
-  puts "I'm loaded too !!!"
   def post_initialize
     @type = :traitor
   end

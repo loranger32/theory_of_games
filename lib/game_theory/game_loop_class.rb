@@ -1,12 +1,14 @@
 # Main Game Loop
 class GameLoop
   include Displayable
+  include Validable
 
-  TURNS = 15
+  TURNS = 5
 
   attr_reader :players
 
   def initialize(turn_engine, reporter, player_factory)
+    Displayable.set_io_variables_on(self)
     @turn_engine = turn_engine
     @reporter = reporter
     @player_factory = player_factory
@@ -67,12 +69,7 @@ class GameLoop
 
   def play_again?
     prompt 'On refait un essai (o/n) ?'
-    answer = gets.chomp.downcase
-    until %w[o n].include?(answer)
-      prompt "Je n'ai pas compris. Veuillez choisir 'o' ou 'n'."
-      answer = gets.chomp.downcase
-    end
-    @still_playing = false if answer == 'n'
+    @still_playing = false if obtain_a_valid_input_from(%w[o n]) == 'n'
   end
 
   attr_reader :player_factory, :turn_engine, :reporter, :report_type

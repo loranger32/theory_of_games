@@ -1,5 +1,4 @@
 class Naive < Behavior
-  puts 'I am loaded'
   def post_initialize
     @type = :naive
   end
