@@ -39,8 +39,6 @@ class HistoryTest < Minitest::Test
     assert_equal @turn2.object_id, @history.last_turn.object_id
   end
 
-  def test_it_can_say
-
   def test_it_respond_to_each
     @history.store_turn(@turn1)
     @history.store_turn(@turn2)

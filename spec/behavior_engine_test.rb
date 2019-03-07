@@ -15,7 +15,7 @@ class BehaviorEngineTest < Minitest::Test
 
     BEHAVIORS.values.size.times do |behavior|
       @behavior_class.expect(:new, Minitest::Mock.new,
-                             [{type: behavior, history: @history}])
+                             [{ type: behavior, history: @history }])
     end
 
     @behavior_engine = BehaviorEngine.new(@behavior_class, @history)

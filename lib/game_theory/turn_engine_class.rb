@@ -15,11 +15,11 @@ class TurnEngine
       TURN
     end
 
-    def has_a_traitor?
+    def a_traitor?
       move == 'trahit'
     end
 
-    def has_a_naive?
+    def a_naive?
       move == 'coopère'
     end
   end

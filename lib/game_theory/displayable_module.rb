@@ -34,21 +34,21 @@ module Displayable
 
   def print_message(message, color: nil)
     if color.nil?
-      puts "#{message}".light_blue
+      puts message.light_blue
     elsif Helpers.valid_color?(color)
-      puts "#{message}".send(color)
+      puts message.send(color)
     else
-      puts "#{message}".light_blue
+      puts message.light_blue
     end
   end
 
   def print_on_line(message, color: nil)
     if color.nil?
-      print "#{message}".light_blue
+      print message.light_blue
     elsif Helpers.valid_color?(color)
-      print "#{message}".send(color)
+      print message.send(color)
     else
-      print "#{message}".light_blue
+      print message.light_blue
     end
   end
 
@@ -57,7 +57,7 @@ module Displayable
   end
 
   def prompt(message)
-    puts message.to_s.green
+    puts message.green
     print '=> '.green
   end
 
@@ -79,6 +79,8 @@ module Displayable
     number_of_lines_to_skip.times { puts '' }
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # Could be refactored => for the gem
   def display_in_table(collection, *attributes)
     Helpers.validate_table_arguments(collection, attributes)
 
@@ -87,9 +89,9 @@ module Displayable
     attributes.each do |attribute|
       collection.each do |item|
         print_on_line('|', color: :yellow)
-        print_on_line("#{item.send(attribute)}".center(COLOM_LENGTH - 2),
+        print_on_line(item.send(attribute).to_s.center(COLOM_LENGTH - 2),
                       color: :yellow)
-        print_on_line("|", color: :yellow)
+        print_on_line('|', color: :yellow)
       end
       skip_lines(1)
       print_message('-' * COLOM_LENGTH * collection.size, color: :yellow) \
@@ -99,7 +101,9 @@ module Displayable
     print_message('+' * COLOM_LENGTH * collection.size, color: :yellow)
     skip_lines(1)
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
+  # A helper module
   module Helpers
     module_function
 
@@ -120,8 +124,9 @@ module Displayable
 
     def validate_attributes(item, attributes)
       attributes.each do |attribute|
-        err_msg = "The attributes must be valid for the items in the collection.\
- ##{attribute} is not a valid attribute for objects of class #{item.class}."
+        err_msg = "The attributes must be valid for the items in their\
+ collection. ##{attribute} is not a valid attribute for objects of\
+ class #{item.class}."
         raise TableArgumentError, err_msg unless item.respond_to?(attribute)
       end
     end

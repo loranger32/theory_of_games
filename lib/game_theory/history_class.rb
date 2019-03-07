@@ -36,40 +36,43 @@ class History
     turns[-3..-1]
   end
 
-  def has_less_than_three_turns?
+  def less_than_three_turns?
     turns.size < 3
   end
 
   def traitor_on_last_turn?(player)
     last_turn.any? do |player_turn|
       next if player_turn.name == player.name
-      player_turn.has_a_traitor?
+
+      player_turn.a_traitor?
     end
   end
 
   def traitor_on_last_three_turns?(player)
     last_three_turns.all? do |turn|
-      last_turn.any? do |player_turn|
+      turn.any? do |player_turn|
         next if player_turn.name == player.name
-        player_turn.has_a_traitor?
-      end 
+
+        player_turn.a_traitor?
+      end
     end
   end
 
   def naive_on_last_three_turns?(player)
     last_three_turns.all? do |turn|
-      last_turn.all? do |player_turn|
+      turn.all? do |player_turn|
         next if player_turn.name == player.name
-        player_turn.has_a_naive?
-      end 
+
+        player_turn.a_naive?
+      end
     end
   end
 
   def pick_last_move_of_player(player)
-    player_turn = last_turn.find do |player_turn|
+    last_player_turn = last_turn.find do |player_turn|
       player_turn.name == player.name
     end
-    player_turn.move
+    last_player_turn.move
   end
 
   def display

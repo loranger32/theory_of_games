@@ -38,10 +38,12 @@ class PlayerFactoryTest < Minitest::Test
     2.times { @behavior_engine.expect(:choose_player_behavior, :random) }
 
     @player_class.expect(:new, @player1,
-                         [score: @score_class.new, name: 'Roger', behavior: :random])
+                         [score: @score_class.new, name: 'Roger',
+                          behavior: :random])
 
     @player_class.expect(:new, @player2,
-                         [score: @score_class.new, name: 'Tim', behavior: :random])
+                         [score: @score_class.new, name: 'Tim',
+                          behavior: :random])
 
     capture_io do
       assert_equal players, @player_factory.create_players

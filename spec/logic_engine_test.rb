@@ -52,6 +52,7 @@ class LogicEngineTest < Minitest::Test
     @earning_engine.verify
   end
 
+  # rubocop:disable Metrics/MethodLength
   def test_process_move_give_appropriate_earnings_to_mixed_two_players
     3.times do
       @player1.expect(:betrays?, true)
@@ -73,3 +74,4 @@ class LogicEngineTest < Minitest::Test
     @earning_engine.verify
   end
 end
+# rubocop:enable Metrics/MethodLength

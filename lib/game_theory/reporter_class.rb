@@ -35,8 +35,8 @@ class Reporter
   private
 
   def want_full_report?
-    prompt("Voulez-vous également un rapport détaillé tour par tour (o/n) ?")
-    obtain_a_valid_input_from(%w(o n)) == 'o'
+    prompt('Voulez-vous également un rapport détaillé tour par tour (o/n) ?')
+    obtain_a_valid_input_from(%w[o n]) == 'o'
   end
 
   attr_reader :players

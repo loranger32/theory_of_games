@@ -50,7 +50,7 @@ class Behavior
   end
 
   def adapt_slowly(player)
-    if history.has_less_than_three_turns?
+    if history.less_than_three_turns?
       :cooperates
     elsif history.traitor_on_last_three_turns?(player)
       :betrays

@@ -54,13 +54,13 @@ class PlayerMovesTest < Minitest::Test
 
   def setup
     create_score_mocks
-    create_behavior_mocks    
+    create_behavior_mocks
     @good_guy = Player.new(score: @gg_score, name: 'Test Good Guy',
                            behavior: @naive)
     @bad_guy = Player.new(score: @bg_score, name: 'Test Bad Guy',
                           behavior: @traitor)
     @random_guy = Player.new(score: @rg_score, name: 'Test Random Guy',
-                                        behavior: @random)
+                             behavior: @random)
     @players = [@good_guy, @bad_guy, @random_guy]
   end
 
