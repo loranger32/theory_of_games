@@ -37,6 +37,12 @@ class Behavior
     end
   end
 
+  def to_s
+    TRANSLATIONS[type]
+  end
+
+  private
+
   def choose_random_move
     rand(0..1).zero? ? :betrays : :cooperates
   end
@@ -60,12 +66,6 @@ class Behavior
       history.pick_last_move_of_player(player)
     end
   end
-
-  def to_s
-    TRANSLATIONS[type]
-  end
-
-  private
 
   def validate_arguments(type, history)
     validate_type(type)

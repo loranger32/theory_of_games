@@ -27,7 +27,23 @@ class BehaviorInitializationTest < Minitest::Test
   end
 end
 
-class BehaviorTest < Minitest::Test
+class BehaviorAccessorTest < Minitest::Test
+  def setup
+    @history = Minitest::Mock.new
+    @history.expect(:store_turn, nil)
+    @behavior = Behavior.new(type: :random, history: @history)
+  end
+
+  def test_it_has_a_type_reader_accessor
+    assert_equal :random, @behavior.type
+  end
+
+  def test_it_has_a_history_reader_accessor
+    assert_equal @history.object_id, @behavior.history.object_id
+  end
+end
+
+class BehaviorInMessagesTest < Minitest::Test
   def setup
     @history = Minitest::Mock.new
     @history.expect(:store_turn, nil)
