@@ -3,11 +3,11 @@ class BehaviorArgumentError < ArgumentError; end
 # Behavior class - stores the possible behaviors and the choose move logic
 class Behavior
   BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
-                'r' => :quick_adapter, 's' => :slow_adapter }.freeze
+                'r' => :quick_adapter, 'l' => :slow_adapter }.freeze
 
   TRANSLATIONS = { naive: 'naif', traitor: 'traitre', random: 'au hasard',
-                   slow_adapter: "change lentement",
-                   quick_adapter: "change vite"}.freeze
+                   slow_adapter: 'change lentement',
+                   quick_adapter: 'change vite' }.freeze
 
   def self.behaviors
     BEHAVIORS
@@ -27,11 +27,11 @@ class Behavior
 
   def choose_move(player)
     case type
-    when :naive   then :cooperates
-    when :traitor then :betrays
-    when :random  then choose_random_move
+    when :naive         then :cooperates
+    when :traitor       then :betrays
+    when :random        then choose_random_move
     when :quick_adapter then adapt_quickly(player)
-    when :slow_adapter then adapt_slowly(player)
+    when :slow_adapter  then adapt_slowly(player)
     else
       :do_not_know
     end
@@ -45,15 +45,19 @@ class Behavior
     if history.empty?
       :cooperates
     else
-      history.has_a_traitor_on_last_turn?(player) ? :betrays : :cooperates
+      history.traitor_on_last_turn?(player) ? :betrays : :cooperates
     end
   end
 
   def adapt_slowly(player)
     if history.has_less_than_three_turns?
       :cooperates
+    elsif history.traitor_on_last_three_turns?(player)
+      :betrays
+    elsif history.naive_on_last_three_turns?(player)
+      :cooperates
     else
-      history.has_a_traitor_on_last_three_turns?(player) ? :betrays : :cooperates
+      history.pick_last_move_of_player(player)
     end
   end
 
@@ -71,7 +75,7 @@ class Behavior
   def validate_type(type)
     err_msg = "Invalid behavior argument. Got #{type}, but must be one of the \
  following: #{BEHAVIORS.values.join(', ')}."
-    raise BehaviorArgumentError, err_msg unless BEHAVIORS.values.include?(type)
+    raise BehaviorArgumentError, err_msg unless BEHAVIORS.value?(type)
   end
 
   def validate_history(history)

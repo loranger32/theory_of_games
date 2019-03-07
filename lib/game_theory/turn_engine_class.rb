@@ -18,6 +18,10 @@ class TurnEngine
     def has_a_traitor?
       move == 'trahit'
     end
+
+    def has_a_naive?
+      move == 'coopère'
+    end
   end
 
   def initialize(game_logic, history)
