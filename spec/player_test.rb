@@ -50,7 +50,7 @@ class PlayerMovesTest < Minitest::Test
   def setup
     @score_recorder = Minitest::Mock.new
     @behavior = Minitest::Mock.new
-    @player = Player.new(name: 'Test Player', score_recorder: @gg_score,
+    @player = Player.new(name: 'Test Player', score_recorder: @score_recorder,
                          behavior: @behavior)
     @behavior.expect(:choose_move, :cooperates, [@player])
   end
