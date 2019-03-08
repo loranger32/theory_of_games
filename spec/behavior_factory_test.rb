@@ -1,38 +1,33 @@
 require_relative 'spec_helpers'
 require_relative '../lib/game_theory/displayable_module'
 require_relative '../lib/game_theory/validable_module'
+require_bahavior_classes
 require_relative '../lib/game_theory/behavior_factory_class'
 
-class BehaviorEngineTest < Minitest::Test
-  BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
-                'r' => :quick_adapter, 's' => :slow_adapter }.freeze
+class BehaviorFactoryTest < Minitest::Test
   def setup
-    @behavior_class = Minitest::Mock.new
-    @behavior_class.expect(:[], nil)
-    @behavior_class.expect(:behaviors, BEHAVIORS)
-    @behavior_class.expect(:valid_behavior_choices, BEHAVIORS.keys)
     @history = Minitest::Mock.new
+    @behavior_factory = BehaviorFactory.new(@history)
+  end
 
-    BEHAVIORS.values.size.times do |behavior|
-      @behavior_class.expect(:new, Minitest::Mock.new,
-                             [{ type: behavior, history: @history }])
-    end
-
-    @behavior_engine = BehaviorEngine.new(@behavior_class, @history)
+  def test_it_has_a_history_reader_attribute
+    assert_equal @history.object_id, @behavior_factory.history.object_id
   end
 
   def test_it_responds_to_coose_behavior_method
-    skip
-    assert_respond_to(@behavior_engine, :choose_player_behavior)
+    assert_respond_to(@behavior_factory, :create_behavior)
   end
 
   def test_it_chooses_correctly_player_behavior
-    skip
-    BEHAVIORS.keys.each do |choice|
-      @behavior_engine.input = StringIO.new(choice)
+    behavior_classes = BehaviorFactory::BEHAVIOR_CLASSES
+    behaviors = BehaviorFactory::BEHAVIORS
+
+    BehaviorFactory::BEHAVIORS.keys.each do |choice|
+      @behavior_factory.input = StringIO.new(choice)
       capture_io do
-        behavior = @behavior_engine.choose_player_behavior
-        assert_is_a? Minitest::Mock, behavior
+        behavior = @behavior_factory.create_behavior
+        expected_class = behavior_classes[behaviors[choice]]
+        assert_instance_of expected_class, behavior
       end
     end
   end
