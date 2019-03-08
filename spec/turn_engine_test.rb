@@ -1,19 +1,35 @@
 require_relative 'spec_helpers'
 require_relative '../lib/game_theory/turn_engine_class'
 
+module TurnEngineTestHelper
+  def general_setup
+    @player1     = Minitest::Mock.new
+    @player2     = Minitest::Mock.new
+    @players     = [@player1, @player2]
+    @game_logic  = Minitest::Mock.new
+    @history     = Minitest::Mock.new
+    @turn_class  = Minitest::Mock.new
+    @turn_engine = TurnEngine.new(@game_logic, @history, @turn_class)
+  end
+end
+
 class TurnEngineTest < Minitest::Test
+  include TurnEngineTestHelper
+
   def setup
-    @player1 = Minitest::Mock.new
-    @player2 = Minitest::Mock.new
-    @players = [@player1, @player2]
-    @game_logic = Minitest::Mock.new
-    @history = Minitest::Mock.new
-    @turn_engine = TurnEngine.new(@game_logic, @history)
+    general_setup      
   end
 
-  def test_it_has_players_and_game_logic_attribute_readers
-    assert_respond_to(@turn_engine, :players)
-    assert_respond_to(@turn_engine, :game_logic)
+  def test_it_has_a_game_logic_reader_accessor
+    assert_equal @game_logic.object_id, @turn_engine.game_logic.object_id
+  end
+
+  def test_it_has_a_history_reader_accessor
+    assert_equal @history.object_id, @turn_engine.history.object_id
+  end
+
+  def test_it_has_a_turn_class_reader_aaccessor
+    assert_equal @turn_class.object_id, @turn_engine.turn_class.object_id
   end
 
   def test_it_has_players_attribue_set_to_nil_on_initialisation
@@ -24,13 +40,24 @@ class TurnEngineTest < Minitest::Test
     assert_equal @game_logic.object_id, @turn_engine.game_logic.object_id
   end
 
-  def test_it_can_assigns_players_to_self_and_game_logic
+  def test_it_can_assigns_players
     @game_logic.expect(:assign_players, nil, [@players])
     @history.expect(:assign_players, nil, [@players])
     @turn_engine.assign_players(@players)
     assert_equal @players, @turn_engine.players
     @game_logic.verify
     @history.verify
+  end
+end
+
+class TurnEngineOperationsTest < Minitest::Test
+  include TurnEngineTestHelper
+
+  def setup
+    general_setup
+    @game_logic.expect(:assign_players, nil, [@players])
+    @history.expect(:assign_players, nil, [@players])
+    @turn_engine.assign_players(@players)
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
