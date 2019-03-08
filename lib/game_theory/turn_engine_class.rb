@@ -16,11 +16,11 @@ class TurnEngine
     end
 
     def a_traitor?
-      move == 'trahit'
+      move == :betrays
     end
 
     def a_naive?
-      move == 'coopère'
+      move == :cooperates
     end
   end
 

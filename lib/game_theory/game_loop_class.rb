@@ -3,7 +3,7 @@ class GameLoop
   include Displayable
   include Validable
 
-  TURNS = 5
+  TURNS = 25
 
   attr_reader :players
 
