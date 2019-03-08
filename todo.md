@@ -3,10 +3,10 @@
 ## Open
 |status| date | description |
 |:---|:---:| ---|
-|open|22/02/2019|Add tests for the validable module|
+|open|08/03/2019|Make a separate class for turns|
+|open|08/03/2019|Make a separate class for interface|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
-|open|06/03/2019|Implement the adapters|
 |open|18/02/2019|Allow exporting the reports in a file|
 | ||- Create a class to store history|
 | ||- Pass the instance of the history class to reporter|
@@ -38,4 +38,8 @@
 |DONE|28/02/2019|Fix issue when playing with more than 2 players|
 |DONE|05/03/2019|make the short report form the default, with an option to add long form|
 |DONE|06/03/2019|Create a behavior class|
+|DONE|06/03/2019|Create a behavior abstract class|
+|DONE|06/03/2019|Create concrete behavior classes|
+|DONE|08/03/2019|Implement the adapters|
+
 

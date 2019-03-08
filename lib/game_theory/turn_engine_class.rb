@@ -1,33 +1,12 @@
 # The engine responsible for manging turns
 class TurnEngine
-  attr_reader :game_logic, :players, :history
+  attr_reader :game_logic, :players, :history, :turn_class
 
-  Turn = Struct.new(:name, :move, :display_move, :earning, :behavior, :score,
-                    keyword_init: true) do
-    def to_s
-      <<~TURN
-        #{name}:
-        - behavior : #{behavior}
-        - move : #{display_move}
-        - earning : #{earning}
-        - score : #{score}
-        --------------------------
-      TURN
-    end
-
-    def a_traitor?
-      move == :betrays
-    end
-
-    def a_naive?
-      move == :cooperates
-    end
-  end
-
-  def initialize(game_logic, history)
-    @players = nil
+  def initialize(game_logic, history, turn_class)
+    @players    = nil
     @game_logic = game_logic
-    @history = history
+    @history    = history
+    @turn_class = turn_class
   end
 
   def assign_players(players)
@@ -69,14 +48,11 @@ class TurnEngine
 
   def format_turn(players)
     players.each_with_object([]) do |player, container|
-      container << Turn.new.tap do |turn|
-        turn.name = player.name
-        turn.move = player.move
-        turn.display_move = player.display_move
-        turn.earning = player.turn_earning
-        turn.behavior = player.behavior
-        turn.score = player.score
-      end
+      container << turn_class.new(name: player.name, move: player.move,
+                                  display_move: player.display_move,
+                                  earning: player.turn_earning, 
+                                  behavior: player.behavior,
+                                  score: player.score)
     end
   end
 end
