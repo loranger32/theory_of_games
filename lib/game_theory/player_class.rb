@@ -3,9 +3,9 @@ class Player
   attr_reader :name, :behavior, :score_recorder
   attr_accessor :move
 
-  def initialize(name:, score:, behavior:)
+  def initialize(name:, score_recorder:, behavior:)
     @name = name
-    @score_recorder = score
+    @score_recorder = score_recorder
     @behavior = behavior
     @move = nil
   end
