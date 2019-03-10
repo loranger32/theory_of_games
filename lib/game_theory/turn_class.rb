@@ -1,6 +1,16 @@
 # A class to model turns to be stored in the history instance
 class Turn
 
+  def self.create_turn(players)
+    players.each_with_object([]) do |player, container|
+      container << new(name: player.name, move: player.move,
+                       display_move: player.display_move,
+                       earning: player.turn_earning,
+                       behavior: player.behavior,
+                       score: player.score)
+    end
+  end
+
   attr_reader :name, :move, :display_move, :earning, :behavior, :score
 
   def initialize(name:, move:, display_move:, earning:, behavior:, score:)

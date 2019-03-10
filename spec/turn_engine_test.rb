@@ -11,9 +11,35 @@ module TurnEngineTestHelper
     @turn_class  = Minitest::Mock.new
     @turn_engine = TurnEngine.new(@game_logic, @history, @turn_class)
   end
+
+  def set_up_players_for_turn
+    @players.each do |player|
+      player.expect(:play_move, nil)
+      player.expect(:reset_turn_earning, nil)
+      player.expect(:reset_move, nil)
+    end
+  end
+
+  def set_up_game_logic_for_turn
+    @game_logic.expect(:assign_players, nil, [@players])
+    @game_logic.expect(:process_moves, nil)
+  end
+
+  def set_up_history_for_turn
+    @history.expect(:assign_players, nil, [@players])
+    @history.expect(:store_turn, nil, [:result])
+  end
+
+  def set_up_mocks_for_turn
+    set_up_players_for_turn
+    set_up_game_logic_for_turn
+    set_up_history_for_turn
+    
+    @turn_class.expect(:create_turn, :result, [@players])
+  end
 end
 
-class TurnEngineTest < Minitest::Test
+class TurnEngineBasicsTest < Minitest::Test
   include TurnEngineTestHelper
 
   def setup
@@ -60,46 +86,48 @@ class TurnEngineOperationsTest < Minitest::Test
     @turn_engine.assign_players(@players)
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def test_it_can_reset_players_scores
+    @players.each { |player| player.expect(:reset_score, nil) }
+    @turn_engine.reset_players_score
+    @players.each(&:verify)
+  end
+
+  def test_it_can_reset_players_turns_earning
+    @players.each { |player| player.expect(:reset_turn_earning, nil) }
+    @turn_engine.reset_players_turn_earning
+    @players.each(&:verify)
+  end
+
+  def test_it_can_reset_history
+    @history.expect(:reset!, nil)
+    @turn_engine.reset_history!
+    @history.verify
+  end
+
+  def test_it_can_reset_players_move
+    @players.each { |player| player.expect(:reset_move, nil) }
+    @turn_engine.reset_players_move
+    @players.each(&:verify)
+  end
+
+  def test_it_can_store_turn
+    @turn_class.expect(:create_turn, :result, [@players])
+    @history.expect(:store_turn, nil, [:result])    
+
+    @turn_engine.store_turn
+    @history.verify
+    @turn_class.verify
+  end
+
   def test_play_turn_method_actually_play_the_whole_turn
-    skip
-    @game_logic.expect(:assign_players, nil, [@players])
-    @history.expect(:assign_players, nil, [@players])
-
-    turn1 = TurnEngine::Turn.new(name: 'roro', behavior: :random,
-                                 move: 'trahit', score: 10, earning: 0)
-    turn2 = TurnEngine::Turn.new(name: 'roro', behavior: :random,
-                                 move: 'trahit', score: 10, earning: 0)
-
-    @history.expect(:store_turn, nil, [[turn1, turn2]])
+    set_up_mocks_for_turn
+    
     @turn_engine.assign_players(@players)
-
-    @players.each do |player|
-      player.expect(:play_move, nil)
-      player.expect(:reset_move, nil)
-      player.expect(:reset_turn_earning, nil)
-      player.expect(:name, 'roro')
-      player.expect(:behavior, :random)
-      player.expect(:display_move, 'trahit')
-      player.expect(:score, 10)
-      player.expect(:turn_earning, 0)
-    end
-
-    @game_logic.expect(:process_moves, nil)
 
     @turn_engine.play_turn
     @players.each(&:verify)
     @game_logic.verify
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-  def test_it_can_reset_player_scores
-    @game_logic.expect(:assign_players, nil, [@players])
-    @history.expect(:assign_players, nil, [@players])
-    @turn_engine.assign_players(@players)
-
-    @players.each { |player| player.expect(:reset_score, nil) }
-    @turn_engine.reset_players_score
-    @players.each(&:verify)
+    @turn_class.verify
+    @history.verify
   end
 end

@@ -1,6 +1,6 @@
 # The engine responsible for manging turns
 class TurnEngine
-  attr_reader :game_logic, :players, :history, :turn_class
+  attr_reader :players, :game_logic, :history, :turn_class
 
   def initialize(game_logic, history, turn_class)
     @players    = nil
@@ -27,6 +27,10 @@ class TurnEngine
     players.each(&:reset_score)
   end
 
+  def reset_players_move
+    @players.map(&:reset_move)
+  end
+
   def reset_players_turn_earning
     players.each(&:reset_turn_earning)
   end
@@ -36,23 +40,7 @@ class TurnEngine
   end
 
   def store_turn
-    formatted_turn = format_turn(players)
+    formatted_turn = turn_class.create_turn(players)
     history.store_turn(formatted_turn)
-  end
-
-  private
-
-  def reset_players_move
-    @players.map(&:reset_move)
-  end
-
-  def format_turn(players)
-    players.each_with_object([]) do |player, container|
-      container << turn_class.new(name: player.name, move: player.move,
-                                  display_move: player.display_move,
-                                  earning: player.turn_earning, 
-                                  behavior: player.behavior,
-                                  score: player.score)
-    end
   end
 end
