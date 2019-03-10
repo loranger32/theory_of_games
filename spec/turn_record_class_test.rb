@@ -1,10 +1,10 @@
 require_relative 'spec_helpers'
-require_relative '../lib/game_theory/turn_class'
+require_relative '../lib/game_theory/turn_record_class'
 
 class TurnTest < Minitest::Test
   def setup
     @behavior = Minitest::Mock.new
-    @turn = Turn.new(name: 'Test Player', move: :cooperates,
+    @turn_record = TurnRecord.new(name: 'Test Player', move: :cooperates,
                      display_move: 'coopère', earning: 3, behavior: @behavior, score: 20)
   end
 
@@ -33,48 +33,48 @@ class TurnTest < Minitest::Test
 
   end
 
-  def test_it_can_create_turns
+  def test_it_can_create_turn_records
     create_mock_player_one
     create_mock_player_two
-    turn = Turn.create_turn([@player1, @player2])
+    turn = TurnRecord.create_turn_records([@player1, @player2])
 
     assert_instance_of(Array, turn)
     assert_equal 2, turn.size
-    assert_instance_of(Turn, turn.first)
-    assert_instance_of(Turn, turn.last)
+    assert_instance_of(TurnRecord, turn.first)
+    assert_instance_of(TurnRecord, turn.last)
     assert_equal 'Test Player One', turn.first.name
     assert_equal 'Test Player Two', turn.last.name
   end
 
   def test_it_has_a_name_reader_accessor
-    assert_equal 'Test Player', @turn.name
+    assert_equal 'Test Player', @turn_record.name
   end
 
   def test_it_has_a_move_reader_accessor
-    assert_equal :cooperates, @turn.move
+    assert_equal :cooperates, @turn_record.move
   end
 
   def test_it_has_a_display_move_reader_accessor
-    assert_equal 'coopère', @turn.display_move
+    assert_equal 'coopère', @turn_record.display_move
   end
 
   def test_it_has_a_earning_reader_accessor
-    assert_equal 3, @turn.earning
+    assert_equal 3, @turn_record.earning
   end
 
   def test_it_has_a_behavior_reader_accessor
-    assert_equal @behavior.object_id, @turn.behavior.object_id
+    assert_equal @behavior.object_id, @turn_record.behavior.object_id
   end
 
   def test_it_has_a_score_reader_accessor
-    assert_equal 20, @turn.score
+    assert_equal 20, @turn_record.score
   end
 
   def test_it_says_if_a_turn_has_a_naive
-    assert @turn.a_naive?
+    assert @turn_record.a_naive?
   end
 
   def test_it_says_if_a_trun_has_a_traitor
-    refute @turn.a_traitor?
+    refute @turn_record.a_traitor?
   end
 end

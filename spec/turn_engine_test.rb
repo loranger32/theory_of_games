@@ -35,7 +35,7 @@ module TurnEngineTestHelper
     set_up_game_logic_for_turn
     set_up_history_for_turn
     
-    @turn_class.expect(:create_turn, :result, [@players])
+    @turn_class.expect(:create_turn_records, :result, [@players])
   end
 end
 
@@ -111,7 +111,7 @@ class TurnEngineOperationsTest < Minitest::Test
   end
 
   def test_it_can_store_turn
-    @turn_class.expect(:create_turn, :result, [@players])
+    @turn_class.expect(:create_turn_records, :result, [@players])
     @history.expect(:store_turn, nil, [:result])    
 
     @turn_engine.store_turn

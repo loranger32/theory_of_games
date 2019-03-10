@@ -1,7 +1,7 @@
 # A class to model turns to be stored in the history instance
-class Turn
+class TurnRecord
 
-  def self.create_turn(players)
+  def self.create_turn_records(players)
     players.each_with_object([]) do |player, container|
       container << new(name: player.name, move: player.move,
                        display_move: player.display_move,

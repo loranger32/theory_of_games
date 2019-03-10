@@ -40,7 +40,7 @@ class TurnEngine
   end
 
   def store_turn
-    formatted_turn = turn_class.create_turn(players)
+    formatted_turn = turn_class.create_turn_records(players)
     history.store_turn(formatted_turn)
   end
 end

@@ -9,7 +9,7 @@ require_relative 'game_theory/messages_module'
 require_relative 'game_theory/displayable_module'
 require_relative 'game_theory/validable_module'
 require_relative 'game_theory/history_class'
-require_relative 'game_theory/turn_class'
+require_relative 'game_theory/turn_record_class'
 
 # Require first the abstract Behavior class
 require_relative 'game_theory/behaviors/behavior_class'
@@ -54,7 +54,7 @@ earning_engine = EarningEngine.new
 logic_engine = LogicEngine.new(earning_engine)
 
 # Engine that process turns - needs the logic engine and the history
-turn_engine = TurnEngine.new(logic_engine, history, Turn)
+turn_engine = TurnEngine.new(logic_engine, history, TurnRecord)
 
 # Engine that generates the reports
 reporter = Reporter.new
