@@ -3,8 +3,10 @@ class InvalidNameArgumentError < ArgumentError; end
 
 # Class responsible for name choice, both custom and random
 class NameEngine
-  # Allow word characters, a new line or an empty string
-  NAME_PATTERN = /\A[\w+]|\n|\z/.freeze
+  # Allow word characters, maximum of 3 sequences separated by space(s)
+  NAME_PATTERN = /\A\w+(\s+\w+){0,2}\z/.freeze
+
+  attr_reader :choosen_names
 
   def initialize(random_name_list)
     @random_names = random_name_list
@@ -40,7 +42,7 @@ class NameEngine
 
   private
 
-  attr_reader :random_names, :choosen_names
+  attr_reader :random_names
 
   def validate_argument(name)
     err_msg = "Invalide choice argument. Expect nil or a string, got #{name}\
