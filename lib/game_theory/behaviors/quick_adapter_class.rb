@@ -1,3 +1,4 @@
+# Concrete class for the quick adapter behavior
 class QuickAdapter < Behavior
   def post_initialize
     @type = :quick_adapter

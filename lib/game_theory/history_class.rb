@@ -60,7 +60,7 @@ class History
 
   def naive_on_last_three_turns?(player)
     last_three_turns_of_other_players = exclude_player_own_turns(player)
-    
+
     last_three_turns_of_other_players.all? do |turn|
       turn.all? do |player_turn|
         next if player_turn.name == player.name

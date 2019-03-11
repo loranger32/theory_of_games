@@ -5,45 +5,48 @@ class TurnTest < Minitest::Test
   def setup
     @behavior = Minitest::Mock.new
     @turn_record = TurnRecord.new(name: 'Test Player', move: :cooperates,
-                     display_move: 'coopère', earning: 3, behavior: @behavior, score: 20)
+                                  display_move: 'coopère', earning: 3,
+                                  behavior: @behavior, score: 20)
   end
 
   def create_mock_player_one
     @behavior1 = Minitest::Mock.new
     @score1    = Minitest::Mock.new
     @player1   = Minitest::Mock.new
-    @player1.expect(:name, 'Test Player One')  
-    @player1.expect(:move, :betrays)  
-    @player1.expect(:display_move, 'trahit')  
-    @player1.expect(:turn_earning, 5)  
-    @player1.expect(:behavior, @behavior1)  
-    @player1.expect(:score, @score1)  
+    @player1.expect(:name, 'Test Player One')
+    @player1.expect(:move, :betrays)
+    @player1.expect(:display_move, 'trahit')
+    @player1.expect(:turn_earning, 5)
+    @player1.expect(:behavior, @behavior1)
+    @player1.expect(:score, @score1)
   end
 
   def create_mock_player_two
     @behavior2 = Minitest::Mock.new
     @score2    = Minitest::Mock.new
     @player2   = Minitest::Mock.new
-    @player2.expect(:name, 'Test Player Two')  
-    @player2.expect(:move, :cooperates)  
-    @player2.expect(:display_move, 'coopère')  
-    @player2.expect(:turn_earning, 0)  
-    @player2.expect(:behavior, @behavior2)  
-    @player2.expect(:score, @score2)  
+    @player2.expect(:name, 'Test Player Two')
+    @player2.expect(:move, :cooperates)
+    @player2.expect(:display_move, 'coopère')
+    @player2.expect(:turn_earning, 0)
+    @player2.expect(:behavior, @behavior2)
+    @player2.expect(:score, @score2)
+  end
 
+  def create_mock_players_and_create_records
+    create_mock_player_one
+    create_mock_player_two
+    TurnRecord.create_turn_records([@player1, @player2])
   end
 
   def test_it_can_create_turn_records
-    create_mock_player_one
-    create_mock_player_two
-    turn = TurnRecord.create_turn_records([@player1, @player2])
+    turn_records = create_mock_players_and_create_records
 
-    assert_instance_of(Array, turn)
-    assert_equal 2, turn.size
-    assert_instance_of(TurnRecord, turn.first)
-    assert_instance_of(TurnRecord, turn.last)
-    assert_equal 'Test Player One', turn.first.name
-    assert_equal 'Test Player Two', turn.last.name
+    assert_instance_of(Array, turn_records)
+    assert_equal 2, turn_records.size
+    turn_records.each { |record| assert_instance_of(TurnRecord, record) }
+    assert_equal 'Test Player One', turn_records.first.name
+    assert_equal 'Test Player Two', turn_records.last.name
   end
 
   def test_it_has_a_name_reader_accessor

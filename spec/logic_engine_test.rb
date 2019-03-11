@@ -18,7 +18,7 @@ class LogicEngineTest < Minitest::Test
   end
 
   def test_it_has_a_players_attributes_set_to_nil_on_instantiation
-    assert_equal nil, LogicEngine.new(@earning_engine).send(:players)
+    assert_nil LogicEngine.new(@earning_engine).send(:players)
   end
 
   def test_it_assigns_players_to_self

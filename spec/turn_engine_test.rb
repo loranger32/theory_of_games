@@ -34,7 +34,7 @@ module TurnEngineTestHelper
     set_up_players_for_turn
     set_up_game_logic_for_turn
     set_up_history_for_turn
-    
+
     @turn_class.expect(:create_turn_records, :result, [@players])
   end
 end
@@ -43,7 +43,7 @@ class TurnEngineBasicsTest < Minitest::Test
   include TurnEngineTestHelper
 
   def setup
-    general_setup      
+    general_setup
   end
 
   def test_it_has_a_game_logic_reader_accessor
@@ -112,7 +112,7 @@ class TurnEngineOperationsTest < Minitest::Test
 
   def test_it_can_store_turn
     @turn_class.expect(:create_turn_records, :result, [@players])
-    @history.expect(:store_turn, nil, [:result])    
+    @history.expect(:store_turn, nil, [:result])
 
     @turn_engine.store_turn
     @history.verify
@@ -121,7 +121,7 @@ class TurnEngineOperationsTest < Minitest::Test
 
   def test_play_turn_method_actually_play_the_whole_turn
     set_up_mocks_for_turn
-    
+
     @turn_engine.assign_players(@players)
 
     @turn_engine.play_turn

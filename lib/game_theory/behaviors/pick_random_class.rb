@@ -1,3 +1,4 @@
+# Concrete class for the pick at random behavior
 class PickRandom < Behavior
   def post_initialize
     @type = :random

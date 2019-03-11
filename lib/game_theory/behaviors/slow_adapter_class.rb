@@ -1,3 +1,4 @@
+# Concrete class for the slow adapter behavior
 class SlowAdapter < Behavior
   def post_initialize
     @type = :slow_adapter

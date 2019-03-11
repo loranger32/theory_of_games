@@ -5,7 +5,8 @@ class PlayerAttributesTest < Minitest::Test
   def setup
     @score_recorder = Minitest::Mock.new
     @behavior = Minitest::Mock.new
-    @player = Player.new(score_recorder: @score_recorder, name: 'Test Player', behavior: @behavior)
+    @player = Player.new(score_recorder: @score_recorder, name: 'Test Player',
+                         behavior: @behavior)
   end
 
   def test_player_has_a_name_reader_accessor
@@ -36,7 +37,7 @@ class PlayerAttributesTest < Minitest::Test
   end
 
   def test_it_can_display_itself
-    out, err = capture_io do
+    out, = capture_io do
       @player.display
     end
 

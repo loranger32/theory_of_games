@@ -1,7 +1,6 @@
 require_relative 'spec_helpers'
 require_bahavior_classes
 
-
 class AbstractBehaviorTest < Minitest::Test
   def setup
     @history           = Minitest::Mock.new
@@ -28,7 +27,8 @@ class AbstractBehaviorTest < Minitest::Test
   end
 
   def test_private_method_postinitialize_returns_nil_on_abstract_class
-    assert_equal :abstract_behavior_class, @abstract_behavior.send(:post_initialize)
+    assert_equal :abstract_behavior_class,
+                 @abstract_behavior.send(:post_initialize)
   end
 end
 
@@ -120,7 +120,7 @@ class PickRandomBehaviorTest < Minitest::Test
   end
 
   def test_choose_move
-    10.times do 
+    10.times do
       assert_includes %I[cooperates betrays], @behavior.choose_move(@player)
     end
   end

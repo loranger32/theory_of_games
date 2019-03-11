@@ -1,3 +1,4 @@
+# Concrete class for the naive behavior
 class Naive < Behavior
   def post_initialize
     @type = :naive

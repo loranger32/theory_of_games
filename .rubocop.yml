@@ -11,3 +11,6 @@ Layout/EmptyLinesAroundModuleBody:
 
 Layout/EmptyLinesAroundClassBody:
   Enabled: false
+
+Metrics/ParameterLists:
+  Max: 6
