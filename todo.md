@@ -3,16 +3,13 @@
 ## Open
 |status| date | description |
 |:---|:---:| ---|
-|open|08/03/2019|Make a separate class for turns|
 |open|08/03/2019|Make a separate class for interface|
+|open|08/03/2019|Rename name_engine class with name factory class|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|
-| ||- Create a class to store history|
-| ||- Pass the instance of the history class to reporter|
-| ||- Write the tests (first ?)|
 |open|18/02/2019|Fix the executable issue : allow program to be run from anywhere without `'.rb'` extension
-|open|05/03/2019|En faire une webapp|
+|open|05/03/2019|Make a webapp|
 
 ## Done
 |status| date | description |
@@ -41,5 +38,4 @@
 |DONE|06/03/2019|Create a behavior abstract class|
 |DONE|06/03/2019|Create concrete behavior classes|
 |DONE|08/03/2019|Implement the adapters|
-
-
+|DONE|10/03/2019|Make a separate class for turns|

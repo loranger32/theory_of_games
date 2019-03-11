@@ -1,15 +1,25 @@
 #!/usr/bin/env ruby
 
+######### Gems and Standard Library compenents
+
 require 'bundler'
 require 'bundler/setup'
 require 'yaml'
 Bundler.require(:default, :development)
 
+######### CLI ui components
+
 require_relative 'game_theory/messages_module'
 require_relative 'game_theory/displayable_module'
 require_relative 'game_theory/validable_module'
+require_relative 'game_theory/user_interfaces/cli_ui_class'
+
+######### Game logic files
+
 require_relative 'game_theory/history_class'
 require_relative 'game_theory/turn_record_class'
+require_relative 'game_theory/score_class'
+require_relative 'game_theory/name_engine_class'
 
 # Require first the abstract Behavior class
 require_relative 'game_theory/behaviors/behavior_class'
@@ -22,9 +32,6 @@ require_relative 'game_theory/behaviors/slow_adapter_class'
 require_relative 'game_theory/behaviors/quick_adapter_class'
 
 require_relative 'game_theory/behavior_factory_class'
-require_relative 'game_theory/score_class'
-require_relative 'game_theory/name_engine_class'
-require_relative 'game_theory/behavior_factory_class'
 require_relative 'game_theory/player_class'
 require_relative 'game_theory/player_factory_class'
 require_relative 'game_theory/earning_engine_class'
@@ -33,35 +40,46 @@ require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 require_relative 'game_theory/game_loop_class'
 
+######### Constants
+
 MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
 
-# Generate the history object
+######### Objects generations
+
+# Generate the ui object
+
+ui = CliUi.new
+
+# Generate the history object - shared by all players
 history = History.new
 
-# generate the name engine instance
+# Generate the name engine instance
 random_names = YAML.load_file('./data/random_names.yaml')
 name_engine = NameEngine.new(random_names)
 
 behavior_factory = BehaviorFactory.new(history)
 
-# Generate Players - Will take options in the future
+# Generate the player factory instance
 player_factory = PlayerFactory.new(Player, Score, name_engine, behavior_factory)
 
-# Rules for granting earnings - acts on players instances
+# Rules for granting earnings
 earning_engine = EarningEngine.new
 
 # Game logic - needs acces to the earning engine to grant earnings
 logic_engine = LogicEngine.new(earning_engine)
 
-# Engine that process turns - needs the logic engine and the history
+# Engine that process turns - needs the logic engine, the history object and
+# the TurnRecord class
 turn_engine = TurnEngine.new(logic_engine, history, TurnRecord)
 
 # Engine that generates the reports
 reporter = Reporter.new
 
-# Game can be instantiated with the turn engine
+# Game can be instantiated with the turn engine, the reporter and
+# the player factory
 GameLoop.new(turn_engine, reporter, player_factory).run
 
+# Fancy ending message
 at_exit do
   Messages.exit_game
 end
