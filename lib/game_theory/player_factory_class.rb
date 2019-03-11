@@ -38,7 +38,8 @@ class PlayerFactory
   def collect_data_for_player_creation(number_of_players)
     1.upto(number_of_players) do |player_number|
       name = name_engine.choose_player_name(player_number)
-      behavior = behavior_factory.create_behavior
+      behavior_choice = ask_behavior_to_player
+      behavior = behavior_factory.create_behavior(behavior_choice)
       players << player_class.new(name: name, score_recorder: score_class.new,
                                   behavior: behavior)
     end
@@ -57,4 +58,19 @@ class PlayerFactory
     @players = []
     print_message('Ok, on recommence.')
   end
+
+  def ask_behavior_to_player
+    question = <<~QUESTION
+      Choisissez le type ce comportement pour le joueur:
+      - Naif (n)
+      - Traitre (t)
+      - au Hasard (h)
+      - s'adapte Rapidement (r)
+      - s'adapet Lentement (l)
+    QUESTION
+
+    prompt(question)
+    obtain_a_valid_input_from_list %w[t n h r l ]
+  end
+
 end

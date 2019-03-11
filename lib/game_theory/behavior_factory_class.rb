@@ -2,8 +2,6 @@ class BehaviorArgumentError < ArgumentError; end
 
 # A class to create requested behavior for players
 class BehaviorFactory
-  include Displayable
-  include Validable
 
   BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
                 'r' => :quick_adapter, 'l' => :slow_adapter }.freeze
@@ -15,14 +13,11 @@ class BehaviorFactory
   attr_reader :history
 
   def initialize(history)
-    Displayable.set_io_variables_on(self)
     @history = history
   end
 
-  def create_behavior
-    choice = ask_behavior_to_player
-    requested_behavior = BEHAVIORS[choice]
-
+  def create_behavior(choice)
+    requested_behavior = process_choice(choice)
     validate_type(requested_behavior)
 
     BEHAVIOR_CLASSES[requested_behavior].new(history)
@@ -30,18 +25,14 @@ class BehaviorFactory
 
   private
 
-  def ask_behavior_to_player
-    question = <<~QUESTION
-      Choisissez le type ce comportement pour le joueur:
-      - Naif (n)
-      - Traitre (t)
-      - au Hasard (h)
-      - s'adapte Rapidement (r)
-      - s'adapet Lentement (l)
-    QUESTION
-
-    prompt(question)
-    obtain_a_valid_input_from_list(BEHAVIORS.keys)
+  def process_choice(choice)
+    case choice
+    when String then BEHAVIORS[choice]
+    when Symbol then choice
+    else
+      err_msg = "Argument of #process_choice must be String or Symbol"
+      raise BehaviorArgumentError, err_msg
+    end
   end
 
   def validate_type(type)
@@ -50,3 +41,4 @@ class BehaviorFactory
     raise BehaviorArgumentError, err_msg unless BEHAVIORS.value?(type)
   end
 end
+
