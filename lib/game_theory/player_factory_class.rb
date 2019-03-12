@@ -1,95 +1,63 @@
+# A custom error class for the Player Factory Argument validation
+class PlayerFactoryArgumentError < ArgumentError; end
+
 # A class to generate the players
 class PlayerFactory
-  include Displayable
-  include Validable
-
-  def initialize(player_class, score_class, name_engine, behavior_factory)
-    Displayable.set_io_variables_on(self)
+  def initialize(player_class, score_class, behavior_class)
     @player_class      = player_class
     @score_class       = score_class
-    @name_engine       = name_engine
-    @behavior_factory  = behavior_factory
+    @behavior_class    = behavior_class
     @players           = []
   end
 
-  def create_players
-    loop do
-      number_of_players = ask_number_of_players_to_create
-      collect_data_for_player_creation(number_of_players)
-      return players if confirm_players?
+  def create_players(players_data)
+    players_data.each do |player_data|
+      validate_player_data(player_data)      
 
-      collect_data_again
+      players << player_class.new(name: player_data[:name],
+                                  behavior: player_data[:behavior],
+                                  score_recorder: score_class.new)   
     end
+
+    players
   end
 
   private
 
-  attr_reader :players, :player_class, :score_class, :name_engine,
-              :behavior_factory
+  attr_reader :player_class, :score_class, :behavior_class, :players
 
-  def ask_number_of_players_to_create
-    prompt('Combien de joueurs voulez-vous (2 - 9) ?')
-    pattern = /\A[2-9]\z/
-    choice = obtain_a_valid_input_from(pattern)
-    choice.to_i
+  def validate_player_data(player_data)
+    validate_player_data_is_a_hash(player_data)
+    validate_player_data_has_a_name_key_with_string_value(player_data)
+    validate_player_data_has_a_behavior_key_with_behavior_value(player_data)
   end
 
-  def collect_data_for_player_creation(number_of_players)
-    1.upto(number_of_players) do |player_number|
-      choice = ask_player_name_choice(player_number)
-      name = name_engine.create_name(choice)
-      while %I[existent_name invalid_name].include?(name)
-        if name == :existent_name
-          prompt 'Ce nom existe déjà, veuillez en choisir un autre'
-        elsif name == :invalid_name
-          prompt 'Ce nom est invalide, veuillez en choisir un autre'
-        end
-        
-        choice = retrieve_input
-        name = name_engine.create_name(choice)
-      end
+  def validate_player_data_is_a_hash(player_data)
+    err_msg = "Arguments list must be composed of hashes, got a\
+ #{player_data.class} instead : #{player_data}"
 
-    behavior_choice = ask_behavior_to_player
-    behavior = behavior_factory.create_behavior(behavior_choice)
-    players << player_class.new(name: name, score_recorder: score_class.new,
-                                behavior: behavior)
-    end
+    raise PlayerFactoryArgumentError, err_msg unless player_data.is_a? Hash
   end
 
-  def ask_player_name_choice(player_number)
-    question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
- pour un nom par défaut:"
-    prompt(question)
-    retrieve_input
+  def validate_player_data_has_a_name_key_with_string_value(player_data)
+    err_key = "Player data must have a :name key, found none."
+
+    raise PlayerFactoryArgumentError, err_key unless player_data.key? :name 
+
+    err_val = "Player name value must be a string, got\
+ #{player_data[:name]} of class #{player_data[:name].class} instead."
+
+    raise PlayerFactoryArgumentError, err_val unless player_data[:name].is_a? String
   end
 
+  def validate_player_data_has_a_behavior_key_with_behavior_value(player_data)
+    err_key = "Player data must have a :behavior key, found none in #{player_data}."
 
-  def confirm_players?
-    clear_screen
-    print_message('Vous avez choisi les joueurs suivant:')
-    display_in_table(players, :name, :behavior)
+    raise PlayerFactoryArgumentError, err_key unless player_data.key?(:behavior)
+  
+    err_val = "Player behavior value must be of Behavior class, got\
+ #{player_data[:behavior]} of class #{player_data[:behavior].class} instead."
 
-    prompt('Confirmez vous ce choix ? (o/n)')
-    obtain_a_valid_input_from(%w[o n]) == 'o'
-  end
-
-  def collect_data_again
-    @players = []
-    @name_engine.reset_names!
-    print_message('Ok, on recommence.')
-  end
-
-  def ask_behavior_to_player
-    question = <<~QUESTION
-      Choisissez le type ce comportement pour le joueur:
-      - Naif (n)
-      - Traitre (t)
-      - au Hasard (h)
-      - s'adapte Rapidement (r)
-      - s'adapet Lentement (l)
-    QUESTION
-
-    prompt(question)
-    obtain_a_valid_input_from_list %w[t n h r l ]
+    raise PlayerFactoryArgumentError, err_val unless player_data[:behavior].is_a?(behavior_class)
   end
 end

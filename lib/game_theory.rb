@@ -60,7 +60,8 @@ name_engine = NameEngine.new(random_names)
 behavior_factory = BehaviorFactory.new(history)
 
 # Generate the player factory instance
-player_factory = PlayerFactory.new(Player, Score, name_engine, behavior_factory)
+player_factory = PlayerFactory.new(Player, Score, name_engine, behavior_factory,
+                                   Behavior)
 
 # Rules for granting earnings
 earning_engine = EarningEngine.new

@@ -19,9 +19,8 @@ class NameEngine
   end
 
   def pick_random_name
-    name = random_names.sample
-    name = random_names.sample while choosen_names.include?(name)
-    store_and_return_name(name.chomp)
+    name = random_names.shuffle.pop
+    store_and_return_name(name)
   end
 
   def process_choice(name)
