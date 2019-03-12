@@ -1,5 +1,5 @@
 # Main Game Loop
-class GameLoop
+class CliGameLoop
   include Displayable
   include Validable
 

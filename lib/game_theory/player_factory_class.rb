@@ -22,6 +22,10 @@ class PlayerFactory
     players
   end
 
+  def reset!
+    @players = []
+  end
+
   private
 
   attr_reader :player_class, :score_class, :behavior_class, :players

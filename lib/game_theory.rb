@@ -12,7 +12,6 @@ Bundler.require(:default, :development)
 require_relative 'game_theory/messages_module'
 require_relative 'game_theory/displayable_module'
 require_relative 'game_theory/validable_module'
-require_relative 'game_theory/user_interfaces/cli_ui_class'
 
 ######### Game logic files
 
@@ -38,17 +37,15 @@ require_relative 'game_theory/earning_engine_class'
 require_relative 'game_theory/logic_engine_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
-require_relative 'game_theory/game_loop_class'
+
+# CLI game loop class
+require_relative 'game_theory/cli_game_loop_class'
 
 ######### Constants
 
 MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
 
 ######### Objects generations
-
-# Generate the ui object
-
-ui = CliUi.new
 
 # Generate the history object - shared by all players
 history = History.new
@@ -78,7 +75,8 @@ reporter = Reporter.new
 
 # Game can be instantiated with the turn engine, the reporter and
 # the player factory
-GameLoop.new(turn_engine, reporter, player_factory).run
+CliGameLoop.new(turn_engine, reporter, player_factory, name_engine,
+                behavior_factory).run
 
 # Fancy ending message
 at_exit do

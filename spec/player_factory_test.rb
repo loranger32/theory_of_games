@@ -94,4 +94,15 @@ class PlayerFactoryTest < Minitest::Test
                                       valid_player_2_data])
     end
   end
+
+  def test_it_can_reset_players
+    mock_player_class(valid_player_1_data, valid_player_2_data)
+
+    players = @player_factory.create_players([valid_player_1_data,
+                                              valid_player_2_data])
+
+    assert_equal [:player1, :player2], players
+    @player_factory.reset!
+    assert_empty @player_factory.send(:players)
+  end
 end
