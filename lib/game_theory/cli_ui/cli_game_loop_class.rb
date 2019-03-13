@@ -42,8 +42,14 @@ class CliGameLoop
   end
 
   def create_players
-    players_data = collect_data_for_players
-    @players = player_factory.create_players
+    loop do
+      players_data = collect_data_for_players
+      @players = player_factory.create_players(players_data)
+      
+      break if confirm_players?
+
+      collect_data_again
+    end
     assign_players_to_engines
   end
 
@@ -78,13 +84,8 @@ class CliGameLoop
   end
 
   def collect_data_for_players
-    loop do
-      number_of_players = ask_number_of_players_to_create
-      collect_data_for_player_creation(number_of_players)
-      return players if confirm_players?
-
-      collect_data_again
-    end
+    number_of_players = ask_number_of_players_to_create
+    collect_data_for_player_creation(number_of_players)
   end
 
   def ask_number_of_players_to_create
@@ -95,23 +96,33 @@ class CliGameLoop
   end
 
   def collect_data_for_player_creation(number_of_players)
-    #need to create a K/V collection to store players data
+    players_data = []
     1.upto(number_of_players) do |player_number|
-      choice = ask_player_name_choice(player_number)
-      name = name_engine.create_name(choice)
-      while %I[existent_name invalid_name].include?(name)
-        if name == :existent_name
-          prompt 'Ce nom existe déjà, veuillez en choisir un autre'
-        elsif name == :invalid_name
-          prompt 'Ce nom est invalide, veuillez en choisir un autre'
-        end
-        
-        choice = retrieve_input
-        name = name_engine.create_name(choice)
-      end
+      player_data = {}
+      player_data[:name]     = retrieve_player_name(player_number)
+      player_data[:behavior] = retrieve_player_behavior(player_data[:name])
+      players_data << player_data
     end
+    players_data
+  end
 
-    behavior_choice = ask_behavior_to_player
+  def retrieve_player_name(player_number)
+    choice = ask_player_name_choice(player_number)
+    name   = name_engine.create_name(choice)
+    while %I[existent_name invalid_name].include?(name)
+      if name == :existent_name
+        prompt 'Ce nom existe déjà, veuillez en choisir un autre'
+      elsif name == :invalid_name
+        prompt 'Ce nom est invalide, veuillez en choisir un autre'
+      end
+      name = name_engine.create_name(retrieve_input)
+    end
+    name
+  end
+
+  def retrieve_player_behavior(name)
+    choice = ask_behavior_to_player(name)
+    behavior = @behavior_factory.create_behavior(choice)
   end
 
   def ask_player_name_choice(player_number)
@@ -121,9 +132,9 @@ class CliGameLoop
     retrieve_input
   end
 
-  def ask_behavior_to_player
+  def ask_behavior_to_player(name)
     question = <<~QUESTION
-      Choisissez le type ce comportement pour le joueur:
+      Choisissez le type ce comportement pour le joueur #{name}:
       - Naif (n)
       - Traitre (t)
       - au Hasard (h)
@@ -132,7 +143,7 @@ class CliGameLoop
     QUESTION
 
     prompt(question)
-    obtain_a_valid_input_from_list %w[t n h r l ]
+    obtain_a_valid_input_from_list BehaviorFactory::BEHAVIORS.keys
   end
 
   def confirm_players?
@@ -145,8 +156,8 @@ class CliGameLoop
   end
 
   def collect_data_again
-    @players = []
-    @name_engine.reset_names!
+    players.clear
+    name_engine.reset_names!
     print_message('Ok, on recommence.')
   end
 end

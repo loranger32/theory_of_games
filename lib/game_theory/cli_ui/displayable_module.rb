@@ -118,7 +118,7 @@ module Displayable
 
     def validate_collection(collection)
       err_msg = "The first argument must respond to each. #{collection.class}\
- objects do not."
+ objects usually do not."
       raise TableArgumentError, err_msg unless collection.respond_to?(:each)
     end
 
