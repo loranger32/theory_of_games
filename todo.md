@@ -3,7 +3,7 @@
 ## Open
 |status| date | description |
 |:---|:---:| ---|
-
+|open|13/03/2019|Allow user to choose the number of turns|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|

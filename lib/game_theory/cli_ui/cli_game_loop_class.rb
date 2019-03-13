@@ -3,10 +3,8 @@ class CliGameLoop
   include Displayable
   include Validable
 
-  TURNS = 25
-
   attr_reader :turn_engine, :reporter, :player_factory, :players, :name_factory,
-              :behavior_factory
+              :behavior_factory, :turns
 
   def initialize(turn_engine, reporter, player_factory, name_factory,
                  behavior_factory)
@@ -18,14 +16,16 @@ class CliGameLoop
     @behavior_factory = behavior_factory
     @players          = nil
     @still_playing    = true
+    @turns            = 0
   end
 
   def run
     greet
     create_players
+    choose_number_of_turns
     while still_playing?
       ready_to_play?
-      TURNS.times { @turn_engine.play_turn }
+      turns.times { @turn_engine.play_turn }
       display_report(turn_engine.history)
       reset_players_score_and_history
       play_again?
@@ -51,6 +51,12 @@ class CliGameLoop
       collect_data_again
     end
     assign_players_to_engines
+  end
+
+  def choose_number_of_turns
+    prompt 'Combien de tous souhaitez-vous faire (1 - 1000)'
+    answer = obtain_a_valid_input_from /\A\d{1,4}\z/
+    @turns = answer.to_i
   end
 
   def assign_players_to_engines
