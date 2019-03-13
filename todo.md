@@ -3,7 +3,7 @@
 ## Open
 |status| date | description |
 |:---|:---:| ---|
-|open|13/03/2019|Allow user to choose the number of turns|
+|open|13/03/2019|Allow user to change players and turn number beteween games|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|
@@ -40,3 +40,4 @@
 |DONE|10/03/2019|Make a separate class for turns|
 |DONE|13/03/2019|Separate UI from Logic|
 |DONE|13/03/2019|Rename name_factory class with name factory class|
+|DONE|13/03/2019|Allow user to choose the number of turns|

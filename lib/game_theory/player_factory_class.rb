@@ -7,28 +7,21 @@ class PlayerFactory
     @player_class      = player_class
     @score_class       = score_class
     @behavior_class    = behavior_class
-    @players           = []
   end
 
   def create_players(players_data)
-    players_data.each do |player_data|
+    players_data.each_with_object([]) do |player_data, players|
       validate_player_data(player_data)      
 
       players << player_class.new(name: player_data[:name],
                                   behavior: player_data[:behavior],
                                   score_recorder: score_class.new)   
     end
-
-    players
-  end
-
-  def reset!
-    @players = []
   end
 
   private
 
-  attr_reader :player_class, :score_class, :behavior_class, :players
+  attr_reader :player_class, :score_class, :behavior_class
 
   def validate_player_data(player_data)
     validate_player_data_is_a_hash(player_data)

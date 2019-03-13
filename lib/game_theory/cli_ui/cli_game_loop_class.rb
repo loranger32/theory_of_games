@@ -15,20 +15,23 @@ class CliGameLoop
     @name_factory     = name_factory
     @behavior_factory = behavior_factory
     @players          = nil
-    @still_playing    = true
     @turns            = 0
   end
 
   def run
     greet
-    create_players
-    choose_number_of_turns
-    while still_playing?
-      ready_to_play?
-      turns.times { @turn_engine.play_turn }
-      display_report(turn_engine.history)
-      reset_players_score_and_history
-      play_again?
+    loop do
+      create_players
+      choose_number_of_turns
+      loop do
+        ready_to_play?
+        turns.times { @turn_engine.play_turn }
+        display_report(turn_engine.history)
+        reset_players_score_and_history
+        break unless play_again_with_same_players_and_turn?
+      end
+      reset_players_and_turns!
+      break unless play_again?
     end
   end
 
@@ -45,7 +48,7 @@ class CliGameLoop
     loop do
       players_data = collect_data_for_players
       @players = player_factory.create_players(players_data)
-      
+
       break if confirm_players?
 
       collect_data_again
@@ -62,10 +65,6 @@ class CliGameLoop
   def assign_players_to_engines
     turn_engine.assign_players(players)
     reporter.assign_players(players)
-  end
-
-  def still_playing?
-    @still_playing
   end
 
   def display_report(history)
@@ -85,8 +84,13 @@ class CliGameLoop
   end
 
   def play_again?
-    prompt 'On refait un essai (o/n) ?'
-    @still_playing = false if obtain_a_valid_input_from(%w[o n]) == 'n'
+    prompt 'On refait un essai avec de nouveaux joueurs (o/n) ?'
+    obtain_a_valid_input_from(%w[o n]) == 'o'
+  end
+
+  def play_again_with_same_players_and_turn?
+    prompt 'Nouvel essai avec les mêmes joueurs et nombre de tours (o/n) ?'
+    obtain_a_valid_input_from(%w[o n]) == 'o'
   end
 
   def collect_data_for_players
@@ -162,8 +166,15 @@ class CliGameLoop
   end
 
   def collect_data_again
-    players.clear
+    @players = nil
     name_factory.reset_names!
     print_message('Ok, on recommence.')
+  end
+
+  def reset_players_and_turns!
+    @players = nil
+    assign_players_to_engines
+    name_factory.reset_names!
+    @turns = 0
   end
 end
