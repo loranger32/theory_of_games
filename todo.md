@@ -3,8 +3,7 @@
 ## Open
 |status| date | description |
 |:---|:---:| ---|
-|open|08/03/2019|Make a separate class for interface|
-|open|08/03/2019|Rename name_engine class with name factory class|
+
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|
@@ -21,7 +20,7 @@
 |DONE|20/02/2019|Fix the issue of the of program crash if human chooses empty name (needs to implement random names choice)|
 |DONE|20/02/2019|Implement a behavior_engine_class|
 |DONE|18/02/2019|Write tests for behavior_engine|
-|DONE|18/02/2019|Write tests for name_engine |
+|DONE|18/02/2019|Write tests for name_factory |
 |DONE|22/02/2019|Add a validable module as in warrior quest|
 |DONE|22/02/2019|Implement a consistent testing strategy for I/O input|
 |DONE|22/02/2019|Refactor the `obtain_a_valid_choice_from` method to make it generic|
@@ -39,3 +38,5 @@
 |DONE|06/03/2019|Create concrete behavior classes|
 |DONE|08/03/2019|Implement the adapters|
 |DONE|10/03/2019|Make a separate class for turns|
+|DONE|13/03/2019|Separate UI from Logic|
+|DONE|13/03/2019|Rename name_factory class with name factory class|

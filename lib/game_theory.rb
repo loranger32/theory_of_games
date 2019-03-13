@@ -18,7 +18,7 @@ require_relative 'game_theory/cli_ui/validable_module'
 require_relative 'game_theory/history_class'
 require_relative 'game_theory/turn_record_class'
 require_relative 'game_theory/score_class'
-require_relative 'game_theory/name_engine_class'
+require_relative 'game_theory/name_factory_class'
 
 # Require first the abstract Behavior class
 require_relative 'game_theory/behaviors/behavior_class'
@@ -52,7 +52,7 @@ history = History.new
 
 # Generate the name engine instance
 random_names = YAML.load_file('./data/random_names.yaml')
-name_engine = NameEngine.new(random_names)
+name_factory = NameFactory.new(random_names)
 
 behavior_factory = BehaviorFactory.new(history)
 
@@ -74,7 +74,7 @@ reporter = Reporter.new
 
 # Game can be instantiated with the turn engine, the reporter and
 # the player factory
-CliGameLoop.new(turn_engine, reporter, player_factory, name_engine,
+CliGameLoop.new(turn_engine, reporter, player_factory, name_factory,
                 behavior_factory).run
 
 # Fancy ending message

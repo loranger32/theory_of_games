@@ -5,16 +5,16 @@ class CliGameLoop
 
   TURNS = 25
 
-  attr_reader :turn_engine, :reporter, :player_factory, :players, :name_engine,
+  attr_reader :turn_engine, :reporter, :player_factory, :players, :name_factory,
               :behavior_factory
 
-  def initialize(turn_engine, reporter, player_factory, name_engine,
+  def initialize(turn_engine, reporter, player_factory, name_factory,
                  behavior_factory)
     Displayable.set_io_variables_on(self)
     @turn_engine      = turn_engine
     @reporter         = reporter
     @player_factory   = player_factory
-    @name_engine      = name_engine
+    @name_factory     = name_factory
     @behavior_factory = behavior_factory
     @players          = nil
     @still_playing    = true
@@ -108,14 +108,14 @@ class CliGameLoop
 
   def retrieve_player_name(player_number)
     choice = ask_player_name_choice(player_number)
-    name   = name_engine.create_name(choice)
+    name   = name_factory.create_name(choice)
     while %I[existent_name invalid_name].include?(name)
       if name == :existent_name
         prompt 'Ce nom existe déjà, veuillez en choisir un autre'
       elsif name == :invalid_name
         prompt 'Ce nom est invalide, veuillez en choisir un autre'
       end
-      name = name_engine.create_name(retrieve_input)
+      name = name_factory.create_name(retrieve_input)
     end
     name
   end
@@ -157,7 +157,7 @@ class CliGameLoop
 
   def collect_data_again
     players.clear
-    name_engine.reset_names!
+    name_factory.reset_names!
     print_message('Ok, on recommence.')
   end
 end

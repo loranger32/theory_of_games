@@ -1,6 +1,6 @@
 require_relative 'spec_helpers'
-require_relative '../lib/game_theory/displayable_module'
-require_relative '../lib/game_theory/validable_module'
+require_relative '../lib/game_theory/cli_ui/displayable_module'
+require_relative '../lib/game_theory/cli_ui/validable_module'
 require_relative '../lib/game_theory/history_class'
 
 class HistoryTest < Minitest::Test
