@@ -9,9 +9,9 @@ Bundler.require(:default, :development)
 
 ######### CLI ui components
 
-require_relative 'game_theory/messages_module'
-require_relative 'game_theory/displayable_module'
-require_relative 'game_theory/validable_module'
+require_relative 'game_theory/cli_ui/messages_module'
+require_relative 'game_theory/cli_ui/displayable_module'
+require_relative 'game_theory/cli_ui/validable_module'
 
 ######### Game logic files
 
@@ -39,7 +39,7 @@ require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 
 # CLI game loop class
-require_relative 'game_theory/cli_game_loop_class'
+require_relative 'game_theory/cli_ui/cli_game_loop_class'
 
 ######### Constants
 

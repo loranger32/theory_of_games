@@ -5,15 +5,19 @@ class CliGameLoop
 
   TURNS = 25
 
-  attr_reader :player_factory, :turn_engine, :reporter, :report_type, :players
+  attr_reader :turn_engine, :reporter, :player_factory, :players, :name_engine,
+              :behavior_factory
 
-  def initialize(turn_engine, reporter, player_factory)
+  def initialize(turn_engine, reporter, player_factory, name_engine,
+                 behavior_factory)
     Displayable.set_io_variables_on(self)
-    @turn_engine = turn_engine
-    @reporter = reporter
-    @player_factory = player_factory
-    @players = nil
-    @still_playing = true
+    @turn_engine      = turn_engine
+    @reporter         = reporter
+    @player_factory   = player_factory
+    @name_engine      = name_engine
+    @behavior_factory = behavior_factory
+    @players          = nil
+    @still_playing    = true
   end
 
   def run
