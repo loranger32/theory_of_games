@@ -21,13 +21,10 @@ class CliGameLoop
   def run
     greet
     loop do
-      create_players
-      choose_number_of_turns
+      setup_players_and_turns
       loop do
-        ready_to_play?
-        turns.times { @turn_engine.play_turn }
-        display_report(turn_engine.history)
-        reset_players_score_and_history
+        play_turns
+        display_report_and_reset_history_and_scores
         break unless play_again_with_same_players_and_turn?
       end
       reset_players_and_turns!
@@ -44,6 +41,11 @@ class CliGameLoop
     skip_lines(2)
   end
 
+  def setup_players_and_turns
+    create_players
+    choose_number_of_turns
+  end
+
   def create_players
     loop do
       players_data = collect_data_for_players
@@ -58,13 +60,24 @@ class CliGameLoop
 
   def choose_number_of_turns
     prompt 'Combien de tous souhaitez-vous faire (1 - 1000)'
-    answer = obtain_a_valid_input_from /\A\d{1,4}\z/
+    pattern = /\A\d{1,4}\z/
+    answer = obtain_a_valid_input_from(pattern)
     @turns = answer.to_i
   end
 
   def assign_players_to_engines
     turn_engine.assign_players(players)
     reporter.assign_players(players)
+  end
+
+  def play_turns
+    ready_to_play?
+    turns.times { @turn_engine.play_turn }
+  end
+
+  def display_report_and_reset_history_and_scores
+    display_report(turn_engine.history)
+    reset_players_score_and_history
   end
 
   def display_report(history)
@@ -132,7 +145,7 @@ class CliGameLoop
 
   def retrieve_player_behavior(name)
     choice = ask_behavior_to_player(name)
-    behavior = @behavior_factory.create_behavior(choice)
+    @behavior_factory.create_behavior(choice)
   end
 
   def ask_player_name_choice(player_number)

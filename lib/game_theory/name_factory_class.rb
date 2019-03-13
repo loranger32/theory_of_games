@@ -46,7 +46,8 @@ class NameFactory
   def validate_argument(name)
     err_msg = "Invalide choice argument. Expect nil or a string, got #{name}\
  which is of class #{name.class}."
-    raise InvalidNameArgumentError, err_msg unless name.nil? || name.is_a?(String)
+    raise InvalidNameArgumentError, err_msg unless \
+      name.nil? || name.is_a?(String)
   end
 
   def unique_name?(name)

@@ -2,7 +2,7 @@ require_relative 'spec_helpers'
 require_relative '../lib/game_theory/player_factory_class'
 
 class PlayerFactoryTest < Minitest::Test
-  
+
   class Behavior; end
 
   ####### Setup
@@ -33,8 +33,8 @@ class PlayerFactoryTest < Minitest::Test
   def mock_player_class(player_1_data, player_2_data)
     player1_params = player_1_data.merge(score_recorder: @score_class.new)
     player2_params = player_2_data.merge(score_recorder: @score_class.new)
-    @player_class.expect(:new, :player1,[player1_params])
-    @player_class.expect(:new, :player2,[player2_params])
+    @player_class.expect(:new, :player1, [player1_params])
+    @player_class.expect(:new, :player2, [player2_params])
   end
 
   ####### Tests
@@ -49,14 +49,14 @@ class PlayerFactoryTest < Minitest::Test
     players = @player_factory.create_players([valid_player_1_data,
                                               valid_player_2_data])
 
-    assert_equal [:player1, :player2], players
+    assert_equal %I[player1 player2], players
     @player_class.verify
     @score_class.verify
   end
 
   def test_it_raises_error_if_player_data_is_not_a_hash
     assert_raises PlayerFactoryArgumentError do
-      @player_factory.create_players([:invalid, :invalid])
+      @player_factory.create_players(%I[invalid invalid])
     end
   end
 
@@ -93,16 +93,5 @@ class PlayerFactoryTest < Minitest::Test
       @player_factory.create_players([invalid_player_1_data,
                                       valid_player_2_data])
     end
-  end
-
-  def test_it_can_reset_players
-    mock_player_class(valid_player_1_data, valid_player_2_data)
-
-    players = @player_factory.create_players([valid_player_1_data,
-                                              valid_player_2_data])
-
-    assert_equal [:player1, :player2], players
-    @player_factory.reset!
-    assert_empty @player_factory.send(:players)
   end
 end

@@ -11,11 +11,11 @@ class PlayerFactory
 
   def create_players(players_data)
     players_data.each_with_object([]) do |player_data, players|
-      validate_player_data(player_data)      
+      validate_player_data(player_data)
 
       players << player_class.new(name: player_data[:name],
                                   behavior: player_data[:behavior],
-                                  score_recorder: score_class.new)   
+                                  score_recorder: score_class.new)
     end
   end
 
@@ -37,24 +37,27 @@ class PlayerFactory
   end
 
   def validate_player_data_has_a_name_key_with_string_value(player_data)
-    err_key = "Player data must have a :name key, found none."
+    err_key = 'Player data must have a :name key, found none.'
 
-    raise PlayerFactoryArgumentError, err_key unless player_data.key? :name 
+    raise PlayerFactoryArgumentError, err_key unless player_data.key?(:name)
 
     err_val = "Player name value must be a string, got\
  #{player_data[:name]} of class #{player_data[:name].class} instead."
 
-    raise PlayerFactoryArgumentError, err_val unless player_data[:name].is_a? String
+    raise PlayerFactoryArgumentError, err_val unless \
+      player_data[:name].is_a?(String)
   end
 
   def validate_player_data_has_a_behavior_key_with_behavior_value(player_data)
-    err_key = "Player data must have a :behavior key, found none in #{player_data}."
+    err_key = "Player data must have a :behavior key, found none\
+ in #{player_data}."
 
     raise PlayerFactoryArgumentError, err_key unless player_data.key?(:behavior)
-  
+
     err_val = "Player behavior value must be of Behavior class, got\
  #{player_data[:behavior]} of class #{player_data[:behavior].class} instead."
 
-    raise PlayerFactoryArgumentError, err_val unless player_data[:behavior].is_a?(behavior_class)
+    raise PlayerFactoryArgumentError, err_val unless \
+      player_data[:behavior].is_a?(behavior_class)
   end
 end

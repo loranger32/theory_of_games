@@ -39,25 +39,25 @@ class BehaviorFactoryTest < Minitest::Test
   end
 
   def test_create_behavior_raise_error_with_invalid_argument
-    assert_raises(BehaviorArgumentError) do 
+    assert_raises(BehaviorArgumentError) do
       @behavior_factory.create_behavior(42)
     end
 
-    assert_raises(BehaviorArgumentError) do 
+    assert_raises(BehaviorArgumentError) do
       @behavior_factory.create_behavior([:traitor])
     end
 
-    assert_raises(BehaviorArgumentError) do 
-      @behavior_factory.create_behavior({ traitor: true} )
+    assert_raises(BehaviorArgumentError) do
+      @behavior_factory.create_behavior(traitor: true)
     end
   end
 
   def test_create_behavior_raises_error_with_unknwown_value_as_argument
-    assert_raises(BehaviorArgumentError) do 
+    assert_raises(BehaviorArgumentError) do
       @behavior_factory.create_behavior('invalid')
     end
 
-    assert_raises(BehaviorArgumentError) do 
+    assert_raises(BehaviorArgumentError) do
       @behavior_factory.create_behavior(:invalid)
     end
   end

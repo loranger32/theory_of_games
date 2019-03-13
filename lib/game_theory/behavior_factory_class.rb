@@ -8,7 +8,7 @@ class BehaviorFactory
 
   BEHAVIOR_CLASSES = { naive: Naive, traitor: Traitor, random: PickRandom,
                        quick_adapter: QuickAdapter,
-                       slow_adapter: SlowAdapter }. freeze
+                       slow_adapter: SlowAdapter }.freeze
 
   attr_reader :history
 
@@ -30,7 +30,7 @@ class BehaviorFactory
     when String then BEHAVIORS[choice]
     when Symbol then choice
     else
-      err_msg = "Argument of #process_choice must be String or Symbol"
+      err_msg = 'Argument of #process_choice must be String or Symbol'
       raise BehaviorArgumentError, err_msg
     end
   end
@@ -41,4 +41,3 @@ class BehaviorFactory
     raise BehaviorArgumentError, err_msg unless BEHAVIORS.value?(type)
   end
 end
-

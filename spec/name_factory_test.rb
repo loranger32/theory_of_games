@@ -14,7 +14,7 @@ class NameFactoryTest < Minitest::Test
 
   def test_it_raises_an_error_if_argument_is_not_nil_or_string
     assert_raises(InvalidNameArgumentError) { @name_factory.create_name(:name) }
-    assert_raises(InvalidNameArgumentError) { @name_factory.create_name(['jo']) }
+    assert_raises(InvalidNameArgumentError) { @name_factory.create_name([:a]) }
     assert_raises(InvalidNameArgumentError) { @name_factory.create_name(1234) }
   end
 
