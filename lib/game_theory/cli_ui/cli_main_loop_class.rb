@@ -16,12 +16,13 @@ class CliMainLoop
     Quitter - q
     MENU
 
-  attr_reader :main_box, :cli_game_loop
+  attr_reader :main_box, :cli_game_loop, :cursor
 
   def initialize(cli_game_loop)
     Displayable.set_io_variables_on(self)
     @main_box = generate_main_box
     @cli_game_loop = cli_game_loop
+    @cursor = TTY::Cursor
     @quit = false
   end
 
@@ -70,10 +71,11 @@ class CliMainLoop
 
   def display_main_menu
     puts main_box
+    prompt_center('Entrez votre choix')
   end
 
   def process_choice
-    prompt 'Votre choix'
+    
     choice = obtain_a_valid_input_from %w[i r h a q]
     case choice
     when 'q' then @quit = true

@@ -7,6 +7,8 @@ class TableArgumentError < ArgumentError; end
 # A utils module to be included in various files to add display options
 module Displayable
 
+  COLUMN_LENGTH = 25
+
   # Method to be called in the initialize method of classes that implement
   # the module, in order to perform the tests with custom StringIO objects
   # rubocop:disable Naming/AccessorMethodName
@@ -89,6 +91,14 @@ module Displayable
     print '=> '.green
   end
 
+  def prompt_center(message)
+    half_msg_length = message.length / 2
+    print cursor.down(2) + cursor.forward((screen_width / 2) - half_msg_length)
+    print_message(message, color: :green)
+    print (cursor.forward((screen_width / 2) - half_msg_length))
+    print("=> ".green)
+  end
+
   def clear_screen
     (system 'clear') || (system 'cls')
   end
@@ -112,21 +122,21 @@ module Displayable
   def display_in_table(collection, *attributes)
     Helpers.validate_table_arguments(collection, attributes)
 
-    print_message('+' * COLOM_LENGTH * collection.size, color: :yellow)
+    print_message('+' * COLUMN_LENGTH * collection.size, color: :yellow)
 
     attributes.each do |attribute|
       collection.each do |item|
         print_on_line('|', color: :yellow)
-        print_on_line(item.send(attribute).to_s.center(COLOM_LENGTH - 2),
+        print_on_line(item.send(attribute).to_s.center(COLUMN_LENGTH - 2),
                       color: :yellow)
         print_on_line('|', color: :yellow)
       end
       skip_lines(1)
-      print_message('-' * COLOM_LENGTH * collection.size, color: :yellow) \
+      print_message('-' * COLUMN_LENGTH * collection.size, color: :yellow) \
         unless attributes.index(attribute) == attributes.size - 1
     end
 
-    print_message('+' * COLOM_LENGTH * collection.size, color: :yellow)
+    print_message('+' * COLUMN_LENGTH * collection.size, color: :yellow)
     skip_lines(1)
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

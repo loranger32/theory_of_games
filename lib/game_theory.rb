@@ -38,11 +38,14 @@ require_relative 'game_theory/logic_engine_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 
+
 # Main loop class 
 require_relative 'game_theory/cli_ui/cli_main_loop_class'
 
+
 # CLI game loop class
 require_relative 'game_theory/cli_ui/cli_game_loop_class'
+
 
 # Constants
 
@@ -53,27 +56,34 @@ VERSION = '0.0.2'
 # Generate the history object - shared by all players
 history = History.new
 
+
 # Generate the name engine instance
 random_names = YAML.load_file('./data/random_names.yaml')
 name_factory = NameFactory.new(random_names)
 
 behavior_factory = BehaviorFactory.new(history)
 
+
 # Generate the player factory instance
 player_factory = PlayerFactory.new(Player, Score, Behavior)
+
 
 # Rules for granting earnings
 earning_engine = EarningEngine.new
 
+
 # Game logic - needs acces to the earning engine to grant earnings
 logic_engine = LogicEngine.new(earning_engine)
+
 
 # Engine that process turns - needs the logic engine, the history object and
 # the TurnRecord class
 turn_engine = TurnEngine.new(logic_engine, history, TurnRecord)
 
+
 # Engine that generates the reports
 reporter = Reporter.new
+
 
 # Interactive Game loop can be instantiated with the turn engine, the reporter
 # and the player factory
@@ -83,6 +93,7 @@ cli_game_loop = CliGameLoop.new(turn_engine, reporter, player_factory,
 # Main game loop is instantiated with the two different game loop (interactive
 # and quick one - this last is not yet implemented)
 CliMainLoop.new(cli_game_loop).run
+
 
 # Fancy ending message
 at_exit do
