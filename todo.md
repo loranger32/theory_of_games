@@ -1,8 +1,12 @@
 # TODOS
 
 ## Open
-|status| date | description |
-|:---|:---:| ---|
+| status | date | description |
+| :---  | :---: | :---        |
+| open| 14/02/2019|Make a menu at the start of the game with different options |
+| | | - interactive interface |
+| | | - quick interface |
+| | | - help |
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|

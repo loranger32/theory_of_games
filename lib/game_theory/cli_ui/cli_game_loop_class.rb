@@ -4,6 +4,8 @@ class CliGameLoop
   include Displayable
   include Validable
 
+  MAIN_MENU = %w[help - h].freeze
+
   attr_reader :turn_engine, :reporter, :player_factory, :players, :name_factory,
               :behavior_factory, :turns
 
@@ -21,7 +23,6 @@ class CliGameLoop
 
   # rubocop:disable Metrics/MethodLength
   def run
-    greet
     loop do
       setup_players_and_turns
       loop do
@@ -36,13 +37,6 @@ class CliGameLoop
   # rubocop:enable Metrics/MethodLength
 
   private
-
-  def greet
-    clear_screen
-    titleize(MAIN_TITLE)
-    print_message 'Bienvenue dans cette simulation de la théorie des jeux.'
-    skip_lines(2)
-  end
 
   def setup_players_and_turns
     create_players

@@ -6,8 +6,6 @@ class TableArgumentError < ArgumentError; end
 
 # A utils module to be included in various files to add display options
 module Displayable
-  SCREEN_WIDTH = 100
-  COLOM_LENGTH = 20
 
   # Method to be called in the initialize method of classes that implement
   # the module, in order to perform the tests with custom StringIO objects
@@ -22,14 +20,44 @@ module Displayable
   # including class
   attr_accessor :input, :output
 
+  def screen_height
+    TTY::Screen.size[0]
+  end
+
+  def screen_width
+    TTY::Screen.size[1]
+  end
+
   def titleize(title)
     title_size = title.size
-    line = ('*' * (title_size + 10)).blue.center(SCREEN_WIDTH)
-    title = title.red.center(SCREEN_WIDTH)
+    line = ('*' * (title_size + 10)).blue.center(screen_width)
+    title = title.red.center(screen_width)
     puts line
     puts title
     puts line
     skip_lines(3)
+  end
+
+  def titleize_in_box(title)
+    box_width = 50
+    box_height = 5
+    box = TTY::Box.frame(top: 1,
+                         left: (screen_width / 2) - (box_width / 2),
+                         width: box_width,
+                         height: box_height,
+                         align: :center,
+                         padding: 1,
+                         style: {
+                           fg: :red,
+                           bg: :bright_green,
+                           border: {
+                           fg: :red,
+                           bg: :bright_green
+                           }
+                         }) do
+                            title
+                        end
+    puts box
   end
 
   def print_message(message, color: nil)

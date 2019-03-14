@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-######### Gems and Standard Library compenents
+######### Gems and Standard Library compenents loading
 
 require 'bundler'
 require 'bundler/setup'
@@ -38,12 +38,15 @@ require_relative 'game_theory/logic_engine_class'
 require_relative 'game_theory/turn_engine_class'
 require_relative 'game_theory/reporter_class'
 
+# Main loop class 
+require_relative 'game_theory/cli_ui/cli_main_loop_class'
+
 # CLI game loop class
 require_relative 'game_theory/cli_ui/cli_game_loop_class'
 
-######### Constants
+# Constants
 
-MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
+VERSION = '0.0.2'
 
 ######### Objects generations
 
@@ -72,10 +75,14 @@ turn_engine = TurnEngine.new(logic_engine, history, TurnRecord)
 # Engine that generates the reports
 reporter = Reporter.new
 
-# Game can be instantiated with the turn engine, the reporter and
-# the player factory
-CliGameLoop.new(turn_engine, reporter, player_factory, name_factory,
-                behavior_factory).run
+# Interactive Game loop can be instantiated with the turn engine, the reporter
+# and the player factory
+cli_game_loop = CliGameLoop.new(turn_engine, reporter, player_factory,
+                                name_factory, behavior_factory)
+
+# Main game loop is instantiated with the two different game loop (interactive
+# and quick one - this last is not yet implemented)
+CliMainLoop.new(cli_game_loop).run
 
 # Fancy ending message
 at_exit do
