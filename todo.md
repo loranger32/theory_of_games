@@ -4,8 +4,6 @@
 | status | date | description |
 | :---  | :---: | :---        |
 |open|15/02/2019|Update the README|
-|open|15/02/2019|Add a description to the repo|
-|open|15/02/2019|Move display_in_table in a separate module|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|
@@ -49,3 +47,5 @@
 | | | - interactive interface |
 | | | - quick interface |
 | | | - help |
+|DONE|15/02/2019|Move display_in_table in a separate module|
+|DONE|15/02/2019|Add a description to the repo|
