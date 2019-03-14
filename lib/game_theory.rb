@@ -12,6 +12,7 @@ Bundler.require(:default, :development)
 require_relative 'game_theory/cli_ui/messages_module'
 require_relative 'game_theory/cli_ui/displayable_module'
 require_relative 'game_theory/cli_ui/validable_module'
+require_relative 'game_theory/cli_ui/tableable_module'
 
 ######### Game logic files
 

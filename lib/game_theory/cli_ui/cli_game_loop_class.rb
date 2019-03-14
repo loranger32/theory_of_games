@@ -3,6 +3,7 @@
 class CliGameLoop
   include Displayable
   include Validable
+  include Tableable
 
   MAIN_MENU = %w[help - h].freeze
 

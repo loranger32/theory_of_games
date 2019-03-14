@@ -2,6 +2,7 @@
 class Reporter
   include Displayable
   include Validable
+  include Tableable
 
   COLOM_LENGTH = 20
 

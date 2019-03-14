@@ -2,6 +2,7 @@
 class History
   include Displayable
   include Enumerable
+  include Tableable
 
   attr_reader :players, :turns
 
