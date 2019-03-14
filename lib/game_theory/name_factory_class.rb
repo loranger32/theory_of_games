@@ -5,12 +5,18 @@ class InvalidNameArgumentError < ArgumentError; end
 class NameFactory
   # Allow word characters, maximum of 3 sequences separated by space(s)
   NAME_PATTERN = /\A\w+(\s+\w+){0,2}\z/.freeze
+  NAME_ERRORS = { existent_name: 'Le nom existe déjà',
+                  invalid_name: "le nom n'est pas valide" }.freeze
 
   attr_reader :choosen_names
 
   def initialize(random_name_list)
     @random_names = random_name_list
     @choosen_names = []
+  end
+
+  def name_errors
+    NAME_ERRORS
   end
 
   def create_name(choice = nil)

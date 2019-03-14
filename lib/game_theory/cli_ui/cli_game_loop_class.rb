@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 # Main Game Loop
 class CliGameLoop
   include Displayable
@@ -18,6 +19,7 @@ class CliGameLoop
     @turns            = 0
   end
 
+  # rubocop:disable Metrics/MethodLength
   def run
     greet
     loop do
@@ -31,6 +33,7 @@ class CliGameLoop
       break unless play_again?
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -132,12 +135,13 @@ class CliGameLoop
   def retrieve_player_name(player_number)
     choice = ask_player_name_choice(player_number)
     name   = name_factory.create_name(choice)
-    while %I[existent_name invalid_name].include?(name)
-      if name == :existent_name
-        prompt 'Ce nom existe déjà, veuillez en choisir un autre'
-      elsif name == :invalid_name
-        prompt 'Ce nom est invalide, veuillez en choisir un autre'
-      end
+    verify_name_is_unique_and_valid(name)
+  end
+
+  def verify_name_is_unique_and_valid(name)
+    while name_factory.name_errors.key?(name)
+      print_error_message(name_factory.name_errors[name])
+      prompt('Nouvel essai')
       name = name_factory.create_name(retrieve_input)
     end
     name
@@ -191,3 +195,4 @@ class CliGameLoop
     @turns = 0
   end
 end
+# rubocop:enable Metrics/ClassLength

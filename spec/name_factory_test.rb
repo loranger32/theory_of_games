@@ -12,6 +12,10 @@ class NameFactoryTest < Minitest::Test
     assert_respond_to(@name_factory, :create_name)
   end
 
+  def test_it_name_errors_returns_the_name_errors_constant
+    assert_equal NameFactory::NAME_ERRORS, @name_factory.name_errors
+  end
+
   def test_it_raises_an_error_if_argument_is_not_nil_or_string
     assert_raises(InvalidNameArgumentError) { @name_factory.create_name(:name) }
     assert_raises(InvalidNameArgumentError) { @name_factory.create_name([:a]) }
