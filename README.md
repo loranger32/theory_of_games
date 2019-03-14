@@ -1,5 +1,7 @@
 # Theory of Games Simulation
 
+## Overview
+
 Small Cli program written in Ruby to play and simulate some of
 [the theory of games](https://en.wikipedia.org/wiki/Game_theory) situations.
 
@@ -8,29 +10,31 @@ Fun and learning are the main objectives.
 It's for the moment only written in french, but english translation is on its
 way.
 
+## What it does
+
 5 behaviors have been modelled so far :
 
-- Naive : always cooperates
-- Traitor : always betrays
-- Pick at random : randomy choose to cooperate or betray
+- Naive : always cooperates ;
+- Traitor : always betrays ;
+- Pick at random : randomy choose to cooperate or betray ;
 - Quick Adapter : punish and forgive fast. As long as the other player
                   cooperates, he cooperates also. If the other player betrays,
                   he will betray the next time. As soon as the other player
-                  cooperates again, he will also cooperate.
+                  cooperates again, he will also cooperate ;
 - Slow Adapter : punish and forgives slowly. Same as above, except that he will
-                 wait 3 turns before changing move
+                 wait 3 turns before changing move ;
 
 
 User can choose the number of turns to play (between 1 and 9999), and it will
-be soon possible to run multiple runs af a given number of turns.
+be soon possible to run multiple runs of a given number of turns.
 
 After each run, a display of the total points is rendered, with an option to
-see the detail per turn.
+see the details per turn and per player.
 
-Special attention will be paid to get a fancy display in the terminal,
+Special attention is and will be paid to get a fancy display in the terminal,
 partly using the various [TTY gems](https://piotrmurach.github.io/tty/).
 
-Next steps :
+## Next steps
 
 - more pre-defined behaviors ;
 - allow user to define his own behaviors ;
