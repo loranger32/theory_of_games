@@ -7,6 +7,11 @@
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|
+| | | - YAML |
+| | | - JSON |
+| | | - CSV |
+| | | - Makrdown |
+| | | - html |
 |open|18/02/2019|Fix the executable issue : allow program to be run from anywhere, and not only from within the directory
 |open|15/03/2019|Package it as a gem|
 |open|05/03/2019|Make a webapp|
