@@ -3,13 +3,14 @@
 ## Open
 | status | date | description |
 | :---  | :---: | :---        |
-|open|15/02/2019|Update the README|
+|open|15/03/2019|Allow the user to play against computer|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|
-|open|18/02/2019|Fix the executable issue : allow program to be run from anywhere without `'.rb'` extension
+|open|18/02/2019|Fix the executable issue : allow program to be run from anywhere, and not only from within the directory
+|open|15/03/2019|Package it as a gem|
 |open|05/03/2019|Make a webapp|
-|open|15/02/2019|Make a github page for the project|
+|open|15/03/2019|Make a github page for the project|
 
 ## Done
 |status| date | description |
@@ -43,9 +44,10 @@
 |DONE|13/03/2019|Rename name_factory class with name factory class|
 |DONE|13/03/2019|Allow user to choose the number of turns|
 |DONE|13/03/2019|Allow user to change players and turn number beteween games|
-|DONE|15/02/2019|Make a menu at the start of the game with different options |
+|DONE|15/03/2019|Make a menu at the start of the game with different options |
 | | | - interactive interface |
 | | | - quick interface |
 | | | - help |
-|DONE|15/02/2019|Move display_in_table in a separate module|
-|DONE|15/02/2019|Add a description to the repo|
+|DONE|15/03/2019|Move display_in_table in a separate module|
+|DONE|15/03/2019|Add a description to the repo|
+|DONE|15/03/2019|Update the README|
