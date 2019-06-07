@@ -22,6 +22,10 @@ module Displayable
   # including class
   attr_accessor :input, :output
 
+  def cursor
+    TTY::Cursor
+  end
+
   def screen_height
     TTY::Screen.size[0]
   end
@@ -63,9 +67,7 @@ module Displayable
   end
 
   def print_message(message, color: nil)
-    if color.nil?
-      puts message.light_blue
-    elsif Helpers.valid_color?(color)
+    if Helpers.valid_color?(color)
       puts message.send(color)
     else
       puts message.light_blue
@@ -73,9 +75,7 @@ module Displayable
   end
 
   def print_on_line(message, color: nil)
-    if color.nil?
-      print message.light_blue
-    elsif Helpers.valid_color?(color)
+    if Helpers.valid_color?(color)
       print message.send(color)
     else
       print message.light_blue
@@ -97,6 +97,12 @@ module Displayable
     print_message(message, color: :green)
     print (cursor.forward((screen_width / 2) - half_msg_length))
     print("=> ".green)
+  end
+
+  def print_in_center(message)
+    half_msg_length = message.length / 2
+    print cursor.down(2) + cursor.forward((screen_width / 2) - half_msg_length)
+    print_message(message, color: :blue)
   end
 
   def clear_screen
@@ -122,7 +128,7 @@ module Displayable
   def display_in_table(collection, *attributes)
     Helpers.validate_table_arguments(collection, attributes)
 
-    print_message('+' * COLUMN_LENGTH * collection.size, color: :yellow)
+    print_in_center('+' * COLUMN_LENGTH * collection.size, color: :yellow)
 
     attributes.each do |attribute|
       collection.each do |item|
@@ -132,11 +138,11 @@ module Displayable
         print_on_line('|', color: :yellow)
       end
       skip_lines(1)
-      print_message('-' * COLUMN_LENGTH * collection.size, color: :yellow) \
+      print_in_center('-' * COLUMN_LENGTH * collection.size, color: :yellow) \
         unless attributes.index(attribute) == attributes.size - 1
     end
 
-    print_message('+' * COLUMN_LENGTH * collection.size, color: :yellow)
+    print_in_center('+' * COLUMN_LENGTH * collection.size, color: :yellow)
     skip_lines(1)
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
