@@ -3,8 +3,10 @@ class BehaviorArgumentError < ArgumentError; end
 # A class to create requested behavior for players
 class BehaviorFactory
 
-  BEHAVIORS = { 'n' => :naive, 't' => :traitor, 'h' => :random,
-                'r' => :quick_adapter, 'l' => :slow_adapter }.freeze
+  BEHAVIORS = { 'Naif' => :naive, 'Traitre' => :traitor,
+                'choisit au hasard' => :random,
+                "s'adapte rapidement" => :quick_adapter,
+                "s'adapte lentement" => :slow_adapter }.freeze
 
   BEHAVIOR_CLASSES = { naive: Naive, traitor: Traitor, random: PickRandom,
                        quick_adapter: QuickAdapter,

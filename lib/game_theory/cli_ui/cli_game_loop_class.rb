@@ -154,6 +154,8 @@ class CliGameLoop
   end
 
   def ask_player_name_choice(player_number)
+    clear_screen_with_title_in_box(MAIN_TITLE)
+
     question = pastel.bright_blue("Choisissez un nom pour le joueur\
  #{player_number}, ou 'entrée' pour un nom par défaut:")
     error_msg = "Le nom doit comprendre entre 3 et 12 caractères"
@@ -161,21 +163,17 @@ class CliGameLoop
   end
 
   def ask_behavior_to_player(name)
-    question = <<~QUESTION
-      Choisissez le type ce comportement pour le joueur #{name}:
-      - Naif (n)
-      - Traitre (t)
-      - au Hasard (h)
-      - s'adapte Rapidement (r)
-      - s'adapet Lentement (l)
-    QUESTION
+    clear_screen_with_title_in_box(MAIN_TITLE)
 
-    prompt_center(question)
-    obtain_a_valid_input_from_list BehaviorFactory::BEHAVIORS.keys
+    question = "Choisissez le type ce comportement pour le joueur #{name}:"
+    colorized_question = pastel.bright_blue(question)
+    options = BehaviorFactory::BEHAVIORS.keys
+
+    prompt.select(colorized_question, options)
   end
 
   def confirm_players?
-    clear_screen
+    clear_screen_with_title_in_box(MAIN_TITLE)
     print_in_center('Vous avez choisi les joueurs suivant:')
     display_in_table(players, :name, :behavior)
 
