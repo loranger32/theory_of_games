@@ -74,6 +74,7 @@ DEPENDENCIES
   colorize (~> 0.8.1)
   minitest (~> 5.11, >= 5.11.3)
   minitest-reporters (~> 1.3, >= 1.3.6)
+  pastel
   pry (~> 0.12.2)
   rake (~> 12.3, >= 12.3.2)
   rubocop (~> 0.65.0)
