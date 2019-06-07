@@ -122,6 +122,12 @@ module Displayable
     titleize(title)
   end
 
+  def clear_screen_with_title_in_box(title)
+    clear_screen
+    titleize_in_box(title)
+    skip_lines(3)
+  end
+
   def wait_until_ready_to_go_on
     prompt('Prêts ? (appuyer sur une touche pour continuer)')
     gets

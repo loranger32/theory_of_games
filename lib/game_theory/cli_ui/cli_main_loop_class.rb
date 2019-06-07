@@ -86,8 +86,6 @@ class CliMainLoop
 
   def start_interactive_session
     sleep(0.3)
-    clear_screen
-    titleize_in_box(MAIN_TITLE)
     cli_game_loop.run    
   end
 

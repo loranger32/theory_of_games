@@ -5,6 +5,7 @@ class CliGameLoop
   include Validable
   include Tableable
 
+  MAIN_TITLE = 'LA THEORIE DES JEUX - MODE INTERACTIF'.freeze
   MAIN_MENU = %w[help - h].freeze
 
   attr_reader :turn_engine, :reporter, :player_factory, :players, :name_factory,
@@ -25,6 +26,7 @@ class CliGameLoop
   # rubocop:disable Metrics/MethodLength
   def run
     loop do
+      clear_screen_with_title_in_box(MAIN_TITLE)
       setup_players_and_turns
       loop do
         play_turns
@@ -106,6 +108,7 @@ class CliGameLoop
 
   def collect_data_for_players
     number_of_players = ask_number_of_players_to_create
+    clear_screen_with_title_in_box(MAIN_TITLE)
     collect_data_for_player_creation(number_of_players)
   end
 
@@ -151,10 +154,10 @@ class CliGameLoop
   end
 
   def ask_player_name_choice(player_number)
-    question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
- pour un nom par défaut:"
-    prompt_center(question)
-    retrieve_input
+    question = pastel.bright_blue("Choisissez un nom pour le joueur\
+ #{player_number}, ou 'entrée' pour un nom par défaut:")
+    error_msg = "Le nom doit comprendre entre 3 et 12 caractères"
+    choosen_name = prompt.ask(question)
   end
 
   def ask_behavior_to_player(name)
