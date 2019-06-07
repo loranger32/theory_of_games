@@ -110,9 +110,12 @@ class CliGameLoop
   end
 
   def ask_number_of_players_to_create
-    prompt_center('Combien de joueurs voulez-vous (2 - 9) ?')
-    pattern = /\A[2-9]\z/
-    choice = obtain_a_valid_input_from(pattern)
+    message = pastel.bright_blue('Combien de joueurs voulez-vous (2 - 9) ?')
+    error_msg = pastel.bright_red('Le nombre de joueur doit être entre 2 et 9')
+    choice = prompt.ask(message) do |q|
+      q.required
+      q.in('0-9', error_msg)
+    end
     choice.to_i
   end
 

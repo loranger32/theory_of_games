@@ -26,6 +26,14 @@ module Displayable
     TTY::Cursor
   end
 
+  def prompt
+    @prompt ||= TTY::Prompt.new(active_color: :bright_blue)
+  end
+
+  def pastel
+    @pastel ||= Pastel.new
+  end
+
   def screen_height
     TTY::Screen.size[0]
   end
@@ -86,7 +94,7 @@ module Displayable
     puts "\n#{message}".red
   end
 
-  def prompt(message)
+  def prompt_t(message)
     puts message.green
     print '=> '.green
   end
