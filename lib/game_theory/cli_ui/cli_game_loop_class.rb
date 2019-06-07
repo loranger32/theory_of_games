@@ -110,7 +110,7 @@ class CliGameLoop
   end
 
   def ask_number_of_players_to_create
-    prompt('Combien de joueurs voulez-vous (2 - 9) ?')
+    prompt_center('Combien de joueurs voulez-vous (2 - 9) ?')
     pattern = /\A[2-9]\z/
     choice = obtain_a_valid_input_from(pattern)
     choice.to_i
@@ -150,7 +150,7 @@ class CliGameLoop
   def ask_player_name_choice(player_number)
     question = "Choisissez un nom pour le joueur #{player_number}, ou 'entrée'\
  pour un nom par défaut:"
-    prompt(question)
+    prompt_center(question)
     retrieve_input
   end
 
@@ -164,16 +164,16 @@ class CliGameLoop
       - s'adapet Lentement (l)
     QUESTION
 
-    prompt(question)
+    prompt_center(question)
     obtain_a_valid_input_from_list BehaviorFactory::BEHAVIORS.keys
   end
 
   def confirm_players?
     clear_screen
-    print_message('Vous avez choisi les joueurs suivant:')
+    print_in_center('Vous avez choisi les joueurs suivant:')
     display_in_table(players, :name, :behavior)
 
-    prompt('Confirmez vous ce choix ? (o/n)')
+    prompt_center('Confirmez vous ce choix ? (o/n)')
     obtain_a_valid_input_from(%w[o n]) == 'o'
   end
 
