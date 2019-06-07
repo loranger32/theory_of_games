@@ -52,6 +52,20 @@ module Displayable
     skip_lines(3)
   end
 
+  def underline(message, text_color: :white, underline_color: :white)
+    message_size = message.size
+    underline = '-' * (message_size)
+
+    if Helpers.valid_pastel_colors?([text_color, underline_color])
+      underline = pastel.send(underline_color, underline)
+      message = pastel.send(text_color, message)
+    end
+
+    puts message
+    puts underline
+    skip_lines(1)
+  end
+
   def titleize_in_box(title)
     box_width = 50
     box_height = 5
@@ -72,6 +86,28 @@ module Displayable
                             title
                         end
     puts box
+  end
+
+  def display_in_small_box(message)
+    box_width = message.size + 10
+    box_height = 3
+    box = TTY::Box.frame(top: 10,
+                         left: ((screen_width / 2) - (box_width / 2)),
+                         width: box_width,
+                         height: box_height,
+                         align: :center,
+                         padding: 0,
+                         style: {
+                           fg: :bright_black,
+                           bg: :bright_blue,
+                           border: {
+                            bg: :bright_blue,
+                            fg: :bright_blue,
+                           }
+                         }) do
+                            message
+                          end
+    puts box                     
   end
 
   def print_message(message, color: nil)
@@ -165,8 +201,19 @@ module Displayable
   module Helpers
     module_function
 
+    def pastel
+      @@pastel ||= Pastel.new
+    end
+
     def valid_color?(color)
       String.colors.include?(color)
+    end
+
+    def valid_pastel_colors?(colors)
+      colors.all? do |color|
+        binding.pry
+        pastel.valid?(color)
+      end
     end
 
     def validate_table_arguments(collection, attributes)

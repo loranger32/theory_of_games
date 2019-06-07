@@ -174,7 +174,9 @@ class CliGameLoop
 
   def confirm_players?
     clear_screen_with_title_in_box(MAIN_TITLE)
-    print_in_center('Vous avez choisi les joueurs suivant:')
+
+    display_in_small_box("Vous avez choisi les joueurs suivant:")
+
     display_in_table(players, :name, :behavior)
 
     prompt_center('Confirmez vous ce choix ? (o/n)')
