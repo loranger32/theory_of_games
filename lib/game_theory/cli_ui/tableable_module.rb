@@ -3,32 +3,23 @@ class TableArgumentError < ArgumentError; end
 
 # Module to host all table relative methods
 module Tableable
-  def create_table_with(collection, attributes)
+  def create_table_with(collection, attributes, headers)
     Helpers.validate_table_arguments(collection, attributes)
 
-    table_data = hashify_data(collection, attributes)
-
-    TTY::Table.new(table_data[:headers], table_data[:data],
-                   orientation: :vertical)
-  end
-
-  def hashify_data(collection, attributes)
-    headers = collection.map { |item| item.send(attributes[0]) }
-
-    data = attributes[1...].map do |attribute|
-      collection.map { |item| item.send(attribute) }
+    data = collection.map do |item|
+      attributes.map { |attribute| item.send(attribute) }
     end
 
-    { headers: headers, data: data }
+    TTY::Table.new(headers, data)
   end
 
-  def display_in_table(collection, *attributes)
-    table = create_table_with(collection, attributes)
+  def display_in_table(collection, attributes: [], headers: [])
+    table = create_table_with(collection, attributes, headers)
     table = table.render(:unicode) do |r|
               r.padding  = [1, 2, 1, 2]
               r.width = 40
               r.border.style = :bright_green
-              r.alignments = [:center]
+              r.alignments = [:center, :center]
             end
     
     puts table

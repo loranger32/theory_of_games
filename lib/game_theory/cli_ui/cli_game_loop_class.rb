@@ -177,7 +177,8 @@ class CliGameLoop
 
     display_in_small_box("Vous avez choisi les joueurs suivant:")
 
-    display_in_table(players, :name, :behavior)
+    display_in_table(players, attributes: [:name, :behavior],
+                              headers: %w[Nom Comportement])
 
     prompt_center('Confirmez vous ce choix ? (o/n)')
     obtain_a_valid_input_from(%w[o n]) == 'o'
