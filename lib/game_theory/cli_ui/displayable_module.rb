@@ -173,30 +173,6 @@ module Displayable
     number_of_lines_to_skip.times { puts '' }
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  # Could be refactored => for the gem
-  def display_in_table(collection, *attributes)
-    Helpers.validate_table_arguments(collection, attributes)
-
-    print_in_center('+' * COLUMN_LENGTH * collection.size, color: :yellow)
-
-    attributes.each do |attribute|
-      collection.each do |item|
-        print_on_line('|', color: :yellow)
-        print_on_line(item.send(attribute).to_s.center(COLUMN_LENGTH - 2),
-                      color: :yellow)
-        print_on_line('|', color: :yellow)
-      end
-      skip_lines(1)
-      print_in_center('-' * COLUMN_LENGTH * collection.size, color: :yellow) \
-        unless attributes.index(attribute) == attributes.size - 1
-    end
-
-    print_in_center('+' * COLUMN_LENGTH * collection.size, color: :yellow)
-    skip_lines(1)
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
   # A helper module
   module Helpers
     module_function
@@ -213,26 +189,6 @@ module Displayable
       colors.all? do |color|
         binding.pry
         pastel.valid?(color)
-      end
-    end
-
-    def validate_table_arguments(collection, attributes)
-      validate_collection(collection)
-      validate_attributes(collection[0], attributes)
-    end
-
-    def validate_collection(collection)
-      err_msg = "The first argument must respond to each. #{collection.class}\
- objects usually do not."
-      raise TableArgumentError, err_msg unless collection.respond_to?(:each)
-    end
-
-    def validate_attributes(item, attributes)
-      attributes.each do |attribute|
-        err_msg = "The attributes must be valid for the items in their\
- collection. ##{attribute} is not a valid attribute for objects of\
- class #{item.class}."
-        raise TableArgumentError, err_msg unless item.respond_to?(attribute)
       end
     end
   end
