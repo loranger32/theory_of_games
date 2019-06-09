@@ -7,6 +7,7 @@ gem 'tty-box', '~> 0.3.0'
 gem 'tty-screen', '~> 0.6.5'
 gem 'tty-prompt'
 gem 'tty-cursor'
+gem 'tty-table'
 gem 'pastel'
 
 group :development do
