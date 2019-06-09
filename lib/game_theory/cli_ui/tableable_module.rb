@@ -18,12 +18,23 @@ module Tableable
     table = table.render(:unicode) do |r|
               r.padding  = [1, 2, 1, 2]
               r.width = 40
-              r.border.style = :bright_green
+              r.border.style = :bright_blue
               r.alignments = [:center, :center]
             end
     
-    puts table
+    print_table_in_center(table)
     skip_lines(1)
+  end
+
+  def print_table_in_center(table)
+    half_table_width = table.scan(/.+┐/)[0].sub(/\e...m/, '').size / 2
+
+    print cursor.down(2)
+
+    table.each_line do |line|
+      print cursor.forward((screen_width / 2) - half_table_width)
+      puts line
+    end
   end
 
   module Helpers

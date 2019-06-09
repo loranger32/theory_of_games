@@ -7,8 +7,6 @@ class TableArgumentError < ArgumentError; end
 # A utils module to be included in various files to add display options
 module Displayable
 
-  COLUMN_LENGTH = 25
-
   # Method to be called in the initialize method of classes that implement
   # the module, in order to perform the tests with custom StringIO objects
   # rubocop:disable Naming/AccessorMethodName
