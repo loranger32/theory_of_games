@@ -90,7 +90,12 @@ class CliGameLoop
 
   def display_report(history)
     clear_screen_with_title_in_box(MAIN_TITLE)
-    display_in_small_box("Tous les tours ont été joués. Les résultats sont:")
+    title = "  Tous les tours ont été joués. Les résultats sont:  "
+    padding = ' ' * title.length
+    formatted_title = pastel.bright_black.on_bright_blue(title)
+    formatted_padding = pastel.on_bright_blue(padding)
+    display_boxed_centered_title(title, formatted_title, formatted_padding)
+
     reporter.display_report(history)
   end
 
@@ -182,8 +187,12 @@ class CliGameLoop
 
   def confirm_players?
     clear_screen_with_title_in_box(MAIN_TITLE)
+    title = '  Vous avez choisi les joueurs suivant:  '
+    padding = ' ' * title.size
+    formatted_title = pastel.bright_black.on_bright_blue(title)
+    formatted_padding = pastel.on_bright_blue(padding)
 
-    display_in_small_box("Vous avez choisi les joueurs suivant:")
+    display_boxed_centered_title(title, formatted_title, formatted_padding)
 
     display_in_table(players, attributes: [:name, :behavior],
                               headers: %w[Nom Comportement])

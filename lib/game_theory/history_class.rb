@@ -82,8 +82,8 @@ class History
     each_with_index do |turn, index|
       title = "  Tour #{index + 1}  "
       padding = " " * title.size
-      formatted_title = pastel.red.bold.on_bright_blue(title)
-      formatted_padding = (pastel.on_bright_green(padding))
+      formatted_title = pastel.bright_black.bold.on_bright_blue(title)
+      formatted_padding = (pastel.on_bright_blue(padding))
 
       display_boxed_centered_title(title, formatted_title, formatted_padding)
 
