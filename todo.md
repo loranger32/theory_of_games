@@ -3,17 +3,17 @@
 ## Open
 | status | date | description |
 | :---  | :---: | :---        |
-|open|15/03/2019|Fix error when chossing invalid main menu option|
+
+|open|11/06/2019|Fix error when chosing invalid main menu option|
+|open|11/06/2019|Check the rules for multiplayer games|
 |open|15/03/2019|Allow the user to play against computer|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
-|open|06/03/2019|Make a menu at the launch time to ask action|
 |open|18/02/2019|Allow exporting the reports in a file|
 | | | - YAML |
 | | | - JSON |
 | | | - CSV |
 | | | - Makrdown |
 | | | - html |
-|open|18/02/2019|Fix the executable issue : allow program to be run from anywhere, and not only from within the directory
 |open|15/03/2019|Package it as a gem|
 |open|05/03/2019|Make a webapp|
 |open|15/03/2019|Make a github page for the project|
@@ -57,3 +57,6 @@
 |DONE|15/03/2019|Move display_in_table in a separate module|
 |DONE|15/03/2019|Add a description to the repo|
 |DONE|15/03/2019|Update the README|
+|DONE|11/06/2019|Remove the ready to play after the choice of turn number|
+|DONE|11/06/2019|Make a menu at the launch time to ask action|
+|DONE|18/02/2019|Fix the executable issue : allow program to be run from anywhere, and not only from within the directory

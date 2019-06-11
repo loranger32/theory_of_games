@@ -26,6 +26,7 @@ class Reporter
 
   def display_full_game_report(history)
     history.display
+    wait_until_ready_to_go_on
   end
 
   private

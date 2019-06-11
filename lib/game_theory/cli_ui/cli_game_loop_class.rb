@@ -78,7 +78,7 @@ class CliGameLoop
   def play_turns
     clear_screen_with_title_in_box(MAIN_TITLE)
 
-    ready_to_play?
+    # ready_to_play?
 
     turns.times { @turn_engine.play_turn }
   end
@@ -110,13 +110,27 @@ class CliGameLoop
   end
 
   def play_again?
-    prompt 'On refait un essai avec de nouveaux joueurs (o/n) ?'
-    obtain_a_valid_input_from(%w[o n]) == 'o'
+    clear_screen_with_title_in_box(MAIN_TITLE)
+
+    question = 'On refait un essai avec de nouveaux joueurs ?'
+    formatted_question = pastel.bright_blue(question)
+    prompt.yes?(formatted_question) do |q|
+      q.suffix 'Oui / Non'
+      q.default true
+      q.convert -> (input) { !input.match(/^o$|^n$/i).nil? }
+    end
   end
 
   def play_again_with_same_players_and_turn?
-    prompt 'Nouvel essai avec les mêmes joueurs et nombre de tours (o/n) ?'
-    obtain_a_valid_input_from(%w[o n]) == 'o'
+    clear_screen_with_title_in_box(MAIN_TITLE)
+
+    question = 'Nouvel essai avec les mêmes joueurs et nombre de tours ?'
+    formatted_question = pastel.bright_blue(question)
+    prompt.yes?(formatted_question) do |q|
+      q.suffix 'Oui / Non'
+      q.default true
+      q.convert -> (input) { !input.match(/^o$|^n$/i).nil? }
+    end
   end
 
   def collect_data_for_players

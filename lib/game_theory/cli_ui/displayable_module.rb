@@ -183,8 +183,8 @@ module Displayable
   end
 
   def wait_until_ready_to_go_on
-    prompt('Prêts ? (appuyer sur une touche pour continuer)')
-    gets
+    message = pastel.bright_blue('Appuyez sur espace ou retour pour continuer')
+    prompt.keypress(message, keys: [:space, :return])
   end
 
   def skip_lines(number_of_lines_to_skip)
