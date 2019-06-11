@@ -90,7 +90,7 @@ class History
       display_in_table(turn,
                        attributes: [:name, :behavior, :display_move, :earning,
                                     :score],
-                       headers: %w[nom comportement action gain score])
+                       headers: %w[NOM COMPORTEMENT ACTION GAIN SCORE])
     end
   end
 

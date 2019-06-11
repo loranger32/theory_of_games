@@ -195,7 +195,7 @@ class CliGameLoop
     display_boxed_centered_title(title, formatted_title, formatted_padding)
 
     display_in_table(players, attributes: [:name, :behavior],
-                              headers: %w[Nom Comportement])
+                              headers: %w[NOM COMPORTEMENT])
 
     prompt.yes?(pastel.bright_blue("Confirmez-vous ce choix ?")) do |q|
       q.suffix 'oui / non'
