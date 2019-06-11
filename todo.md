@@ -3,8 +3,6 @@
 ## Open
 | status | date | description |
 | :---  | :---: | :---        |
-
-|open|11/06/2019|Fix error when chosing invalid main menu option|
 |open|11/06/2019|Check the rules for multiplayer games|
 |open|15/03/2019|Allow the user to play against computer|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
@@ -60,3 +58,4 @@
 |DONE|11/06/2019|Remove the ready to play after the choice of turn number|
 |DONE|11/06/2019|Make a menu at the launch time to ask action|
 |DONE|18/02/2019|Fix the executable issue : allow program to be run from anywhere, and not only from within the directory
+|DONE|11/06/2019|Fix error when chosing invalid main menu option|

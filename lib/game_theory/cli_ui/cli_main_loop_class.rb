@@ -70,11 +70,11 @@ class CliMainLoop
 
   def display_main_menu
     puts main_box
-    prompt_center('Entrez votre choix')
   end
 
   def process_choice
-    choice = obtain_a_valid_input_from %w[i r h a q]
+    choice = retrieve_menu_choice
+
     case choice
     when 'q' then @quit = true
     when 'i' then start_interactive_session
@@ -84,8 +84,17 @@ class CliMainLoop
 
   end
 
+  def retrieve_menu_choice
+    message = 'Entrez votre choix'
+    half_msg_length = message.size / 2
+    formatted_message = pastel.bright_blue(message)
+
+    print cursor.down(2)
+    print cursor.forward((screen_width / 2) - half_msg_length)
+    prompt.keypress(formatted_message, [:i, :r, :h,:a, :q])
+  end
+
   def start_interactive_session
-    sleep(0.3)
     cli_game_loop.run    
   end
 
