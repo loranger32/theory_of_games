@@ -90,7 +90,7 @@ class CliGameLoop
 
   def display_report(history)
     clear_screen_with_title_in_box(MAIN_TITLE)
-    print_message 'Tous les tours ont été joués.'
+    display_in_small_box("Tous les tours ont été joués. Les résultats sont:")
     reporter.display_report(history)
   end
 

@@ -19,8 +19,6 @@ class Reporter
   end
 
   def display_short_game_report
-    print_message('Les scores sont:', color: :light_blue)
-
     display_in_table(players,
                      headers: %w[nom comportement score],
                      attributes: [:name, :behavior, :score])
