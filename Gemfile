@@ -1,14 +1,13 @@
 source 'https://rubygems.org'
 
 gem 'bundler'
-gem 'colorize', '~> 0.8.1'
-gem 'rake', '~> 12.3', '>= 12.3.2'
-gem 'tty-box', '~> 0.3.0'
-gem 'tty-screen', '~> 0.6.5'
-gem 'tty-prompt'
-gem 'tty-cursor'
-gem 'tty-table'
 gem 'pastel'
+gem 'rake', '~> 12.3', '>= 12.3.2'
+gem 'tty-box'
+gem 'tty-cursor'
+gem 'tty-prompt'
+gem 'tty-screen'
+gem 'tty-table'
 
 group :development do
   gem 'minitest', '~> 5.11', '>= 5.11.3'

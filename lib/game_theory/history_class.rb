@@ -81,15 +81,14 @@ class History
   def display
     each_with_index do |turn, index|
       title = "  Tour #{index + 1}  "
-      padding = " " * title.size
+      padding = ' ' * title.size
       formatted_title = pastel.bright_black.bold.on_bright_blue(title)
-      formatted_padding = (pastel.on_bright_blue(padding))
+      formatted_padding = pastel.on_bright_blue(padding)
 
       display_boxed_centered_title(title, formatted_title, formatted_padding)
 
       display_in_table(turn,
-                       attributes: [:name, :behavior, :display_move, :earning,
-                                    :score],
+                       attributes: %i[name behavior display_move earning score],
                        headers: %w[NOM COMPORTEMENT ACTION GAIN SCORE])
     end
   end

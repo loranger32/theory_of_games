@@ -23,10 +23,8 @@ class CliGameLoop
     @turns            = 0
   end
 
-  # rubocop:disable Metrics/MethodLength
   def run
     loop do
-      clear_screen_with_title_in_box(MAIN_TITLE)
       setup_players_and_turns
       loop do
         play_turns
@@ -37,7 +35,6 @@ class CliGameLoop
       break unless play_again?
     end
   end
-  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -48,6 +45,7 @@ class CliGameLoop
 
   def create_players
     loop do
+      clear_screen_with_title_in_box(MAIN_TITLE)
       players_data = collect_data_for_players
       @players = player_factory.create_players(players_data)
 
@@ -64,7 +62,7 @@ class CliGameLoop
     question = pastel.bright_blue('Choisissez le nombre de tours (1 - 1000)')
     error_msg = pastel.bright_red('Choisissez un nombre entre 1 et 1000')
     answer = prompt.ask(question) do |q|
-      q.validate /\A\d{1,4}\z/, error_msg
+      q.validate(/\A\d{1,4}\z/, error_msg)
     end
 
     @turns = answer.to_i
@@ -77,9 +75,6 @@ class CliGameLoop
 
   def play_turns
     clear_screen_with_title_in_box(MAIN_TITLE)
-
-    # ready_to_play?
-
     turns.times { @turn_engine.play_turn }
   end
 
@@ -90,7 +85,7 @@ class CliGameLoop
 
   def display_report(history)
     clear_screen_with_title_in_box(MAIN_TITLE)
-    title = "  Tous les tours ont été joués. Les résultats sont:  "
+    title = '  Tous les tours ont été joués. Les résultats sont:  '
     padding = ' ' * title.length
     formatted_title = pastel.bright_black.on_bright_blue(title)
     formatted_padding = pastel.on_bright_blue(padding)
@@ -115,9 +110,8 @@ class CliGameLoop
     question = 'On refait un essai avec de nouveaux joueurs ?'
     formatted_question = pastel.bright_blue(question)
     prompt.yes?(formatted_question) do |q|
-      q.suffix 'Oui / Non'
-      q.default true
-      q.convert -> (input) { !input.match(/^o$|^n$/i).nil? }
+      q.positive 'Oui'
+      q.negative 'Non'
     end
   end
 
@@ -127,9 +121,8 @@ class CliGameLoop
     question = 'Nouvel essai avec les mêmes joueurs et nombre de tours ?'
     formatted_question = pastel.bright_blue(question)
     prompt.yes?(formatted_question) do |q|
-      q.suffix 'Oui / Non'
-      q.default true
-      q.convert -> (input) { !input.match(/^o$|^n$/i).nil? }
+      q.positive 'Oui'
+      q.negative 'Non'
     end
   end
 
@@ -185,8 +178,8 @@ class CliGameLoop
 
     question = pastel.bright_blue("Choisissez un nom pour le joueur\
  #{player_number}, ou 'entrée' pour un nom par défaut:")
-    error_msg = "Le nom doit comprendre entre 3 et 12 caractères"
-    choosen_name = prompt.ask(question)
+    error_msg = pastel.red('Le nom doit comprendre entre 3 et 12 caractères')
+    prompt.ask(question, error_msg)
   end
 
   def ask_behavior_to_player(name)
@@ -200,6 +193,18 @@ class CliGameLoop
   end
 
   def confirm_players?
+    display_players_list
+
+    display_in_table(players, attributes: %i[name behavior],
+                              headers: %w[NOM COMPORTEMENT])
+
+    prompt.yes?(pastel.bright_blue('Confirmez-vous ce choix ?')) do |q|
+      q.positive 'Oui'
+      q.negative 'Non'
+    end
+  end
+
+  def display_players_list
     clear_screen_with_title_in_box(MAIN_TITLE)
     title = '  Vous avez choisi les joueurs suivant:  '
     padding = ' ' * title.size
@@ -207,21 +212,11 @@ class CliGameLoop
     formatted_padding = pastel.on_bright_blue(padding)
 
     display_boxed_centered_title(title, formatted_title, formatted_padding)
-
-    display_in_table(players, attributes: [:name, :behavior],
-                              headers: %w[NOM COMPORTEMENT])
-
-    prompt.yes?(pastel.bright_blue("Confirmez-vous ce choix ?")) do |q|
-      q.suffix 'oui / non'
-      q.default true
-      q.convert -> (input) { !input.match(/[^o$]|[^n$]/i).nil? }
-    end
   end
 
   def collect_data_again
     @players = nil
     name_factory.reset_names!
-    print_message('Ok, on recommence.')
   end
 
   def reset_players_and_turns!

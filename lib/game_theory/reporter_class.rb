@@ -21,7 +21,7 @@ class Reporter
   def display_short_game_report
     display_in_table(players,
                      headers: %w[nom comportement score],
-                     attributes: [:name, :behavior, :score])
+                     attributes: %i[name behavior score])
   end
 
   def display_full_game_report(history)
@@ -32,13 +32,12 @@ class Reporter
   private
 
   def want_full_report?
-    question = "Voulez-vous également un rapport détaillé tour par tour ?"
+    question = 'Voulez-vous également un rapport détaillé tour par tour ?'
     colored_question = pastel.bright_blue(question)
 
     prompt.yes?(colored_question) do |q|
-      q.suffix 'oui / non'
-      q.default false
-      q.convert -> (input) { !input.match(/[^o$]|[^n$]/i).nil? }
+      q.positive 'Oui'
+      q.negative 'Non'
     end
   end
 

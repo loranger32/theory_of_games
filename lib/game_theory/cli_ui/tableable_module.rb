@@ -16,27 +16,30 @@ module Tableable
   def display_in_table(collection, attributes: [], headers: [])
     table = create_table_with(collection, attributes, headers)
     table = table.render(:unicode) do |r|
-              r.padding  = [1, 2, 1, 2]
-              r.width = 200
-              r.border.style = :bright_blue
-              r.alignments = [:center, :center]
-            end
-    
+      r.padding = [1, 2, 1, 2]
+      r.width = 200
+      r.border.style = :bright_blue
+      r.alignments = %i[center center]
+    end
+
     print_table_in_center(table)
     skip_lines(1)
   end
 
   def print_table_in_center(table)
-    half_table_width = table.scan(/.+┐/)[0].sub(/\e...m/, '').size / 2
-
     print cursor.down(2)
 
     table.each_line do |line|
-      print cursor.forward((screen_width / 2) - half_table_width)
+      print cursor.forward((screen_width / 2) - half_table_width_of(table))
       puts line
     end
   end
 
+  def half_table_width_of(table)
+    table.scan(/.+┐/)[0].sub(/\e...m/, '').size / 2
+  end
+
+  # A simple module of helpers
   module Helpers
     module_function
 
@@ -61,4 +64,3 @@ module Tableable
     end
   end
 end
-

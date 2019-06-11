@@ -1,6 +1,3 @@
-# The 'require' is needed for the tests
-require 'colorize'
-
 # A custom error class for invalid display_in_table argument
 class TableArgumentError < ArgumentError; end
 
@@ -40,30 +37,7 @@ module Displayable
     TTY::Screen.size[1]
   end
 
-  def titleize(title)
-    title_size = title.size
-    line = ('*' * (title_size + 10)).blue.center(screen_width)
-    title = title.red.center(screen_width)
-    puts line
-    puts title
-    puts line
-    skip_lines(3)
-  end
-
-  def underline(message, text_color: :white, underline_color: :white)
-    message_size = message.size
-    underline = '-' * (message_size)
-
-    if Helpers.valid_pastel_colors?([text_color, underline_color])
-      underline = pastel.send(underline_color, underline)
-      message = pastel.send(text_color, message)
-    end
-
-    puts message
-    puts underline
-    skip_lines(1)
-  end
-
+  # rubocop:disable Metrics/MethodLength
   def titleize_in_box(title)
     box_width = 50
     box_height = 5
@@ -73,19 +47,17 @@ module Displayable
                          height: box_height,
                          align: :center,
                          padding: 1,
-                         style: {
-                           fg: :red,
-                           bg: :bright_green,
-                           border: {
-                           fg: :red,
-                           bg: :bright_green
-                           }
-                         }) do
-                            title
-                        end
+                         style: { fg: :red,
+                                  bg: :bright_green,
+                                  border: { fg: :red,
+                                            bg: :bright_green } }) do
+                                              title
+                                            end
     puts box
   end
+  # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/MethodLength
   def display_in_small_box(message)
     box_width = message.size + 10
     box_height = 3
@@ -95,77 +67,29 @@ module Displayable
                          height: box_height,
                          align: :center,
                          padding: 0,
-                         style: {
-                           fg: :bright_black,
-                           bg: :bright_blue,
-                           border: {
-                            bg: :bright_blue,
-                            fg: :bright_blue,
-                           }
-                         }) do
-                            message
-                          end
-    puts box                     
+                         style: { fg: :bright_black,
+                                  bg: :bright_blue,
+                                  border: { bg: :bright_blue,
+                                            fg: :bright_blue } }) do
+                                              message
+                                            end
+    puts box
   end
+  # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/AbcSize
   def display_boxed_centered_title(title, formatted_title, formatted_padding)
-      half_title_length = title.length / 2
-      print cursor.down(2) + cursor.forward((screen_width / 2) - half_title_length)
-      puts formatted_padding
+    half_title_size = title.length / 2
+    print cursor.down(2) + cursor.forward((screen_width / 2) - half_title_size)
+    puts formatted_padding
 
-      half_title_length = title.length / 2
-      print cursor.forward((screen_width / 2) - half_title_length)
-      puts formatted_title
+    print cursor.forward((screen_width / 2) - half_title_size)
+    puts formatted_title
 
-      half_title_length = title.length / 2
-      print cursor.forward((screen_width / 2) - half_title_length)
-      puts formatted_padding
+    print cursor.forward((screen_width / 2) - half_title_size)
+    puts formatted_padding
   end
-
-  def print_message(message, color: nil)
-    if Helpers.valid_color?(color)
-      puts message.send(color)
-    else
-      puts message.light_blue
-    end
-  end
-
-  def print_on_line(message, color: nil)
-    if Helpers.valid_color?(color)
-      print message.send(color)
-    else
-      print message.light_blue
-    end
-  end
-
-  def print_error_message(message)
-    puts "\n#{message}".red
-  end
-
-  def prompt_t(message)
-    puts message.green
-    print '=> '.green
-  end
-
-  def prompt_center(message)
-    half_msg_length = message.length / 2
-    print cursor.down(2) + cursor.forward((screen_width / 2) - half_msg_length)
-    print_message(message, color: :green)
-    print (cursor.forward((screen_width / 2) - half_msg_length))
-    print("=> ".green)
-  end
-
-  def print_in_center(message)
-    half_msg_length = message.length / 2
-    print cursor.down(2) + cursor.forward((screen_width / 2) - half_msg_length)
-    print_message(message, color: :blue)
-  end
-
-  def print_in_center_custom_color(message)
-    half_msg_length = message.length / 2
-    print cursor.down(2) + cursor.forward((screen_width / 2) - half_msg_length)
-    puts message
-  end
+  # rubocop:enable Metrics/AbcSize
 
   def clear_screen
     (system 'clear') || (system 'cls')
@@ -184,7 +108,7 @@ module Displayable
 
   def wait_until_ready_to_go_on
     message = pastel.bright_blue('Appuyez sur espace ou retour pour continuer')
-    prompt.keypress(message, keys: [:space, :return])
+    prompt.keypress(message, keys: %i[space return])
   end
 
   def skip_lines(number_of_lines_to_skip)
@@ -196,7 +120,7 @@ module Displayable
     module_function
 
     def pastel
-      @@pastel ||= Pastel.new
+      @pastel ||= Pastel.new
     end
 
     def valid_color?(color)
@@ -205,7 +129,6 @@ module Displayable
 
     def valid_pastel_colors?(colors)
       colors.all? do |color|
-        binding.pry
         pastel.valid?(color)
       end
     end

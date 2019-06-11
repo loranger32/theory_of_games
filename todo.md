@@ -3,6 +3,7 @@
 ## Open
 | status | date | description |
 | :---  | :---: | :---        |
+|open|11/06/2019|Cleanup code of old Displayable methods|
 |open|11/06/2019|Check the rules for multiplayer games|
 |open|15/03/2019|Allow the user to play against computer|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|

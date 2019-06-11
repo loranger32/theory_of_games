@@ -4,17 +4,17 @@ class CliMainLoop
   include Validable
 
   MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
-  MAIN_MENU_TEXT = <<~MENU
+  MAIN_MENU_TEXT = <<~MENU.freeze
     Interface interactive - i
-           
+
     Interface rapide - r
-          
+
     Aide - h
-        
+
     A propos - a
-          
+
     Quitter - q
-    MENU
+  MENU
 
   attr_reader :main_box, :cli_game_loop
 
@@ -30,7 +30,7 @@ class CliMainLoop
     loop do
       display_main_menu
       process_choice
-      break if quit? 
+      break if quit?
     end
   end
 
@@ -46,25 +46,19 @@ class CliMainLoop
     box_height = 15
     box_width = 40
     TTY::Box.frame(top: (screen_height / 2) - (box_height / 2),
-                         left: (screen_width / 2) - (box_width / 2),
-                         width: box_width,
-                         height: box_height,
-                         align: :center,
-                         padding: 2,
-                         title: {
-                          top_left: 'Menu principal',
-                          bottom_right: 'version ' + VERSION 
-                         },
-                         style: {
-                           fg: :bright_yellow,
-                           bg: :blue,
-                           border: {
-                           fg: :bright_yellow,
-                           bg: :blue
-                           }
-                         }) do
-                          MAIN_MENU_TEXT
-                        end
+                   left: (screen_width / 2) - (box_width / 2),
+                   width: box_width,
+                   height: box_height,
+                   align: :center,
+                   padding: 2,
+                   title: { top_left: 'Menu principal',
+                            bottom_right: 'version ' + VERSION },
+                   style: { fg: :bright_yellow,
+                            bg: :blue,
+                            border: { fg: :bright_yellow,
+                                      bg: :blue } }) do
+                                        MAIN_MENU_TEXT
+                                      end
   end
   # rubocop:enable Metrics/MethodLength
 
@@ -78,24 +72,23 @@ class CliMainLoop
     case choice
     when 'q' then @quit = true
     when 'i' then start_interactive_session
-    else
-      nil
     end
-
   end
 
+  # rubocop:disable Metrics/AbcSize
   def retrieve_menu_choice
     message = 'Entrez votre choix'
-    half_msg_length = message.size / 2
     formatted_message = pastel.bright_blue(message)
 
     print cursor.down(2)
-    print cursor.forward((screen_width / 2) - half_msg_length)
-    prompt.keypress(formatted_message, [:i, :r, :h,:a, :q])
+    print cursor.forward((screen_width / 2) - message.size / 2)
+    prompt.keypress(formatted_message, %i[i r h a q])
   end
+  # rubocop:enable Metrics/AbcSize
 
   def start_interactive_session
-    cli_game_loop.run    
+    sleep(0.3)
+    cli_game_loop.run
   end
 
   def quit?
