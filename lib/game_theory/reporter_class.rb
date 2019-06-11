@@ -4,8 +4,6 @@ class Reporter
   include Validable
   include Tableable
 
-  COLOM_LENGTH = 20
-
   def initialize
     Displayable.set_io_variables_on(self)
     @players = nil
@@ -23,7 +21,9 @@ class Reporter
   def display_short_game_report
     print_message('Les scores sont:', color: :light_blue)
 
-    display_in_table(players, :name, :behavior, :score)
+    display_in_table(players,
+                     headers: %w[nom comportement score],
+                     attributes: [:name, :behavior, :score])
   end
 
   def display_full_game_report(history)
@@ -36,8 +36,14 @@ class Reporter
   private
 
   def want_full_report?
-    prompt('Voulez-vous également un rapport détaillé tour par tour (o/n) ?')
-    obtain_a_valid_input_from(%w[o n]) == 'o'
+    question = "Voulez-vous également un rapport détaillé tour par tour ?"
+    colored_question = pastel.bright_blue(question)
+
+    prompt.yes?(question) do |q|
+      q.suffix 'oui / non'
+      q.default false
+      q.convert -> (input) { !input.match(/[^o$]|[^n$]/i).nil? }
+    end
   end
 
   attr_reader :players

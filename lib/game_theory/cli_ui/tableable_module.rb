@@ -17,7 +17,7 @@ module Tableable
     table = create_table_with(collection, attributes, headers)
     table = table.render(:unicode) do |r|
               r.padding  = [1, 2, 1, 2]
-              r.width = 40
+              r.width = 200
               r.border.style = :bright_blue
               r.alignments = [:center, :center]
             end

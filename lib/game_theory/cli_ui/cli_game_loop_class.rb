@@ -59,9 +59,14 @@ class CliGameLoop
   end
 
   def choose_number_of_turns
-    prompt 'Combien de tous souhaitez-vous faire (1 - 1000)'
-    pattern = /\A\d{1,4}\z/
-    answer = obtain_a_valid_input_from(pattern)
+    clear_screen_with_title_in_box(MAIN_TITLE)
+
+    question = pastel.bright_blue('Choisissez le nombre de tours (1 - 1000)')
+    error_msg = pastel.bright_red('Choisissez un nombre entre 1 et 1000')
+    answer = prompt.ask(question) do |q|
+      q.validate /\A\d{1,4}\z/, error_msg
+    end
+
     @turns = answer.to_i
   end
 
@@ -71,7 +76,10 @@ class CliGameLoop
   end
 
   def play_turns
+    clear_screen_with_title_in_box(MAIN_TITLE)
+
     ready_to_play?
+
     turns.times { @turn_engine.play_turn }
   end
 
@@ -81,7 +89,7 @@ class CliGameLoop
   end
 
   def display_report(history)
-    clear_screen
+    clear_screen_with_title_in_box(MAIN_TITLE)
     print_message 'Tous les tours ont été joués.'
     reporter.display_report(history)
   end
@@ -180,8 +188,11 @@ class CliGameLoop
     display_in_table(players, attributes: [:name, :behavior],
                               headers: %w[Nom Comportement])
 
-    prompt_center('Confirmez vous ce choix ? (o/n)')
-    obtain_a_valid_input_from(%w[o n]) == 'o'
+    prompt.yes?(pastel.bright_blue("Confirmez-vous ce choix ?")) do |q|
+      q.suffix 'oui / non'
+      q.default true
+      q.convert -> (input) { !input.match(/[^o$]|[^n$]/i).nil? }
+    end
   end
 
   def collect_data_again
