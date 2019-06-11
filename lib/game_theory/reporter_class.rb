@@ -25,10 +25,7 @@ class Reporter
   end
 
   def display_full_game_report(history)
-    print_message('*' * COLOM_LENGTH, color: :red)
-    print_message('Résultats des matchs:', color: :yellow)
     history.display
-    print_message('*' * COLOM_LENGTH, color: :red)
   end
 
   private
@@ -37,7 +34,7 @@ class Reporter
     question = "Voulez-vous également un rapport détaillé tour par tour ?"
     colored_question = pastel.bright_blue(question)
 
-    prompt.yes?(question) do |q|
+    prompt.yes?(colored_question) do |q|
       q.suffix 'oui / non'
       q.default false
       q.convert -> (input) { !input.match(/[^o$]|[^n$]/i).nil? }

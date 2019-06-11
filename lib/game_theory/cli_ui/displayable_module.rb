@@ -108,6 +108,20 @@ module Displayable
     puts box                     
   end
 
+  def display_boxed_centered_title(title, formatted_title, formatted_padding)
+      half_title_length = title.length / 2
+      print cursor.down(2) + cursor.forward((screen_width / 2) - half_title_length)
+      puts formatted_padding
+
+      half_title_length = title.length / 2
+      print cursor.forward((screen_width / 2) - half_title_length)
+      puts formatted_title
+
+      half_title_length = title.length / 2
+      print cursor.forward((screen_width / 2) - half_title_length)
+      puts formatted_padding
+  end
+
   def print_message(message, color: nil)
     if Helpers.valid_color?(color)
       puts message.send(color)
@@ -145,6 +159,12 @@ module Displayable
     half_msg_length = message.length / 2
     print cursor.down(2) + cursor.forward((screen_width / 2) - half_msg_length)
     print_message(message, color: :blue)
+  end
+
+  def print_in_center_custom_color(message)
+    half_msg_length = message.length / 2
+    print cursor.down(2) + cursor.forward((screen_width / 2) - half_msg_length)
+    puts message
   end
 
   def clear_screen
