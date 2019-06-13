@@ -107,6 +107,7 @@ class CliGameLoop
     prompt.yes?(formatted_question) do |q|
       q.positive 'Oui'
       q.negative 'Non'
+      q.default 'Non'
     end
   end
 
@@ -118,6 +119,7 @@ class CliGameLoop
     prompt.yes?(formatted_question) do |q|
       q.positive 'Oui'
       q.negative 'Non'
+      q.default 'Non'
     end
   end
 
@@ -197,6 +199,7 @@ class CliGameLoop
     prompt.yes?(pastel.bright_blue('Confirmez-vous ce choix ?')) do |q|
       q.positive 'Oui'
       q.negative 'Non'
+      q.default 'Oui'
     end
   end
 
