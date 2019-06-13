@@ -38,6 +38,7 @@ class Reporter
     prompt.yes?(colored_question) do |q|
       q.positive 'Oui'
       q.negative 'Non'
+      q.default 'Non'
     end
   end
 
