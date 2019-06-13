@@ -46,15 +46,15 @@ module Validable
     extend Displayable
 
     def self.display_invalid_choice_from_list(valid_choices_list)
-      print_error_message('Choix invalide !')
-      print_error_message('Les choix valides sont:')
-      print_error_message(valid_choices_list.join(', ') + '.')
-      prompt('Quel est votre choix ?')
+      prompt.error('Choix invalide !')
+      prompt.error('Les choix valides sont:')
+      prompt.error(valid_choices_list.join(', ') + '.')
+      prompt.ask('Quel est votre choix ?')
     end
 
     def self.display_invalid_choice_from_regexp
-      print_error_message('Choix invalide !')
-      prompt('Quel est votre choix ?')
+      prompt.error('Choix invalide !')
+      prompt.ask('Quel est votre choix ?')
     end
   end
 end

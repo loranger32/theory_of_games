@@ -94,11 +94,6 @@ class CliGameLoop
     reporter.display_report(history)
   end
 
-  def ready_to_play?
-    print_message 'Prêt à lancer le jeu ? (pressez une touche pour continuer)'
-    gets.chomp
-  end
-
   def reset_players_score_and_history
     @turn_engine.reset_players_score
     @turn_engine.reset_history!
@@ -161,8 +156,8 @@ class CliGameLoop
 
   def verify_name_is_unique_and_valid(name)
     while name_factory.name_errors.key?(name)
-      print_error_message(name_factory.name_errors[name])
-      prompt('Nouvel essai')
+      prompt.error(name_factory.name_errors[name])
+      prompt.ok('Nouvel essai')
       name = name_factory.create_name(retrieve_input)
     end
     name

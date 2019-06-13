@@ -95,11 +95,6 @@ module Displayable
     (system 'clear') || (system 'cls')
   end
 
-  def clear_screen_with_title(title)
-    clear_screen
-    titleize(title)
-  end
-
   def clear_screen_with_title_in_box(title)
     clear_screen
     titleize_in_box(title)
