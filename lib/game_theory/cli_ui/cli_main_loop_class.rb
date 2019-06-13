@@ -6,13 +6,13 @@ class CliMainLoop
   MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
   MAIN_MENU_TEXT = <<~MENU.freeze
     Interface interactive - i
-
+                              
     Interface rapide - r
-
+                           
     Aide - h
-
+                           
     A propos - a
-
+                       
     Quitter - q
   MENU
 
