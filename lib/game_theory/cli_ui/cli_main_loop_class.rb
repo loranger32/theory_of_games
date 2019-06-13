@@ -4,6 +4,7 @@ class CliMainLoop
   include Validable
 
   MAIN_TITLE = 'LA THEORIE DES JEUX - SIMULATION'.freeze
+  # rubocop:disable Layout/TrailingWhitespace
   MAIN_MENU_TEXT = <<~MENU.freeze
     Interface interactive - i
                               
@@ -15,6 +16,7 @@ class CliMainLoop
                        
     Quitter - q
   MENU
+  # rubocop:enable Layout/TrailingWhitespace
 
   attr_reader :main_box, :cli_game_loop
 
