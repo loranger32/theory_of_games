@@ -158,6 +158,7 @@ class CliGameLoop
     while name_factory.name_errors.key?(name)
       prompt.error(name_factory.name_errors[name])
       prompt.ok('Nouvel essai')
+      # TO DO: Refactor to use the new TTY-Prompt Library
       name = name_factory.create_name(retrieve_input)
     end
     name

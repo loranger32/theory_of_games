@@ -12,6 +12,7 @@ Bundler.require(:default, :development)
 require_relative 'game_theory/cli_ui/displayable_module'
 require_relative 'game_theory/cli_ui/validable_module'
 require_relative 'game_theory/cli_ui/tableable_module'
+require_relative 'game_theory/cli_ui/reporter_class'
 
 ######### Game logic files
 
@@ -36,7 +37,6 @@ require_relative 'game_theory/player_factory_class'
 require_relative 'game_theory/earning_engine_class'
 require_relative 'game_theory/logic_engine_class'
 require_relative 'game_theory/turn_engine_class'
-require_relative 'game_theory/reporter_class'
 
 # Main loop class
 require_relative 'game_theory/cli_ui/cli_main_loop_class'

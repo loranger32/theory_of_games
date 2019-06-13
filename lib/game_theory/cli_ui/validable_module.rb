@@ -3,7 +3,6 @@
 # and instance variable 'input' and 'output' to reference $stdin and $stdout
 # AND extends the HelperMethods submodule
 module Validable
-
   def obtain_a_valid_input_from(pattern)
     if pattern.is_a?(Array)
       obtain_a_valid_input_from_list(pattern)
