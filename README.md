@@ -1,4 +1,4 @@
-# Theory of Games Simulation
+# Prsionner's Dilemma Simulation
 
 ## Overview
 
@@ -9,8 +9,22 @@ is a example of
 
 Fun and learning are the main objectives.
 
-It's for the moment only written in french, but english translation is on its
-way.
+It's for the moment only written in french, but english translation is foreseen.
+
+## Main concept
+
+Two players or more are playing a "cooperate or betray" game.
+
+For each turn, each player must choose if he cooperates or betrays.
+
+If all players cooperate, they all get 5 points.
+
+If all players betray, they all get no points.
+
+And if one betrays and the others cooperate, the one who betrays gets 10 points.
+
+The number of rounds is determined before the game starts, and can range from
+1 to 9999.
 
 ## What it does
 
@@ -29,22 +43,21 @@ way.
 
 
 User can choose the number of turns to play (between 1 and 9999), and it will
-be soon possible to run multiple runs of a given number of turns.
+be soon possible to run multiple sets of a given number of turns.
 
-After each run, a display of the total points is rendered, with an option to
-see the details per turn and per player.
+After the run of all the turns, a display of the total points is rendered,
+with an option to see the details per turn and per player.
 
-Special attention is and will be paid to get a fancy display in the terminal,
-partly using the various [TTY gems](https://piotrmurach.github.io/tty/).
 
 ## Next steps
 
 - more pre-defined behaviors ;
 - allow user to define his own behaviors ;
 - real time playing against other players (ai) with randomly selected behaviors;
-- adaptative beahviors for the ai ;
-- Implement a version with a non predefined number of rounds;
+- adaptative behaviors for the ai ;
+- implement a version with a non predefined number of rounds;
 - export results in various format (JSON, YAML, CSV, Markdown, html) ;
+- implement other versions of the Prisonner's Dilemma ;
 - english translation ;
 - package it as a gem ;
 - make a webapp ;
