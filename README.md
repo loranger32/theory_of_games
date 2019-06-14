@@ -2,7 +2,9 @@
 
 ## Overview
 
-Small Cli program written in Ruby to play and simulate some of
+Small Cli program written in Ruby to play and simulate a version of the
+[Prisonner's Dilemma](https://en.wikipedia.org/wiki/Prisoner%27s_dilemma), which
+is a example of 
 [the theory of games](https://en.wikipedia.org/wiki/Game_theory) situations.
 
 Fun and learning are the main objectives.
@@ -17,10 +19,11 @@ way.
 - Naive : always cooperates ;
 - Traitor : always betrays ;
 - Pick at random : randomy choose to cooperate or betray ;
-- Quick Adapter : punish and forgive fast. As long as the other player
-                  cooperates, he cooperates also. If the other player betrays,
-                  he will betray the next time. As soon as the other player
-                  cooperates again, he will also cooperate ;
+- Quick Adapter : punish and forgive fast
+                  (the so called '_tit for tat_.' strategy). As long as the
+                  other player cooperates, he cooperates also. If the other
+                  player betrays, he will betray the next time. As soon as the
+                  other player cooperates again, he will also cooperate ;
 - Slow Adapter : punish and forgives slowly. Same as above, except that he will
                  wait 3 turns before changing move ;
 
@@ -39,6 +42,8 @@ partly using the various [TTY gems](https://piotrmurach.github.io/tty/).
 - more pre-defined behaviors ;
 - allow user to define his own behaviors ;
 - real time playing against other players (ai) with randomly selected behaviors;
+- adaptative beahviors for the ai ;
+- Implement a version with a non predefined number of rounds;
 - export results in various format (JSON, YAML, CSV, Markdown, html) ;
 - english translation ;
 - package it as a gem ;
@@ -47,7 +52,7 @@ partly using the various [TTY gems](https://piotrmurach.github.io/tty/).
 
 See `todo.md` at the root of the directory to check the next steps.
 
-For now (march 2019) it's still a WIP in the early stages.
+For now (june 2019) it's still a WIP in the early stages.
 
 
 # Installation
