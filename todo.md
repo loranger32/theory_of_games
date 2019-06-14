@@ -3,9 +3,7 @@
 ## Open
 | status | date | description |
 | :---  | :---: | :---        |
-|open|11/06/2019|Rename the game in prisonner's dilemma|
 |open|13/06/2019|Update readme with theoretical notions of the prisonner's dilemma|
-|open|11/06/2019|Check the rules for multiplayer games|
 |open|15/03/2019|Allow the user to play against computer|
 |open|18/02/2019|Allow the play of multiple runs of the game, with display recap at the end of each run|
 |open|18/02/2019|Allow exporting the reports in a file|
@@ -64,3 +62,5 @@
 |DONE|13/06/2019|Cleanup code of old Displayable methods|
 |DONE|13/06/2019|Review Reporter class to check the most appropriate place (logic or display)|
 |DONE|13/06/2019|Fix an error when typing return in yes? no? questions|
+|DONE|14/06/2019|Rename the game in prisonner's dilemma|
+|DONE|11/06/2019|Check the rules for multiplayer games|
