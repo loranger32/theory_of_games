@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'bundler'
 gem 'pastel'
-gem 'rake', '~> 12.3', '>= 12.3.2'
+gem 'rake', '~> 12.3'
 gem 'tty-box'
 gem 'tty-cursor'
 gem 'tty-prompt'
